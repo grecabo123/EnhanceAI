@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
+import PrimeReact from 'primereact/api';
+import axios from 'axios'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import Login from './components/Login';
+import Landing from './components/Landing';
+import Register from './components/Register';
+import PrivateAdminRoutes from './private/PrivateAdminRoutes';
+import PrivateCustomerRoutes from './private/PrivateCustomerRoutes';
+
+
+axios.defaults.baseURL = "http://127.0.0.1:8000/";
+axios.defaults.headers.post['Content-Type'] = "application/json";
+axios.defaults.headers.post['Accept'] = "application/json";
+
+axios.defaults.withCredentials = true;
+
+axios.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('auth_token');
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
+    return config;
+});
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    PrimeReact.ripple = true;
+
+
+
+    return (
+        <div className=''>
+            <Router>
+                <Switch>
+                    <Route path="/" exact={true} component={Landing} />
+                    <Route path="/login" exact={true} component={Login} />
+                    <Route path="/register" exact={true} component={Register} />
+
+
+                    {/* Admin */}
+                    <PrivateAdminRoutes path="/admin" name="Admin" />
+
+                    {/* Customer */}
+
+                    <PrivateCustomerRoutes path="/customer" name="Customer" />
+
+                </Switch>
+            </Router>
+        </div>
+    )
 }
 
 export default App
