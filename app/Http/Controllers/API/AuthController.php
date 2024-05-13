@@ -27,7 +27,7 @@ class AuthController extends Controller
         }
         else{
             $user = User::where('email',$request->email)->first();
-            if($user || Hash::check($request->password, $user->password)){   
+            if($user && Hash::check($request->password, $user->password)){   
 
                 // 1 = Verified
                 if($user->status == 1){

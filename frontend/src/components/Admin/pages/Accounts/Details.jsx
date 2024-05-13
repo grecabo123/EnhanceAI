@@ -70,6 +70,10 @@ function Details(props) {
         })
     }
 
+    const Return_Page = () => {
+        history.push(`/admin/accounts/pending`)
+    }
+
     return (
         <div className='container'>
             <div className="row">
@@ -78,6 +82,9 @@ function Details(props) {
                     loading ? <Skeleton /> :
                         <Panel header={`Details - ${UserInfo.name}`}>
                             <Toast ref={toast} />
+                            <div className="d-flex justify-content-end">
+                                <Button onClick={Return_Page} className='p-button-sm p-button-info' label='Return Page' />
+                            </div>
                             <div className="container">
                                 <div className="row">
                                     <div className="col-lg-4 col-md-4 col-sm-12 mb-2">

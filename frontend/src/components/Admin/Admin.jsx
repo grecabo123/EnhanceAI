@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { FaBars, FaCaretDown, FaCheck, FaDesktop, FaHome, FaUsers } from 'react-icons/fa'
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import AdminRoutes from '../../routes/AdminRoutes'
-import { FcApproval, FcBarChart, FcBookmark, FcLineChart, FcShop } from "react-icons/fc";
+import { FcApproval, FcBarChart, FcBookmark, FcFile, FcLineChart, FcLock, FcShop } from "react-icons/fc";
 import { GoReport } from "react-icons/go";
 import { Menu } from 'primereact/menu';
 import { Avatar } from 'primereact/avatar';
@@ -42,8 +42,8 @@ function Admin() {
         <React.Fragment>
             <header id="header" className="header fixed-top d-flex align-items-center">
                 <div className="d-flex align-items-center justify-content-between">
-                    <a href="/admin" className="logo d-flex align-items-center" style={{ textDecoration: "none" }}>
-                        <span className="d-none d-lg-block">Admin</span>
+                    <a href="/admin" className="logo d-flex justify-content-center align-items-center" style={{ textDecoration: "none" }}>
+                        <span className="d-none d-lg-block text-white">Admin</span>
                     </a>
                     <FaBars size={25} style={{ color: "#A1A5AC", cursor: "pointer" }} />
                 </div>
@@ -80,48 +80,44 @@ function Admin() {
                     </li>
                     <li className="nav-item">
                         <a className="nav-link collapsed" data-bs-target="#shops" data-bs-toggle="collapse" >
-                            <FcShop className='me-3' size={25} /><span>Shops  Online  </span> <FaCaretDown className='ms-auto bi-chevron-down' />
+                            <FcShop className='me-3' size={25} /><span>Flower Shop  </span> <FaCaretDown className='ms-auto bi-chevron-down' />
                         </a>
                         <ul id="shops" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li>
-                                <Link to="/admin/accounts/registered">
-                                    <FaCheck className='me-2' /> <span>Active Shops</span>
+                                <Link to="/admin/shop/accounts">
+                                    <FcApproval className='me-2' size={20} /> <span>Shop Account</span>
                                 </Link>
                             </li>
+                    
                             <li>
-                                <Link to="/admin/accounts/pending">
-                                    <FaCheck className='me-2' /> <span>Not Active Shops</span>
+                                <Link to="/admin/accounts/request">
+                                    <FcFile className='me-2' size={20} /> <span>Request Shop Form</span>
                                 </Link>
                             </li>
                         </ul>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link collapsed" href="users-profile.html">
-                            <i className="bi bi-person"></i>
-                            <span></span>
-                        </a>
-                    </li>
+             
 
                     <li className="nav-heading">Monitoring</li>
                     <li className="nav-item">
-                        <a className="nav-link collapsed" href="users-profile.html">
+                        <Link to="/admin/monitor/shop" className="nav-link collapsed" >
                             <FcLineChart className='me-3' size={20} />
                             <span>Shop Monitoring</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-heading">Chart</li>
                     <li className="nav-item">
-                        <a className="nav-link collapsed" href="users-profile.html">
+                        <Link className="nav-link collapsed" to="/admin/analytics/chart">
                             <FcBarChart className='me-3' size={20} />
                             <span>Analytics</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-heading">Reports</li>
                     <li className="nav-item">
-                        <a className="nav-link collapsed" href="users-profile.html">
+                        <Link className="nav-link collapsed" to="/admin/feedback">
                             <GoReport size={20} className='me-3' />
                             <span>Feedback</span>
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="nav-heading">Logs</li>
