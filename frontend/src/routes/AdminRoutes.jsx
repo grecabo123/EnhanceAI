@@ -5,7 +5,7 @@ import Request from "../components/Admin/pages/Accounts/Request";
 import ShopAccounts from "../components/Admin/pages/Accounts/ShopAccounts";
 import ShopDetails from "../components/Admin/pages/Accounts/ShopDetails";
 import Dashboard from "../components/Admin/pages/Dashboard/Dashboard";
-import ActivityLogs from "../components/Admin/pages/Logs/ActivityLogs";
+import ActivityLogs from "../components/Admin/pages/LogsHistory/ActivityLogs";
 
 
 const AdminRoutes = [
