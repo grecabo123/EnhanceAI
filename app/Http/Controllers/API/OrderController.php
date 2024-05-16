@@ -92,4 +92,14 @@ class OrderController extends Controller
             ]);
         }
     }
+
+    public function OrderStatus($id){
+
+        $data = OrderDetails::join('tbl_product','tbl_product.id','=','tbl_order.product_fk')->where('tbl_order.from_user',$id)->orderBy('tbl_order.created_at','DESC')->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+        ]);
+    }
 }

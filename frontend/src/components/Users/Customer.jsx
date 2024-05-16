@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import admin from '../../assets/admin/customer.png'
 import { FcFolder, FcHome, FcPackage, FcSearch } from 'react-icons/fc'
-import { FaBars, FaCaretDown, FaDesktop, FaUser, FaUsers } from 'react-icons/fa'
+import { FaBars, FaCaretDown, FaCartPlus, FaDesktop, FaRobot, FaUser, FaUsers } from 'react-icons/fa'
 import { BsPersonBadge } from "react-icons/bs";
 import { useState } from 'react'
 import { Sidebar } from 'primereact/sidebar';
@@ -99,6 +99,18 @@ function Admin() {
                                         <Link to="/customer/product/search" className="sidebar-link">
                                             <FcSearch size={20} className='align-middle' />
                                             <span>Search Product</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link to="/customer/product/search" className="sidebar-link">
+                                            <FaRobot size={20} className='align-middle' />
+                                            <span>Generate Design</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link to="/customer/product/order" className="sidebar-link">
+                                            <FaCartPlus size={20} className='align-middle' />
+                                            <span>Order Status</span>
                                         </Link>
                                     </li>
 

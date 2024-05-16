@@ -6,6 +6,7 @@ import AI from "../components/Users/pages/DesignGenerate/AI";
 import ActivityLogs from "../components/Users/pages/LogsHistory/Activitylogs";
 import DesignProduct from "../components/Users/pages/MyProduct/DesignProduct";
 import Myproduct from "../components/Users/pages/MyProduct/Myproduct";
+import OrderStatus from "../components/Users/pages/MyProduct/OrderStatus";
 import PurchaseStatus from "../components/Users/pages/Products/PurchaseStatus";
 import SearchProducts from "../components/Users/pages/Products/SearchProducts";
 import Form from "../components/Users/pages/Sell/Request/Form";
@@ -22,6 +23,7 @@ const CustomerRoutes = [
     {path: "/customer/request/form", exact: true, name: "Forn", component: Form},
     {path: "/customer/product/status", exact: true, name: "Forn", component: Myproduct},
     {path: "/customer/buyer/list", exact: true, name: "Forn", component: ListofBuyer},
+    {path: "/customer/product/order", exact: true, name: "Forn", component: OrderStatus},
     {path: "/customer/buyer/history", exact: true, name: "Forn", component: BuyerHistory},
     {path: "/customer/product/design", exact: true, name: "Design", component: DesignProduct},
     {path: "/customer/:name/refid=:id", exact: true, name: "Name", component: BidItem},
