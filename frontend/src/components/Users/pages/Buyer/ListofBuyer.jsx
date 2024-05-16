@@ -114,6 +114,7 @@ function ListofBuyer() {
                 });
                 setVisible(false);
                 setbtnload(false)
+                FetchData();
             }
         }).catch((error) => {
             if(error.response.status === 500) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import admin from '../../assets/admin/admin.jpg'
+import admin from '../../assets/admin/customer.png'
 import { FcFolder, FcHome, FcPackage, FcSearch } from 'react-icons/fc'
 import { FaBars, FaCaretDown, FaDesktop, FaUser, FaUsers } from 'react-icons/fa'
 import { BsPersonBadge } from "react-icons/bs";
@@ -172,7 +172,7 @@ function Admin() {
                                         History
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/history/logs" className="sidebar-link">
+                                        <Link to="/customer/history/logs" className="sidebar-link">
                                             <FaDesktop size={20} className='align-middle' />
                                             <span>Activity Logs</span>
                                         </Link>
@@ -319,7 +319,7 @@ function Admin() {
                                             History
                                         </li>
                                         <li className="sidebar-item">
-                                            <Link to="/admin/history/logs" className="sidebar-link">
+                                            <Link to="/customer/history/logs" className="sidebar-link">
                                                 <FaDesktop size={20} className='align-middle' />
                                                 <span>Activity Logs</span>
                                             </Link>
