@@ -34,6 +34,7 @@ function ActivityLogs() {
             <div className="row">
                 <Panel header="History Logs">
                     <DataTable value={Logs} loading={loading} paginator paginatorLeft rows={10}>
+                        <Column header="#" body={(data,options) => options.rowIndex + 1}></Column>
                         <Column field='description' header="Description"></Column>
                         <Column field='created_at' body={created_at_format} header="DateTime"></Column>
                     </DataTable>

@@ -73,7 +73,7 @@ class ProductController extends Controller
         $validate = Validator::make($request->all(), [
             "name"                  =>          "required",
             "desc"                  =>          "required",
-            "file"                  =>          "required|mimes:png,jpg",
+            "file"                  =>          "required",
             "pricedata"             =>          "required",
         ]);
 

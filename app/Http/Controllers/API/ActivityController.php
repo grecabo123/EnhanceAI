@@ -12,7 +12,7 @@ class ActivityController extends Controller
 
     public function Logs($id){
 
-        $data = ActivityLogs::where('user_fk',$id)->get();
+        $data = ActivityLogs::where('user_fk',$id)->orderBy('created_at','DESC')->get();
 
         return response()->json([
             "status"            =>          200,

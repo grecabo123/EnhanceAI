@@ -56,6 +56,16 @@ function Login() {
 
                     }
                 }
+                else if (res.data.status === 501){
+                    swal("Warning",res.data.message,'warning');
+                    setbtnload(false)
+                    
+                }
+                else if (res.data.status === 504){
+                    swal("Warning",res.data.message,'warning');
+                    setbtnload(false)
+                    
+                }
                 else{
                     setData({...LoginData, error: res.data.error});
                     setbtnload(false)

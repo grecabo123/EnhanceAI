@@ -144,7 +144,7 @@ function Details(props) {
                                         <label htmlFor="" className="form-label">
                                             Status
                                         </label>
-                                        <Dropdown placeholder='Choose Status' onChange={(e) => setStatus(e.value)} options={list_approve} className='w-100 p-inputtext-sm' />
+                                        <Dropdown value={status} placeholder='Choose Status' onChange={(e) => setStatus(e.value)} options={list_approve} className='w-100 p-inputtext-sm' />
                                     </div>
                                     <div className="mt-2">
                                         <Button className='w-100 p-button-sm' label='Submit' />

@@ -2,7 +2,7 @@ import BidItem from "../components/Users/pages/Bid/BidItem";
 import ListofBuyer from "../components/Users/pages/Buyer/ListofBuyer";
 import Dashboard from "../components/Users/pages/Dashboard/Dashboard";
 import AI from "../components/Users/pages/DesignGenerate/AI";
-import ActivityLogs from "../components/Users/pages/Logs/Activitylogs";
+import ActivityLogs from "../components/Users/pages/LogsHistory/Activitylogs";
 import DesignProduct from "../components/Users/pages/MyProduct/DesignProduct";
 import Myproduct from "../components/Users/pages/MyProduct/Myproduct";
 import PurchaseStatus from "../components/Users/pages/Products/PurchaseStatus";
