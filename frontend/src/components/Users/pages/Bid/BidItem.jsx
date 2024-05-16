@@ -58,6 +58,7 @@ function BidItem(props) {
             contact: PurchaseData.contact,
             to_address: PurchaseData.to_address,
             message: PurchaseData.message,
+            from_buyer: Details.user_id,
         }
 
         axios.post(`/api/OrderNow`, data).then(res => {

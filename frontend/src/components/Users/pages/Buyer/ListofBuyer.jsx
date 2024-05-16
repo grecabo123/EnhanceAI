@@ -29,6 +29,10 @@ function ListofBuyer() {
         to_name: "",
         img: "",
         desc: "",
+        contact: "",
+        address: "",
+        city: "",
+        person_msg: "",
     });
     const toast = useRef(null);
 
@@ -57,7 +61,7 @@ function ListofBuyer() {
 
     const file_format = (list) => {
         return (
-            <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={60} alt="" />
+            <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={80} alt="" />
         )
     }
 
@@ -75,6 +79,10 @@ function ListofBuyer() {
                     data-to_name={list.to_name}
                     data-img={list.file_product_design}
                     data-desc={list.description}
+                    data-contact={list.contact}
+                    data-address={list.address}
+                    data-city={list.city}
+                    data-person_msg={list.messages}
                     onClick={GetDetails}
                 />
             </React.Fragment>
@@ -94,6 +102,10 @@ function ListofBuyer() {
             to_name: e.currentTarget.getAttribute('data-to_name'),
             img: e.currentTarget.getAttribute('data-img'),
             message: e.currentTarget.getAttribute('data-desc'),
+            contact: e.currentTarget.getAttribute('data-contact'),
+            address: e.currentTarget.getAttribute('data-address'),
+            city: e.currentTarget.getAttribute('data-city'),
+            person_msg: e.currentTarget.getAttribute('data-person_msg'),
         });
     }
 
@@ -149,12 +161,27 @@ function ListofBuyer() {
                 <form onSubmit={UpdateStatus}>
                     <ul class="list-group">
                         <Divider>
-                            <span>Details</span>
+                            <span>Buyer  Details</span>
                         </Divider>
                         <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
                             Name of Buyer
                             <span>{Details.name}</span>
                         </li>
+                          <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            Contact
+                            <span>{Details.contact}</span>
+                        </li>
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            Address
+                            <span>{Details.address}</span>
+                        </li>
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            City
+                            <span>{Details.city}</span>
+                        </li>
+                        <Divider>
+                            <span> Product Details</span>
+                        </Divider>
                         <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
                             Product Name
                             <span>{Details.product_name}</span>
@@ -178,6 +205,14 @@ function ListofBuyer() {
                         <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
                             Person Contact
                             <span>{Details.to_contact}</span>
+                        </li>
+
+                        <Divider>
+                            <span>Message</span>
+                        </Divider>
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            
+                            <span>{Details.person_msg}</span>
                         </li>
 
                         <Divider>

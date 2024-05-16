@@ -20,6 +20,7 @@ class OrderController extends Controller
         $order->to_address = $request->to_address;
         $order->to_contact = $request->contact;
         $order->messages = $request->message;
+        $order->owner_fk = $request->from_buyer;
         $order->save();
 
         return response()->json([
@@ -44,7 +45,8 @@ class OrderController extends Controller
 
         $data = OrderDetails::join('users','users.id','=','tbl_order.from_user')
         ->join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
-        ->selectRaw('users.name,
+        ->join('tbl_contact','tbl_contact.user_fk','=','users.id')
+        ->selectRaw('users.name,tbl_contact.contact,tbl_contact.address,tbl_contact.city,
         tbl_order.to_name,tbl_order.to_address,tbl_order.to_contact,tbl_order.messages,tbl_product_design.product_name,
         tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design,tbl_order.id as order_id')
         ->where('tbl_order.owner_fk',$id)

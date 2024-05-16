@@ -56,7 +56,7 @@ function SearchProducts() {
                                             <Image src={`${import.meta.env.VITE_API_BASE_URL}/${AllDesin.file_product_design}`} className='me-3' width='150' preview />
                                             <p>{AllDesin.description}</p>
                                         </div>
-                                        Price: ₱{AllDesin.price.toFixed(2)}
+                                        {/* Price: ₱{AllDesin.price.toFixed(2)} */}
                                         <div className="mt-2">
                                             <ul>
                                                 <li>Name of Seller: {AllDesin.name}</li>

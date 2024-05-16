@@ -133,7 +133,7 @@ function Admin() {
                                             <Menu model={items_list} popup ref={menu} id="popup_menu_left" />
                                         </li>
                                     </ul>
-                                    <span className='p-2' style={{ cursor: "pointer" }} onClick={(event) => menu.current.toggle(event)} aria-controls="popup_menu" aria-haspopup shape='square'>dawdww  <FaCaretDown /></span>
+                                    <span className='p-2' style={{ cursor: "pointer" }} onClick={(event) => menu.current.toggle(event)} aria-controls="popup_menu" aria-haspopup shape='square'>Admin  <FaCaretDown /></span>
                                 </div>
                             </div>
                         </nav>

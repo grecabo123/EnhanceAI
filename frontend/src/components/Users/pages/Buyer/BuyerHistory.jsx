@@ -132,7 +132,7 @@ function ListofBuyer() {
     return (
         <div className='container-fluid'>
             <Toast ref={toast} />
-            <Panel header="List of Buyer">
+            <Panel header="History Buyer">
                 <DataTable loading={loading} value={list} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
