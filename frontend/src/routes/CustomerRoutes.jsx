@@ -1,4 +1,5 @@
 import BidItem from "../components/Users/pages/Bid/BidItem";
+import BuyerHistory from "../components/Users/pages/Buyer/BuyerHistory";
 import ListofBuyer from "../components/Users/pages/Buyer/ListofBuyer";
 import Dashboard from "../components/Users/pages/Dashboard/Dashboard";
 import AI from "../components/Users/pages/DesignGenerate/AI";
@@ -21,6 +22,7 @@ const CustomerRoutes = [
     {path: "/customer/request/form", exact: true, name: "Forn", component: Form},
     {path: "/customer/product/status", exact: true, name: "Forn", component: Myproduct},
     {path: "/customer/buyer/list", exact: true, name: "Forn", component: ListofBuyer},
+    {path: "/customer/buyer/history", exact: true, name: "Forn", component: BuyerHistory},
     {path: "/customer/product/design", exact: true, name: "Design", component: DesignProduct},
     {path: "/customer/:name/refid=:id", exact: true, name: "Name", component: BidItem},
 ];

@@ -148,7 +148,7 @@ function DesignProduct() {
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Product Name
+                                <span className='text-danger'>*</span>Product Image
                                 </label>
                                 <InputText type='file' className='w-100 p-inputtext-sm' name='file' onChange={handleupload} />
                             </div>

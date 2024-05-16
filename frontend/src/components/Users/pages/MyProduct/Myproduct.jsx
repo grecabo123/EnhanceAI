@@ -189,21 +189,26 @@ function Myproduct() {
                         <div className="row">
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Product Name
+                                <span className='text-danger'>*</span>Product Name
                                 </label>
                                 <InputText className='w-100 p-inputtext-sm' name='name' onChange={handleinput} />
+                                <span className='text-danger'>{product.error.name}</span>
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Pieces
+                                <span className='text-danger'>*</span> Pieces
                                 </label>
+
                                 <InputText className='w-100 p-inputtext-sm'  keyfilter={'num'}  name='pcs' onChange={handleinput} />
+                                <span className='text-danger'>{product.error.pcs}</span>
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Product Name
+                                <span className='text-danger'>*</span>Product Name
                                 </label>
+
                                 <InputText type='file' className='w-100 p-inputtext-sm' name='file' onChange={handleupload} />
+                                <span className='text-danger'>{product.error.file}</span>
                             </div>
                             <div className="mt-2">
                                 <Button label='Add Product' className='w-100 p-button-sm p-button-info' />
@@ -225,13 +230,13 @@ function Myproduct() {
                         <div className="row">
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Product Name
+                                    <span className='text-danger'>*</span>Product Name
                                 </label>
                                 <InputText className='w-100 p-inputtext-sm' name='name' value={EditDetails.name} onChange={handleupdate} />
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    Number of Pcs
+                                <span className='text-danger'>*</span>Number of Pcs
                                 </label>
                                 <InputText className='w-100 p-inputtext-sm' name='pcs' value={EditDetails.pcs} onChange={handleupdate} />
                             </div>

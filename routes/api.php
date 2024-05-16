@@ -75,6 +75,9 @@ Route::middleware(['auth:sanctum','isAPIUser'])->group(function () {
     
     // List of buyer
     Route::get('ListoBuyer/{id}',[OrderController::class, 'ListoBuyer']);
+    Route::get('ListoBuyerHistory/{id}',[OrderController::class, 'ListoBuyerHistory']);
+
+    Route::post('UpdateProductBuyer',[OrderController::class, 'UpdateProductBuyer']);
 });
 
 

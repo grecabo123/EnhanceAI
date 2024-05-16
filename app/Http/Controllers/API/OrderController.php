@@ -46,13 +46,48 @@ class OrderController extends Controller
         ->join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
         ->selectRaw('users.name,
         tbl_order.to_name,tbl_order.to_address,tbl_order.to_contact,tbl_order.messages,tbl_product_design.product_name,
-        tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design')
+        tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design,tbl_order.id as order_id')
         ->where('tbl_order.owner_fk',$id)
+        ->where('tbl_order.purchase_status',0)
         ->orderBy('tbl_order.created_at','DESC')->get();
 
         return response()->json([
             "status"            =>          200,
             "data"              =>          $data,
         ]);
+    }
+
+    public function ListoBuyerHistory($id){
+
+        $data = OrderDetails::join('users','users.id','=','tbl_order.from_user')
+        ->join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
+        ->selectRaw('users.name,
+        tbl_order.to_name,tbl_order.to_address,tbl_order.to_contact,tbl_order.messages,tbl_product_design.product_name,
+        tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design,tbl_order.id as order_id')
+        ->where('tbl_order.owner_fk',$id)
+        ->where('tbl_order.purchase_status',1)
+        ->orderBy('tbl_order.created_at','DESC')->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+        ]);
+    }
+
+
+
+
+    public function UpdateProductBuyer(Request $request){
+
+        $data = OrderDetails::find($request->product_id);
+
+        if($data){
+            $data->purchase_status = 1;
+            $data->update();
+
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
     }
 }

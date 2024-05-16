@@ -154,6 +154,9 @@ function Admin() {
                                                             <Link to="/customer/buyer/list" className="sidebar-link"><span className='child'>Buyers</span></Link>
                                                         </li>
                                                         <li className="sidebar-item">
+                                                                <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>
+                                                            </li>
+                                                        <li className="sidebar-item">
                                                             <Link to="/customer/purchase/generate/design" className="sidebar-link"><span className='child'>Feedback</span></Link>
                                                         </li>
                                                     </ul>
@@ -298,6 +301,9 @@ function Admin() {
                                                         <ul id="buyer" className="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                                             <li className="sidebar-item">
                                                                 <Link to="/customer/buyer/list" className="sidebar-link"><span className='child'>Buyers</span></Link>
+                                                            </li>
+                                                            <li className="sidebar-item">
+                                                                <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>
                                                             </li>
                                                             <li className="sidebar-item">
                                                                 <Link to="/customer/purchase/generate/design" className="sidebar-link"><span className='child'>Feedback</span></Link>

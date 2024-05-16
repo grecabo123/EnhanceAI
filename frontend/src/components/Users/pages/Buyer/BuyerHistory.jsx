@@ -43,7 +43,7 @@ function ListofBuyer() {
     }, [])
 
     const FetchData = () => {
-        axios.get(`/api/ListoBuyer/${localStorage.getItem('auth_id')}`).then(res => {
+        axios.get(`/api/ListoBuyerHistory/${localStorage.getItem('auth_id')}`).then(res => {
             if (res.data.status === 200) {
                 setList(res.data.data)
             }
@@ -138,7 +138,7 @@ function ListofBuyer() {
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
                     <Column field='name' header="Name of Buyer"></Column>
                     <Column body={(list) => <span>{moment(list.created_at).format('MMM DD YYYY')}</span>} header="Date Time"></Column>
-                    <Column field='id' body={ActionsButton} header="Actions"></Column>
+                    {/* <Column field='id' body={ActionsButton} header="Actions"></Column> */}
                 </DataTable>
             </Panel>
 
