@@ -73,6 +73,8 @@ Route::middleware(['auth:sanctum','isAPIUser'])->group(function () {
     Route::post('AddProductDesign',[ProductController::class, 'AddProductDesign']);
     Route::get('DesignProduct/{id}',[ProductController::class, 'DesignProduct']);
     
+    // List of buyer
+    Route::get('ListoBuyer/{id}',[OrderController::class, 'ListoBuyer']);
 });
 
 

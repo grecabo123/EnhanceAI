@@ -81,10 +81,10 @@ function ShopDetails(props) {
         <div className='container'>
             <div className="row">
                 <div className="d-flex justify-content-end mb-2">
-                    <Button className='p-button-sm p-button-info' onClick={returnpage} label='Return Page' />
+                    {/* <Button className='p-button-sm p-button-info' onClick={returnpage} label='Return Page' /> */}
                 </div>
                 <Panel header="Details">
-                <Toast ref={toast} />
+                    <Toast ref={toast} />
                     {
                         loading ?
                             <>

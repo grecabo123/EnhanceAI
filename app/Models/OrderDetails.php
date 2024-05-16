@@ -19,5 +19,6 @@ class OrderDetails extends Model
         "to_contact",
         "messages",
         'purchase_status',
+        "owner_fk",
     ];
 }

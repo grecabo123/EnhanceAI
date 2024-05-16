@@ -60,23 +60,23 @@ function BidItem(props) {
             message: PurchaseData.message,
         }
 
-        axios.post(`/api/OrderNow`,data).then(res=>{
-            if(res.data.status === 200) {
+        axios.post(`/api/OrderNow`, data).then(res => {
+            if (res.data.status === 200) {
                 toast.current.show({
                     severity: "success",
                     summary: "Order Product",
                     detail: "Successfully",
                 });
                 setTimeout(() => {
-                    window.location.href= "/customer/product/search"
-                },1500)
+                    window.location.href = "/customer/product/search"
+                }, 1500)
             }
         }).catch((error) => {
-            if(error.response.status === 500) {
-                swal("Warning",error.response.statusText,'warning')
+            if (error.response.status === 500) {
+                swal("Warning", error.response.statusText, 'warning')
             }
-            else if(error.response.status === 404) {
-                swal("Error","Server Error",'error');
+            else if (error.response.status === 404) {
+                swal("Error", "Server Error", 'error');
             }
         })
 
@@ -113,6 +113,19 @@ function BidItem(props) {
                                 <p>{Details.description}</p>
                             </div>
                             <Divider>
+                                <span>Other Details</span>
+                            </Divider>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                                    Name of Owner
+                                    <span className='text-secondary'>{Details.name}</span>
+                                </li>
+                                <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                                    Email
+                                    <span className='text-secondary'>{Details.email}</span>
+                                </li>
+                            </ul>
+                            <Divider>
                                 <span>Price Information</span>
                             </Divider>
                             <div className="container">
@@ -142,7 +155,7 @@ function BidItem(props) {
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' name='to_address' onChange={handleinput} />
                                         </div>
-                                  
+
                                         <div className="col-lg-12 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 Message (optional)

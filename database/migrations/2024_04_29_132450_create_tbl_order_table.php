@@ -24,6 +24,8 @@ class CreateTblOrderTable extends Migration
             $table->bigInteger('to_contact')->nullable();
             $table->longText('messages')->nullable();
             $table->tinyInteger('purchase_status')->default(0);
+            $table->unsignedBigInteger('owner_fk');
+            $table->foreign('owner_fk')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

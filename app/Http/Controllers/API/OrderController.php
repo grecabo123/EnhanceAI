@@ -39,4 +39,20 @@ class OrderController extends Controller
             "data"              =>          $data,
         ]);
     }
+
+    public function ListoBuyer($id){
+
+        $data = OrderDetails::join('users','users.id','=','tbl_order.from_user')
+        ->join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
+        ->selectRaw('users.name,
+        tbl_order.to_name,tbl_order.to_address,tbl_order.to_contact,tbl_order.messages,tbl_product_design.product_name,
+        tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design')
+        ->where('tbl_order.owner_fk',$id)
+        ->orderBy('tbl_order.created_at','DESC')->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+        ]);
+    }
 }

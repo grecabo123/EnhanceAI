@@ -66,8 +66,8 @@ function SearchProducts() {
                                     </div>
                                     <div className="col-lg-2 mb-2 col-md-12 mt-5">
                                         <Button onClick={OrderNow} data-name={AllDesin.product_name} data-id={AllDesin.id} className='p-button-sm w-100 p-button-info m-2' label='Order Now' icon={PrimeIcons.SHOPPING_CART} />
-                                        <Button className='p-button-sm w-100 p-button-warning m-2' label='Generate Design' icon={PrimeIcons.ANDROID} />
-                                        <Button className='p-button-sm w-100 p-button-success m-2' label='Details' icon={PrimeIcons.BOOK} />
+                                        {/* <Button className='p-button-sm w-100 p-button-warning m-2' label='Generate Design' icon={PrimeIcons.ANDROID} /> */}
+                                        {/* <Button className='p-button-sm w-100 p-button-success m-2' label='Details' icon={PrimeIcons.BOOK} /> */}
                                     </div>
 
                                 </div>
