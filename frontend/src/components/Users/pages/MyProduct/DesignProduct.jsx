@@ -17,7 +17,8 @@ function DesignProduct() {
 
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(true)
-    const [pricedata, setPrice] = useState(0)
+    const [pricedata, setPrice] = useState("")
+    const [btndis, setBtn] = useState(false)
     const toast = useRef(null)
     const [product, setProduct] = useState({
         name: "",
@@ -62,18 +63,21 @@ function DesignProduct() {
         setProduct({ ...product, [e.target.name]: e.target.value })
     }
     const handleupload = (e) => {
+        e.persist();
         setimg({ file: e.target.files[0] })
     }
 
     const AddProduct = (e) => {
         e.preventDefault();
+        setBtn(true)
 
         const data = new FormData;
 
         data.append('name', product.name)
         data.append('desc', product.desc)
-        data.append('file', product_img.file)
-        data.append('pricedata',pricedata)
+        data.append('file', product_img.file === undefined ? "" : product_img.file)
+        // data.append('file', product_img.file == "undefined" ? "" : product_img.file)
+        data.append('pricedata', pricedata)
         data.append('user_fk', localStorage.getItem('auth_id'))
 
         axios.post(`/api/AddProductDesign`, data).then(res => {
@@ -86,21 +90,28 @@ function DesignProduct() {
                 document.getElementById('form_reset').reset();
                 setVisible(false)
                 FetchProduct();
+                setBtn(false)
+
             }
             else {
                 setProduct({ ...product, error: res.data.error });
+                setBtn(false)
+
             }
         }).catch((error) => {
             if (error.response.status === 500) {
                 swal("Warning", error.response.statusText, 'warning')
+                setBtn(false)
+
             }
             else if (error.response.status === 404) {
                 swal("Error", "Page Not Found", 'error')
+                setBtn(false)
+
             }
         })
     }
 
-    console.log(pricedata);
 
     return (
         <div className='container'>
@@ -109,11 +120,14 @@ function DesignProduct() {
                 <div className="d-flex justify-content-end">
                     <Button className='p-button-sm p-button-info' label='Add Product' onClick={() => setVisible(true)} icon={PrimeIcons.PLUS} />
                 </div>
-                <DataTable loading={loading} value={ListProduct} paginator paginatorLeft rows={10}>
+                <DataTable
+                    size='small'
+                    selectionMode={'small'}
+                    loading={loading} value={ListProduct} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column field='file_product' body={(ListProduct) => <img className='' width={100} src={`http://127.0.0.1:8000/${ListProduct.file_product_design}`} />} header="Product Image"></Column>
                     <Column field='product_name' header="Product Name"></Column>
-                    <Column field='price' body={(ListProduct) => <span>₱{ListProduct.price.toFixed(2)}</span> } header="Price"></Column>
+                    <Column field='price' body={(ListProduct) => <span>₱{ListProduct.price.toFixed(2)}</span>} header="Price"></Column>
                     <Column field='description' header="Description"></Column>
                     <Column field='created_at' body={(ListProduct) => moment(ListProduct.created_at).format('MMM DD YYYY')} header="Date Created"></Column>
                 </DataTable>
@@ -132,28 +146,32 @@ function DesignProduct() {
                                 <label htmlFor="" className="form-label">
                                     <span className='text-danger'>*</span>Product Name
                                 </label>
-                                <InputText className='w-100 p-inputtext-sm' name='name' onChange={handleinput} />
+                                <InputText className={`w-100 p-inputtext-sm  ${product.error.name ? 'p-invalid' : ''}`} name='name' onChange={handleinput} />
+                                <small className='text-danger'>{product.error.name}</small>
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
                                     <span className='text-danger'>*</span>Product Price
                                 </label>
-                                <InputNumber prefix='₱' name='pricedata' onValueChange={(e) => setPrice(e.value)} className='w-100 p-inputtext-sm' minFractionDigits={2} mode='decimal' />
+                                <InputNumber prefix='₱' name='pricedata' onValueChange={(e) => setPrice(e.value)} className={`w-100 p-inputtext-sm ${product.error.pricedata ? 'p-invalid' : ''}`} minFractionDigits={2} mode='decimal' />
+                                <small className='text-danger'>{product.error.pricedata}</small>
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    <span className='text-danger'>*</span>Description
+                                   Description <small>(optional)</small>
                                 </label>
-                                <InputTextarea className='w-100' rows={5} cols={5} name='desc' onChange={handleinput} />
+                                <InputTextarea className={`w-100 ${product.error.desc ? 'p-invalid' : ''}`} rows={5} cols={5} name='desc' onChange={handleinput} />
+                                <small className='text-danger'>{product.error.desc}</small>
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                <span className='text-danger'>*</span>Product Image
+                                    <span className='text-danger'>*</span>Product Image
                                 </label>
-                                <InputText type='file' className='w-100 p-inputtext-sm' name='file' onChange={handleupload} />
+                                <InputText type='file' className={`w-100 p-inputtext-sm ${product.error.file ? 'p-invalid' : ''} `} name='file' onChange={handleupload} />
+                                <small className='text-danger'>{product.error.file}</small>
                             </div>
                             <div className="mt-2">
-                                <Button label='Add Product' className='w-100 p-button-sm p-button-info' />
+                                <Button loading={btndis} label='Add Product' className='w-100 p-button-sm p-button-info' />
                             </div>
                         </div>
                     </div>

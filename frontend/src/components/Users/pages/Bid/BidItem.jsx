@@ -16,6 +16,7 @@ function BidItem(props) {
     const history = useHistory()
     const [Details, setDetails] = useState([])
     const [loading, setLoading] = useState(true)
+    const [btndis, setBtn] = useState(false)
     const [PurchaseData, setPurchase] = useState({
         name: "",
         contact: "",
@@ -50,7 +51,7 @@ function BidItem(props) {
 
     const Purchase = (e) => {
         e.preventDefault();
-
+        setBtn(true)
         const data = {
             user_fk: localStorage.getItem('auth_id'),
             product_fk: Details.id,
@@ -68,6 +69,8 @@ function BidItem(props) {
                     summary: "Order Product",
                     detail: "Successfully",
                 });
+                setBtn(false)
+
                 setTimeout(() => {
                     window.location.href = "/customer/product/search"
                 }, 1500)
@@ -75,9 +78,13 @@ function BidItem(props) {
         }).catch((error) => {
             if (error.response.status === 500) {
                 swal("Warning", error.response.statusText, 'warning')
+                setBtn(false)
+
             }
             else if (error.response.status === 404) {
                 swal("Error", "Server Error", 'error');
+                setBtn(false)
+
             }
         })
 
@@ -114,7 +121,7 @@ function BidItem(props) {
                                 <p>{Details.description}</p>
                             </div>
                             <Divider>
-                                <span>Other Details</span>
+                                <span>Owner Details</span>
                             </Divider>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
@@ -125,12 +132,19 @@ function BidItem(props) {
                                     Email
                                     <span className='text-secondary'>{Details.email}</span>
                                 </li>
+                                <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                                    Contact Number
+                                    <span className='text-secondary'>{Details.contact}</span>
+                                </li>
+                                <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                                    Price
+                                    <span className='text-success'>₱{Details.price.toFixed(2)}</span>
+                                </li>
                             </ul>
                             <Divider>
                                 <span>Price Information</span>
                             </Divider>
                             <div className="container">
-                                <h6>Price: <span className='text-success'>₱{Details.price.toFixed(2)}</span></h6>
                             </div>
                             <Divider>
                                 <span>Delivery Details</span>
@@ -164,7 +178,7 @@ function BidItem(props) {
                                             <InputTextarea className='w-100' rows={5} onChange={handleinput} name='message' cols={5} style={{ resize: "none" }} />
                                         </div>
                                         <div className="mt-2">
-                                            <Button className='p-button-sm p-button-info' label='Purchase' />
+                                            <Button loading={btndis} className='p-button-sm p-button-info' label='Purchase' />
                                         </div>
                                     </div>
                                 </div>

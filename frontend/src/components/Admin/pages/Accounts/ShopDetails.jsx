@@ -121,13 +121,13 @@ function ShopDetails(props) {
                                                     </div>
                                                     <div className="col-lg-6">
                                                         <label htmlFor="" className="form-label">
-                                                            Shop Name
+                                                            Shop City
                                                         </label>
                                                         <InputText readOnly className='w-100 p-inputtext-sm' value={detail.shop_city} />
                                                     </div>
                                                     <div className="col-lg-6">
                                                         <label htmlFor="" className="form-label">
-                                                            Shop Name
+                                                            Shop Address
                                                         </label>
                                                         <InputText readOnly className='w-100 p-inputtext-sm' value={detail.shop_address} />
                                                     </div>

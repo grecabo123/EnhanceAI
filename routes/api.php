@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\ActivityController;
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ShopController;
@@ -41,6 +42,7 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function() {
     Route::get('AccountDetails/{id}',[AdminController::class,'AccountDetails']);
     Route::put('UpdateStatus',[AdminController::class, 'UpdateStatus']);
 
+    Route::get('Dashboaradmin/{id}',[AdminController::class, 'Dashboaradmin']);
 
     // Request Form
     Route::get('FetchForm',[ShopController::class, 'FetchForm']);
@@ -79,10 +81,17 @@ Route::middleware(['auth:sanctum','isAPIUser'])->group(function () {
 
     Route::post('UpdateProductBuyer',[OrderController::class, 'UpdateProductBuyer']);
 
+    // Dashboard
+    Route::get('AllDataCustomer/{id}',[DashboardController::class,'AllDataCustomer']);
 
     // order
-
     Route::get('OrderStatus/{id}',[OrderController::class,'OrderStatus']);
+    Route::get('OrderStatusDetails/{id}',[OrderController::class, 'OrderStatusDetails']);
+    Route::delete('OrderRemove/{id}',[OrderController::class, 'OrderRemove']);
+
+
+    Route::get('ShopStatus/{id}',[ShopController::class,'ShopStatus']);
+
 });
 
 

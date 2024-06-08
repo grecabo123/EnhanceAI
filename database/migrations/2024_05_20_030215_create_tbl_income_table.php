@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblProductTable extends Migration
+class CreateTblIncomeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTblProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_product', function (Blueprint $table) {
+        Schema::create('tbl_income', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_fk');
+            $table->unsignedBigInteger('product_fk')->nullable();
+            $table->foreign('product_fk')->references('id')->on('tbl_product_design')->onDelete('cascade')->onUpdate('cascade');
+            $table->double('amount',10,2);
+            $table->string('image_gene')->nullable();
+            $table->unsignedBigInteger('user_fk')->nullable();
             $table->foreign('user_fk')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->bigInteger('number_pcs');
-            $table->string('product_name');
-            $table->double('price',10,2);
-            $table->string('file_product');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateTblProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_product');
+        Schema::dropIfExists('tbl_income');
     }
 }

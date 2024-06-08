@@ -15,6 +15,7 @@ class CreateTblOrderTable extends Migration
     {
         Schema::create('tbl_order', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_id');
             $table->unsignedBigInteger('from_user');
             $table->foreign('from_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('product_fk');

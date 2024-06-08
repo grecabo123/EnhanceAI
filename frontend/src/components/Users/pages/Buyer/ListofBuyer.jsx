@@ -10,6 +10,8 @@ import swal from 'sweetalert'
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider'
 import { Toast } from 'primereact/toast'
+import { InputText } from 'primereact/inputtext'
+import { InputNumber } from 'primereact/inputnumber'
 
 
 function ListofBuyer() {
@@ -18,6 +20,7 @@ function ListofBuyer() {
     const [list, setList] = useState([])
     const [visible, setVisible] = useState(false);
     const [btnloading, setbtnload] = useState(false)
+    const [amt, setAmt] = useState("")
     const [Details, setDetails] = useState({
         id: "",
         name: "",
@@ -34,16 +37,19 @@ function ListofBuyer() {
         city: "",
         person_msg: "",
     });
+    const [Error, setError] = useState({
+        error: [],
+    })
     const toast = useRef(null);
 
-    
+
 
     useEffect(() => {
-       FetchData();
+        FetchData();
 
-       return () => {
+        return () => {
             setLoading(true)
-       }
+        }
     }, [])
 
     const FetchData = () => {
@@ -109,16 +115,17 @@ function ListofBuyer() {
         });
     }
 
-    const UpdateStatus = (e) =>{
+    const UpdateStatus = (e) => {
         e.preventDefault();
         setbtnload(true)
-        const data ={
+        const data = {
             product_id: Details.id,
             user_fk: localStorage.getItem('auth_id'),
+            amt: amt,
         };
 
-        axios.post(`/api/UpdateProductBuyer`,data).then(res => {
-            if(res.data.status === 200) {
+        axios.post(`/api/UpdateProductBuyer`, data).then(res => {
+            if (res.data.status === 200) {
                 toast.current.show({
                     severity: "success",
                     summary: "Data Updated",
@@ -128,14 +135,19 @@ function ListofBuyer() {
                 setbtnload(false)
                 FetchData();
             }
-        }).catch((error) => {
-            if(error.response.status === 500) {
-                swal("Warning",error.response.statusText,'warning')
+            else{
+                setError({...Error, error: res.data.error});
                 setbtnload(false)
 
             }
-            else if(error.response.status === 404) {
-                swal("Error","Page Not Found", 'error');
+        }).catch((error) => {
+            if (error.response.status === 500) {
+                swal("Warning", error.response.statusText, 'warning')
+                setbtnload(false)
+
+            }
+            else if (error.response.status === 404) {
+                swal("Error", "Page Not Found", 'error');
                 setbtnload(false)
 
             }
@@ -146,7 +158,10 @@ function ListofBuyer() {
         <div className='container-fluid'>
             <Toast ref={toast} />
             <Panel header="List of Buyer">
-                <DataTable loading={loading} value={list} paginator paginatorLeft rows={10}>
+                <DataTable loading={loading}
+                    size='small'
+                    selectionMode={'single'}
+                    value={list} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
                     <Column field='name' header="Name of Buyer"></Column>
@@ -158,6 +173,14 @@ function ListofBuyer() {
 
             <Dialog header="Details" draggable={false} position='top' visible={visible} onHide={() => setVisible(false)}
                 style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
+
+                <Divider>
+                    <span>Product Details</span>
+                </Divider>
+                <div className="d-flex justify-content-center">
+                    <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} />
+                </div>
+
                 <form onSubmit={UpdateStatus}>
                     <ul class="list-group">
                         <Divider>
@@ -167,7 +190,7 @@ function ListofBuyer() {
                             Name of Buyer
                             <span>{Details.name}</span>
                         </li>
-                          <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
                             Contact
                             <span>{Details.contact}</span>
                         </li>
@@ -211,25 +234,30 @@ function ListofBuyer() {
                             <span>Message</span>
                         </Divider>
                         <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
-                            
                             <span>{Details.person_msg}</span>
                         </li>
-
-                        <Divider>
-                            <span>Product Details</span>
-                        </Divider>
-                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} />
                         <p>
                             {Details.message}
                         </p>
                     </ul>
+
+                    <Divider>
+                        <span>Total</span>
+                    </Divider>
+                    <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                        Total Price
+                        <InputNumber className={`p-inputtext-sm ${Error.error.amt ? 'p-invalid' : ''}`} prefix='₱' minFractionDigits={2} 
+                            onValueChange={(e) => setAmt(e.value)}
+                        
+                        />
+                    </li>
+
                     <div className="mt-2">
-                        <Button loading={btnloading}  className='p-button-sm p-button-info' 
+                        <Button loading={btnloading} className='p-button-sm p-button-info'
                             label={btnloading ? "Saving..." : "Approve"}
                         />
                     </div>
                 </form>
-
             </Dialog>
         </div>
     )

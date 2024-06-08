@@ -12,6 +12,7 @@ class OrderDetails extends Model
     protected $table = "tbl_order";
 
     protected $fillable = [
+        "invoice_id",
         "from_user",
         "product_fk",
         "to_name",

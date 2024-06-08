@@ -133,12 +133,16 @@ function ListofBuyer() {
         <div className='container-fluid'>
             <Toast ref={toast} />
             <Panel header="History Buyer">
-                <DataTable loading={loading} value={list} paginator paginatorLeft rows={10}>
+                <DataTable loading={loading} 
+
+                    size='small'
+                    selectionMode={'small'}
+                value={list} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
                     <Column field='name' header="Name of Buyer"></Column>
                     <Column body={(list) => <span>{moment(list.created_at).format('MMM DD YYYY')}</span>} header="Date Time"></Column>
-                    {/* <Column field='id' body={ActionsButton} header="Actions"></Column> */}
+                    <Column field='id' body={ActionsButton} header="Actions"></Column>
                 </DataTable>
             </Panel>
 
@@ -187,11 +191,11 @@ function ListofBuyer() {
                             {Details.message}
                         </p>
                     </ul>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                         <Button loading={btnloading}  className='p-button-sm p-button-info' 
                             label={btnloading ? "Saving..." : "Approve"}
                         />
-                    </div>
+                    </div> */}
                 </form>
 
             </Dialog>

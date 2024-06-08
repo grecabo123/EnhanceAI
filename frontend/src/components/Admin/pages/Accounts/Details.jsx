@@ -77,7 +77,6 @@ function Details(props) {
     return (
         <div className='container'>
             <div className="row">
-                
                 {
                     loading ? <Skeleton /> :
                         <Panel header={`Details - ${UserInfo.name}`}>

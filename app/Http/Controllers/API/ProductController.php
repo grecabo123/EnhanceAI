@@ -18,7 +18,12 @@ class ProductController extends Controller
         $validate = Validator::make($request->all(), [
             "name"          =>          "required",
             "pcs"           =>          "required",
+            "Amount"        =>          "required",
             "file"          =>          "required|mimes:png,jpg",
+        ],[
+            "name.required"         =>          "Product Name Field is required",
+            "pcs.required"          =>          "Product Pcs Field is required",
+            "Amount.required"       =>          "Product Price Field is required",
         ]);
 
         if($validate->fails()) {
@@ -33,6 +38,7 @@ class ProductController extends Controller
             $product->user_fk = $request->user_fk;
             $product->number_pcs = $request->pcs;
             $product->product_name = $request->name;
+            $product->price = $request->Amount;
             if($request->hasFile('file')){
                 $file = $request->file('file');
                 $extension = $file->getClientOriginalExtension();
@@ -72,9 +78,11 @@ class ProductController extends Controller
     public function AddProductDesign(Request $request){
         $validate = Validator::make($request->all(), [
             "name"                  =>          "required",
-            "desc"                  =>          "required",
             "file"                  =>          "required",
             "pricedata"             =>          "required",
+        ],[
+            "name.required"             =>          "Product Name field is required",
+            "pricedata.required"        =>          "Product Price field is required",
         ]);
 
         if($validate->fails()) {
@@ -138,8 +146,9 @@ class ProductController extends Controller
     public function GetAllProduct($id){
         
         $data = ProductDesign::join('users','users.id','=','tbl_product_design.user_fk')
+            ->join('tbl_contact','tbl_contact.user_fk','=','users.id')
             ->selectRaw('tbl_product_design.description,tbl_product_design.product_name,tbl_product_design.file_product_design,tbl_product_design.created_at,
-            users.name,users.email,tbl_product_design.id,users.id as user_id,tbl_product_design.price')
+            users.name,users.email,tbl_product_design.id,users.id as user_id,tbl_product_design.price,tbl_contact.contact')
             ->where('tbl_product_design.user_fk',"!=",$id)
         ->orderBy('tbl_product_design.created_at','DESC')->get();
 
@@ -152,8 +161,9 @@ class ProductController extends Controller
     public function DetailsProduct($id){
 
         $data = ProductDesign::join('users','users.id','=','tbl_product_design.user_fk')
+        ->join('tbl_contact','tbl_contact.user_fk','=','users.id')
         ->selectRaw('tbl_product_design.description,tbl_product_design.product_name,tbl_product_design.file_product_design,tbl_product_design.created_at,
-        users.name,users.email,tbl_product_design.id,users.id as user_id,tbl_product_design.price')
+        users.name,users.email,tbl_product_design.id,users.id as user_id,tbl_product_design.price,tbl_contact.contact')
         ->where('tbl_product_design.id',$id)
     ->orderBy('tbl_product_design.created_at','DESC')->first();
 

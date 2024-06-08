@@ -132,4 +132,15 @@ class ShopController extends Controller
             "data"              =>          $data,
         ]);
     }
+
+    public function ShopStatus($id){
+
+        $shop = RegisterShop::where('user_fk',$id)->get();
+
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $shop,
+        ]);
+    }
 }

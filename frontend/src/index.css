@@ -251,4 +251,25 @@ a.sidebar-link {
 
 }
 
+#total{
+    border-left: 8px solid blue !important;
+}
+#sold{
+    border-left: 8px solid rgb(16, 129, 63) !important;
+}
+#progress{
+    border-left: 8px solid rgb(199, 163, 32) !important;
+}
+#pending{
+    border-left: 8px solid rgb(218, 69, 32) !important;
+    
+}
+
+.p-datatable .p-datatable-tbody > tr > td{
+    border:  2px solid #bababa83 !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #cccccc !important;
+}
 

@@ -39,7 +39,10 @@ function Approve() {
         <div className='container'>
             <div className="row">
                 <Panel header="All Accounts Registered">
-                    <DataTable value={Accounts} loading={loading} paginator paginatorLeft rows={10}>
+                    <DataTable value={Accounts}
+                        size='small'
+                        selectionMode={'single'}
+                    loading={loading} paginator paginatorLeft rows={10}>
                         <Column body={(data,options) => options.rowIndex + 1} header="#"></Column>
                         <Column field='name' header="Name"></Column>
                         <Column field='email' header="Email"></Column>

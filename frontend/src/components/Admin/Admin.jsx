@@ -78,10 +78,10 @@ function Admin() {
                                         <Link to="/admin/accounts/pending" className="sidebar-link"><span className='child'>New Account</span></Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/accounts/request" className="sidebar-link"><span className='child'>Request Shop</span></Link>
+                                        <Link to="/admin/accounts/registered" className="sidebar-link"><span className='child'>Registered Account</span></Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/accounts/registered" className="sidebar-link"><span className='child'>Registered Account</span></Link>
+                                        <Link to="/admin/accounts/request" className="sidebar-link"><span className='child'>Request Shop</span></Link>
                                     </li>
                                 </ul>
                             </li>
@@ -190,10 +190,10 @@ function Admin() {
                                         <Link to="/admin/accounts/pending" className="sidebar-link"><span className='child'>New Account</span></Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/accounts/request" className="sidebar-link"><span className='child'>Request Shop</span></Link>
+                                        <Link to="/admin/accounts/registered" className="sidebar-link"><span className='child'>Registered Account</span></Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/accounts/registered" className="sidebar-link"><span className='child'>Registered Account</span></Link>
+                                        <Link to="/admin/accounts/request" className="sidebar-link"><span className='child'>Request Shop</span></Link>
                                     </li>
                                 </ul>
                             </li>

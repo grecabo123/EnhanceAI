@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import admin from '../../assets/admin/customer.png'
-import { FcFolder, FcHome, FcPackage, FcSearch } from 'react-icons/fc'
+import { FcFile, FcFolder, FcHome, FcPackage, FcSearch } from 'react-icons/fc'
 import { FaBars, FaCaretDown, FaCartPlus, FaDesktop, FaRobot, FaUser, FaUsers } from 'react-icons/fa'
 import { BsPersonBadge } from "react-icons/bs";
 import { useState } from 'react'
@@ -76,7 +76,14 @@ function Admin() {
                         <aside id="sidebar" className="js-sidebar">
                             <div className="h-100">
                                 <div className="sidebar-logo d-flex justify-content-center align-items-center">
-                                    <img src={admin} alt="" width={100} style={{ borderRadius: "50%" }} />
+                                    {
+                                        UserControl.shop_logo == null ? 
+                                        <img src={admin} alt="" width={100} style={{ borderRadius: "50%" }} /> 
+                                        :
+                                    <img src={`${import.meta.env.VITE_API_BASE_URL}/${UserControl.shop_logo}`} width={100} style={{ borderRadius: "50%" }} alt="" />
+                                    }
+
+                                    {/* <img src={admin} alt="" width={100} style={{ borderRadius: "50%" }} /> */}
                                 </div>
                                 <div className="mt-2 text-center">
                                     <h5 className='text-light'>CUSTOMER FLOWER</h5>
@@ -86,7 +93,7 @@ function Admin() {
                                         Pages
                                     </li>
                                     <li className="sidebar-item">
-                                        <a href="/admin" className="sidebar-link">
+                                        <a href="/customer" className="sidebar-link">
                                             <FcHome size={20} className='align-middle' />
                                             <span>Dashboard</span>
                                         </a>
@@ -102,7 +109,7 @@ function Admin() {
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/customer/product/search" className="sidebar-link">
+                                        <Link to="/customer/purchase/generate/design" className="sidebar-link">
                                             <FaRobot size={20} className='align-middle' />
                                             <span>Generate Design</span>
                                         </Link>
@@ -117,12 +124,14 @@ function Admin() {
                                     {
                                         UserControl.shop_status == 1 ? "" :
                                             <>
-                                                <li className="nav-heading">Build a Shop</li>
+                                                <li className="sidebar-header">
+                                                    Build a Shop
+                                                </li>
                                                 <li className="sidebar-item">
-                                                    <a href="/admin" className="sidebar-link">
-                                                        <FcHome size={20} className='align-middle' />
-                                                        <span>Dashboard</span>
-                                                    </a>
+                                                    <Link to="/customer/request/form" className="sidebar-link">
+                                                        <FcFile size={20} className='align-middle' />
+                                                        <span>Request Form</span>
+                                                    </Link>
                                                 </li>
                                             </>
                                     }
@@ -166,11 +175,11 @@ function Admin() {
                                                             <Link to="/customer/buyer/list" className="sidebar-link"><span className='child'>Buyers</span></Link>
                                                         </li>
                                                         <li className="sidebar-item">
-                                                                <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>
-                                                            </li>
-                                                        <li className="sidebar-item">
-                                                            <Link to="/customer/purchase/generate/design" className="sidebar-link"><span className='child'>Feedback</span></Link>
+                                                            <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>
                                                         </li>
+                                                        {/* <li className="sidebar-item">
+                                                            <Link to="/customer/purchase/generate/design" className="sidebar-link"><span className='child'>Feedback</span></Link>
+                                                        </li> */}
                                                     </ul>
                                                 </li>
 
@@ -262,16 +271,30 @@ function Admin() {
                                                 <span>Search Product</span>
                                             </Link>
                                         </li>
+                                        <li className="sidebar-item">
+                                            <Link to="/customer/purchase/generate/design" className="sidebar-link">
+                                                <FaRobot size={20} className='align-middle' />
+                                                <span>Generate Design</span>
+                                            </Link>
+                                        </li>
+                                        <li className="sidebar-item">
+                                            <Link to="/customer/product/order" className="sidebar-link">
+                                                <FaCartPlus size={20} className='align-middle' />
+                                                <span>Order Status</span>
+                                            </Link>
+                                        </li>
 
                                         {
                                             UserControl.shop_status == 1 ? "" :
                                                 <>
-                                                    <li className="nav-heading">Build a Shop</li>
+                                                    <li className="sidebar-header">
+                                                        Build a Shop
+                                                    </li>
                                                     <li className="sidebar-item">
-                                                        <a href="/admin" className="sidebar-link">
-                                                            <FcHome size={20} className='align-middle' />
-                                                            <span>Dashboard</span>
-                                                        </a>
+                                                        <Link to="/customer/request/form" className="sidebar-link">
+                                                            <FcFile size={20} className='align-middle' />
+                                                            <span>Request Form</span>
+                                                        </Link>
                                                     </li>
                                                 </>
                                         }
@@ -317,9 +340,9 @@ function Admin() {
                                                             <li className="sidebar-item">
                                                                 <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>
                                                             </li>
-                                                            <li className="sidebar-item">
+                                                            {/* <li className="sidebar-item">
                                                                 <Link to="/customer/purchase/generate/design" className="sidebar-link"><span className='child'>Feedback</span></Link>
-                                                            </li>
+                                                            </li> */}
                                                         </ul>
                                                     </li>
 

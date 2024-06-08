@@ -45,36 +45,54 @@ function SearchProducts() {
             <React.Fragment>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-12 mb-2">
+                        <div className="col-lg-12 mb-3">
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className='row'>
-                                    <div className="col-lg-10 col-md-12 mb-2">
-                                        <div className="text-center mt-4">
-                                            <h4>{AllDesin.product_name}</h4>
-                                        </div>
-                                        <div className="d-flex justify-content-evenly">
-                                            <Image src={`${import.meta.env.VITE_API_BASE_URL}/${AllDesin.file_product_design}`} className='me-3' width='150' preview />
-                                            <p>{AllDesin.description}</p>
-                                        </div>
-                                        {/* Price: ₱{AllDesin.price.toFixed(2)} */}
-                                        <div className="mt-2">
-                                            <ul>
-                                                <li>Name of Seller: {AllDesin.name}</li>
-                                                <li>Email: {AllDesin.email}</li>
-                                            </ul>
+                                <div>
+                                    <div className="d-flex justify-content-evenly p-2">
+                                        <Image src={`${import.meta.env.VITE_API_BASE_URL}/${AllDesin.file_product_design}`} className='me-3' width='150' preview />
+                                        <div className="m-2 p-3">
+                                            <div className='mb-2'> <span className='fs-6'>Seller Name:</span> {AllDesin.name}</div>
+                                            <div className='mb-2'> <span className='fs-6'>Email Address:</span> {AllDesin.email}</div>
+                                            <div className='mb-2'> <span className='fs-6'>Contact Number:</span> {AllDesin.contact}</div>
+                                            <div className='mb-2'> <span className='fs-6'>Product Name:</span> {AllDesin.product_name}</div>
+                                            <div className='mb-2'> <span className='fs-6'>Product Price:</span> ₱{AllDesin.price.toFixed(2)}</div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-2 mb-2 col-md-12 mt-5">
-                                        <Button onClick={OrderNow} data-name={AllDesin.product_name} data-id={AllDesin.id} className='p-button-sm w-100 p-button-info m-2' label='Order Now' icon={PrimeIcons.SHOPPING_CART} />
-                                        {/* <Button className='p-button-sm w-100 p-button-warning m-2' label='Generate Design' icon={PrimeIcons.ANDROID} /> */}
-                                        {/* <Button className='p-button-sm w-100 p-button-success m-2' label='Details' icon={PrimeIcons.BOOK} /> */}
-                                    </div>
-
+                                </div>
+                                <div>
+                                    <Button onClick={OrderNow} data-name={AllDesin.product_name} data-id={AllDesin.id} className='p-button-sm w-100 p-button-info m-2' label='Order Now' icon={PrimeIcons.SHOPPING_CART} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {/* <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-4 mb-2">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className='row'>
+                                    <div className="col-12 mb-2">
+                                        <div className="text-start mt-4">
+                                            <h5>{AllDesin.product_name}</h5>
+                                        </div>
+                                        <div className="mt-2">
+                                            <ul>
+                                                <div className="d-flex justify-content-start">
+                                                    <Image src={`${import.meta.env.VITE_API_BASE_URL}/${AllDesin.file_product_design}`} className='me-3' width='150' preview />
+                                                </div>
+                                                <span> <b> Price:</b> ₱{AllDesin.price.toFixed(2)}</span>
+                                                <li>Name of Seller: {AllDesin.name}</li>
+                                                <li>Email: {AllDesin.email}</li>
+                                            </ul>
+                                        </div>
+                                        <Button onClick={OrderNow} data-name={AllDesin.product_name} data-id={AllDesin.id} className='p-button-sm w-100 p-button-info m-2' label='Order Now' icon={PrimeIcons.SHOPPING_CART} />
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
             </React.Fragment>
         )
     }
@@ -87,8 +105,8 @@ function SearchProducts() {
     return (
         <div className='container'>
             <div className="row">
-                <Panel>
-                    <DataView header="List of Products" itemTemplate={itemplate} value={AllDesin} loading={loading} paginator paginatorPosition='both' paginatorLeft rows={5} className='border-0' />
+                <Panel header="Search Product">
+                    <DataView itemTemplate={itemplate} layout={'grid'} value={AllDesin} loading={loading} paginator paginatorPosition='bottom' paginatorLeft rows={5} className='border-0' />
                 </Panel>
             </div>
         </div>

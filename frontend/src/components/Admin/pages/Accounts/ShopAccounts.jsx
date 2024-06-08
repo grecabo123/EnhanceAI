@@ -59,7 +59,10 @@ function ShopAccounts() {
         <div className='container'>
             <div className="row">
                 <Panel header="List of Business Account">
-                    <DataTable value={formdata} paginator paginatorLeft rows={10} loading={loading}>
+                    <DataTable value={formdata} paginator 
+                        size='small'
+                        selectionMode={'single'}
+                    paginatorLeft rows={10} loading={loading}>
                         <Column field='shop_logo' body={image_logo} header="Shop Logo"></Column>
                         <Column field='shop_name' header="Shop Name"></Column>
                         <Column field='shop_city' header="Shop City"></Column>

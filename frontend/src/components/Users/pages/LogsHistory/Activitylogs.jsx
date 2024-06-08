@@ -33,7 +33,10 @@ function ActivityLogs() {
         <div className='container'>
             <div className="row">
                 <Panel header="History Logs">
-                    <DataTable value={Logs} loading={loading} paginator paginatorLeft rows={10}>
+                    <DataTable value={Logs}
+                        size='small'
+                        selectionMode={'small'}
+                    loading={loading} paginator paginatorLeft rows={10}>
                         <Column field='description' header="Description"></Column>
                         <Column field='created_at' body={created_at_format} header="DateTime"></Column>
                     </DataTable>
