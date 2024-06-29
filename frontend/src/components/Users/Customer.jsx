@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import admin from '../../assets/admin/customer.png'
-import { FcFile, FcFolder, FcHome, FcPackage, FcSearch } from 'react-icons/fc'
+import { FcFile, FcFolder, FcHome, FcPackage, FcSearch, FcShop } from 'react-icons/fc'
 import { FaBars, FaCaretDown, FaCartPlus, FaDesktop, FaRobot, FaUser, FaUsers } from 'react-icons/fa'
 import { BsPersonBadge } from "react-icons/bs";
 import { useState } from 'react'
@@ -49,16 +49,6 @@ function Admin() {
     }
 
     let items_list = [
-        // {
-        //     label: 'Settings', icon: 'pi pi-fw pi-cog', command: () => {
-        //         history.push(`/admin/settings/config`)
-        //     }
-        // },
-        // {
-        //     label: 'My Account', icon: 'pi pi-fw pi-user', command: () => {
-        //         history.push(`admin/myaccount`)
-        //     }
-        // },
         { label: <span className='text-danger fw-bold' onClick={Logout}>Logout</span>, icon: 'pi pi-fw pi-power-off' },
     ];
 
@@ -82,11 +72,9 @@ function Admin() {
                                         :
                                     <img src={`${import.meta.env.VITE_API_BASE_URL}/${UserControl.shop_logo}`} width={100} style={{ borderRadius: "50%" }} alt="" />
                                     }
-
-                                    {/* <img src={admin} alt="" width={100} style={{ borderRadius: "50%" }} /> */}
                                 </div>
                                 <div className="mt-2 text-center">
-                                    <h5 className='text-light'>CUSTOMER FLOWER</h5>
+                                    <h5 className='text-light'>{UserControl.shop_status == 1 ? UserControl.shop_name : "Customer"}</h5>
                                 </div>
                                 <ul className="sidebar-nav">
                                     <li className="sidebar-header">
@@ -106,6 +94,12 @@ function Admin() {
                                         <Link to="/customer/product/search" className="sidebar-link">
                                             <FcSearch size={20} className='align-middle' />
                                             <span>Search Product</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link to="/customer/visit/shop" className="sidebar-link">
+                                            <FcShop size={20} className='align-middle' />
+                                            <span>Visit Shop</span>
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
@@ -172,7 +166,10 @@ function Admin() {
                                                     </a>
                                                     <ul id="buyer" className="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                                         <li className="sidebar-item">
-                                                            <Link to="/customer/buyer/list" className="sidebar-link"><span className='child'>Buyers</span></Link>
+                                                            <Link to="/customer/buyer/list" className="sidebar-link"><span className='child'>New Order</span></Link>
+                                                        </li>
+                                                        <li className="sidebar-item">
+                                                            <Link to="/customer/buyer/approve" className="sidebar-link"><span className='child'>Approve Order</span></Link>
                                                         </li>
                                                         <li className="sidebar-item">
                                                             <Link to="/customer/buyer/history" className="sidebar-link"><span className='child'>History Buyer</span></Link>

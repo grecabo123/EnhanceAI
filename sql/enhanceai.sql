@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2024 at 06:58 PM
+-- Generation Time: Jun 29, 2024 at 05:23 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -65,7 +65,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2024_04_27_071634_create_tbl_product_design_table', 7),
 (16, '2024_05_20_030215_create_tbl_income_table', 9),
 (17, '2024_04_27_054819_create_tbl_product_table', 10),
-(18, '2024_04_29_132450_create_tbl_order_table', 11);
+(18, '2024_04_29_132450_create_tbl_order_table', 11),
+(19, '2024_06_19_045301_create_tbl_order_status_table', 12);
 
 -- --------------------------------------------------------
 
@@ -96,14 +97,6 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `personal_access_tokens`
---
-
-INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(43, 'App\\Models\\User', 13, 'john@gmail.com_customer', '6018073559f420308d25919009fa87769b4c3460d181a17971fa11cfee250430', '[\"server:customer\"]', '2024-06-08 08:36:42', '2024-06-08 06:36:13', '2024-06-08 08:36:42'),
-(49, 'App\\Models\\User', 14, 'hanzo@gmail.com_customer', '1641197c961fbb364fb1a1f7294c8709ee4ec01b264d6cae4a4e39fec467032f', '[\"server:customer\"]', '2024-06-08 08:20:25', '2024-06-08 07:52:09', '2024-06-08 08:20:25');
 
 -- --------------------------------------------------------
 
@@ -158,7 +151,12 @@ CREATE TABLE `tbl_income` (
 INSERT INTO `tbl_income` (`id`, `product_fk`, `amount`, `image_gene`, `user_fk`, `created_at`, `updated_at`) VALUES
 (1, 12, 4323.00, NULL, 9, '2024-06-08 04:00:13', '2024-06-08 04:00:13'),
 (2, 12, 2780.00, NULL, 9, '2024-06-08 07:14:36', '2024-06-08 07:14:36'),
-(3, 15, 3640.00, NULL, 13, '2024-06-08 08:16:55', '2024-06-08 08:16:55');
+(3, 15, 3640.00, NULL, 13, '2024-06-08 08:16:55', '2024-06-08 08:16:55'),
+(4, 14, 1900.00, NULL, 14, '2024-06-18 21:39:33', '2024-06-18 21:39:33'),
+(5, 15, 3600.00, NULL, 13, '2024-06-18 21:45:16', '2024-06-18 21:45:16'),
+(6, 13, 1500.00, NULL, 13, '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
+(7, 15, 3600.00, NULL, 13, '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
+(8, 11, 3700.00, NULL, 9, '2024-06-27 06:39:57', '2024-06-27 06:39:57');
 
 -- --------------------------------------------------------
 
@@ -197,7 +195,19 @@ INSERT INTO `tbl_logs` (`id`, `description`, `user_fk`, `created_at`, `updated_a
 (31, 'Your Invoice # 77656 ', 11, '2024-06-08 07:09:39', '2024-06-08 07:09:39'),
 (32, 'Hanzo Has been Approved', 2, '2024-06-08 07:46:51', '2024-06-08 07:46:51'),
 (33, 'Request Form to a Flower Shop Hanzo Flower Shop', 14, '2024-06-08 07:49:31', '2024-06-08 07:49:31'),
-(34, 'Your Invoice # 54420 ', 14, '2024-06-08 08:03:46', '2024-06-08 08:03:46');
+(34, 'Your Invoice # 54420 ', 14, '2024-06-08 08:03:46', '2024-06-08 08:03:46'),
+(35, 'Your Invoice # 88977 ', 9, '2024-06-18 20:26:46', '2024-06-18 20:26:46'),
+(36, 'Your Invoice # 14058 ', 9, '2024-06-18 20:33:36', '2024-06-18 20:33:36'),
+(37, 'Your Order ID 58121649 ', 9, '2024-06-18 20:59:28', '2024-06-18 20:59:28'),
+(38, 'Your Order ID 68572056 ', 9, '2024-06-18 21:26:52', '2024-06-18 21:26:52'),
+(39, 'Your Order ID 30433260 ', 9, '2024-06-18 22:15:30', '2024-06-18 22:15:30'),
+(40, 'Your Order ID 50812817 ', 9, '2024-06-18 22:53:30', '2024-06-18 22:53:30'),
+(41, 'Your Order ID 45705549 ', 9, '2024-06-19 00:08:49', '2024-06-19 00:08:49'),
+(42, 'Your Order ID 29283319 ', 14, '2024-06-19 08:33:57', '2024-06-19 08:33:57'),
+(43, 'Your Order ID 74727092 ', 14, '2024-06-19 20:47:40', '2024-06-19 20:47:40'),
+(44, 'Your Order ID 29915830 ', 14, '2024-06-27 06:32:41', '2024-06-27 06:32:41'),
+(45, 'Your Order ID 25052949 ', 14, '2024-06-27 06:38:28', '2024-06-27 06:38:28'),
+(46, 'Request Form to a Flower Shop Krystianne', 12, '2024-06-27 06:55:54', '2024-06-27 06:55:54');
 
 -- --------------------------------------------------------
 
@@ -209,12 +219,14 @@ CREATE TABLE `tbl_order` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `invoice_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `from_user` bigint(20) UNSIGNED NOT NULL,
-  `product_fk` bigint(20) UNSIGNED NOT NULL,
+  `product_fk` bigint(20) UNSIGNED DEFAULT NULL,
+  `file_attach` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `to_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `to_address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `to_contact` bigint(20) DEFAULT NULL,
   `messages` longtext COLLATE utf8mb4_unicode_ci,
   `purchase_status` tinyint(4) NOT NULL DEFAULT '0',
+  `order_date` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_fk` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -224,11 +236,51 @@ CREATE TABLE `tbl_order` (
 -- Dumping data for table `tbl_order`
 --
 
-INSERT INTO `tbl_order` (`id`, `invoice_id`, `from_user`, `product_fk`, `to_name`, `to_address`, `to_contact`, `messages`, `purchase_status`, `owner_fk`, `created_at`, `updated_at`) VALUES
-(5, '46671', 10, 12, NULL, NULL, NULL, NULL, 0, 9, '2024-06-08 03:38:53', '2024-06-08 03:38:53'),
-(7, '63850', 10, 12, NULL, NULL, NULL, '5 roses and 7 sunflower.', 1, 9, '2024-06-08 03:43:40', '2024-06-08 03:59:37'),
-(8, '77656', 11, 12, 'Sample', 'Quezon Avenue Extension, Iligan City', 9756789567, '5 red roses tapos with sunflower isa ka buok,, then pa deliver dayun ko sa iyaha.', 1, 9, '2024-06-08 07:09:39', '2024-06-08 07:14:35'),
-(9, '54420', 14, 15, 'Alex', 'Quezon Avenue Extension, Iligan City', 9176924203, 'Pa Customize ko sa flower, gusto nko is naai 6 ka tulips , 4 ka red roses ,tapos 2 sun flower..\n\nTapos e Deliver nimo sa kana nga tao.', 1, 13, '2024-06-08 08:03:46', '2024-06-08 08:16:55');
+INSERT INTO `tbl_order` (`id`, `invoice_id`, `from_user`, `product_fk`, `file_attach`, `to_name`, `to_address`, `to_contact`, `messages`, `purchase_status`, `order_date`, `owner_fk`, `created_at`, `updated_at`) VALUES
+(12, '58121649', 9, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-19T04:56:43.326Z', 13, '2024-06-18 20:59:28', '2024-06-23 00:32:41'),
+(13, '68572056', 9, 14, NULL, NULL, NULL, NULL, NULL, 1, '2024-06-19T04:56:43.326Z', 14, '2024-06-18 21:26:52', '2024-06-18 21:39:33'),
+(14, '30433260', 9, 13, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-21T06:10:15.676Z', 13, '2024-06-18 22:15:29', '2024-06-23 00:32:15'),
+(16, '45705549', 9, 15, NULL, NULL, NULL, NULL, 'Paki wrap', 0, '2024-06-26T08:08:37.434Z', 13, '2024-06-19 00:08:49', '2024-06-19 00:08:49'),
+(17, '29283319', 14, 13, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-27T04:33:38.998Z', 13, '2024-06-19 08:33:57', '2024-06-19 08:33:57'),
+(18, '74727092', 14, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-28T09:40:08.728Z', 13, '2024-06-19 20:47:40', '2024-06-23 00:31:39'),
+(20, '25052949', 14, 11, NULL, NULL, NULL, NULL, NULL, 2, '2024-07-17T02:30:14.618Z', 9, '2024-06-27 06:38:28', '2024-06-27 06:42:45');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_order_status`
+--
+
+CREATE TABLE `tbl_order_status` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_fk` bigint(20) UNSIGNED NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_order_status`
+--
+
+INSERT INTO `tbl_order_status` (`id`, `order_fk`, `description`, `created_at`, `updated_at`) VALUES
+(1, 12, 'Order Product Successfully with Order ID 58121649', '2024-06-18 20:59:28', '2024-06-18 20:59:28'),
+(2, 13, 'Order Product Successfully with Order ID 68572056', '2024-06-18 21:26:52', '2024-06-18 21:26:52'),
+(3, 13, 'Your product order has been approved!', '2024-06-18 21:39:33', '2024-06-18 21:39:33'),
+(4, 13, 'Your Product will deliver on  Jun 19 2024 12:56 pm', '2024-06-18 21:39:33', '2024-06-18 21:39:33'),
+(5, 12, 'Your product order has been approved!', '2024-06-18 21:45:16', '2024-06-18 21:45:16'),
+(6, 12, 'Your Product will deliver on  Jun 19 2024 12:56 pm', '2024-06-18 21:45:16', '2024-06-18 21:45:16'),
+(7, 14, 'Order Product Successfully with Order ID 30433260', '2024-06-18 22:15:29', '2024-06-18 22:15:29'),
+(8, 14, 'Your product order has been approved!', '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
+(9, 14, 'Your Product will deliver on  Jun 21 2024 02:10 pm', '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
+(11, 16, 'Order Product Successfully with Order ID 45705549', '2024-06-19 00:08:49', '2024-06-19 00:08:49'),
+(12, 17, 'Order Product Successfully with Order ID 29283319', '2024-06-19 08:33:57', '2024-06-19 08:33:57'),
+(13, 18, 'Order Product Successfully with Order ID 74727092', '2024-06-19 20:47:40', '2024-06-19 20:47:40'),
+(14, 18, 'Your product order has been approved!', '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
+(15, 18, 'Your Product will deliver on  Jun 28 2024 05:40 pm', '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
+(17, 20, 'Order Product Successfully with Order ID 25052949', '2024-06-27 06:38:28', '2024-06-27 06:38:28'),
+(18, 20, 'Your product order has been approved!', '2024-06-27 06:39:57', '2024-06-27 06:39:57'),
+(19, 20, 'Your Product will deliver on  Jul 17 2024 10:30 am', '2024-06-27 06:39:57', '2024-06-27 06:39:57');
 
 -- --------------------------------------------------------
 
@@ -260,7 +312,8 @@ INSERT INTO `tbl_product` (`id`, `user_fk`, `number_pcs`, `product_name`, `price
 (6, 13, 100, 'Red Roses', 50.00, 'Uploads/Flowers/Red Roses279.jpg', '2024-06-08 07:00:49', '2024-06-08 07:00:49'),
 (7, 13, 30, 'Sun Flower', 100.00, 'Uploads/Flowers/Sun Flower671.jpg', '2024-06-08 07:02:02', '2024-06-08 07:02:02'),
 (8, 14, 30, 'Tulips', 580.00, 'Uploads/Flowers/Tulips577.jpg', '2024-06-08 07:54:15', '2024-06-08 07:54:15'),
-(9, 14, 100, 'Red Roses', 60.00, 'Uploads/Flowers/Red Roses325.jpg', '2024-06-08 07:54:59', '2024-06-08 07:54:59');
+(9, 14, 100, 'Red Roses', 60.00, 'Uploads/Flowers/Red Roses325.jpg', '2024-06-08 07:54:59', '2024-06-08 07:54:59'),
+(10, 12, 20, 'Tulips', 80.00, 'Uploads/Flowers/Tulips714.jpg', '2024-06-27 06:58:08', '2024-06-27 06:58:08');
 
 -- --------------------------------------------------------
 
@@ -319,7 +372,8 @@ CREATE TABLE `tbl_shop_register` (
 INSERT INTO `tbl_shop_register` (`id`, `shop_name`, `shop_logo`, `shop_city`, `shop_address`, `shop_permit`, `shop_contact`, `shop_description`, `user_fk`, `shop_status`, `created_at`, `updated_at`) VALUES
 (6, 'Georgie Flower Shop', 'Upload/Files/Georgie Flower Shop.png', 'Iligan City', '10th east, tubod, iligan city', 'Upload/Files/Georgie Flower Shop.pdf', '09705351560', NULL, 9, 1, '2024-06-08 00:32:25', '2024-06-08 00:52:38'),
 (9, 'John Carl Flower Shop', 'Upload/Files/John Carl Flower Shop.png', 'Iligan City', 'Tambo Hwy, Hinaplanon, Iligan City', 'Upload/Files/John Carl Flower Shop.pdf', '097434234234', NULL, 13, 1, '2024-06-08 06:54:09', '2024-06-08 06:57:22'),
-(10, 'Hanzo Flower Shop', 'Upload/Files/Hanzo Flower Shop.jpg', 'Iligan City', 'Roxas Avenue Villa Verde, Iligan City', 'Upload/Files/Hanzo Flower Shop.pdf', '097434234234', NULL, 14, 1, '2024-06-08 07:49:31', '2024-06-08 07:51:08');
+(10, 'Hanzo Flower Shop', 'Upload/Files/Hanzo Flower Shop.jpg', 'Iligan City', 'Roxas Avenue Villa Verde, Iligan City', 'Upload/Files/Hanzo Flower Shop.pdf', '097434234234', NULL, 14, 1, '2024-06-08 07:49:31', '2024-06-08 07:51:08'),
+(11, 'Krystianne', 'Upload/Files/Krystianne.jpg', 'Iligan City', '10th east, tubod, iligan city', 'Upload/Files/Krystianne.pdf', '09705351560', NULL, 12, 1, '2024-06-27 06:55:54', '2024-06-27 06:56:33');
 
 -- --------------------------------------------------------
 
@@ -348,11 +402,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `status`, `email_verified_at`, `secret_key`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, 'Admin', 'admin@gmail.com', 1, 1, NULL, 'admin123', '$2y$10$6f6Pt4lJB1CeEZOwEiZGeO7D0xunQfbG/2S7p5toNqLyxw4ipb6Ey', NULL, '2024-03-28 21:11:00', '2024-03-28 21:11:00'),
 (9, 'Georgie Recabo', 'artamay1@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$0XA9FjEhUmcaG1e04ZEVE.odNPJ4T4FKM/8t76/TYLyg1.BTSrqT2', NULL, '2024-06-08 00:14:27', '2024-06-08 00:21:42'),
-(10, 'Daryl Nicole', 'daryl@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$koKDDqCZ2RSkK.IWEBsPD.ZKRexm57DX6eJBNWkjJnoh2lD60Qh7i', NULL, '2024-06-08 00:16:18', '2024-06-08 00:21:50'),
+(10, 'Daryl Nicole', 'daryl@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$koKDDqCZ2RSkK.IWEBsPD.ZKRexm57DX6eJBNWkjJnoh2lD60Qh7i', NULL, '2024-06-08 00:16:18', '2024-06-17 06:25:23'),
 (11, 'Kate Alcazar', 'kate@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$3yIKiHQd.o8gxsdbUZZSTudGdppZea.feeR851UTzsih6o7mbg7jK', NULL, '2024-06-08 00:19:41', '2024-06-08 00:21:58'),
-(12, 'Shiela Arganda', 'shiela@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$GgYWrZVKghbi8Jnz3wPSrO1HfU9djn445XNemEF/.uqTaj645B5n.', NULL, '2024-06-08 00:21:10', '2024-06-08 00:22:06'),
-(13, 'John Carl', 'john@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$6NvnUssbihXMadnexWC39e8glj0yChHC31lf9jAHHeRIOFXiFMraq', NULL, '2024-06-08 06:32:46', '2024-06-08 06:35:52'),
-(14, 'Hanzo', 'hanzo@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$A7kO5WZtxtw5QJalPGT11eGGoiBBJAT9cNry3d/cbkG1ESn2mUrrm', NULL, '2024-06-08 07:45:37', '2024-06-08 07:46:51');
+(12, 'Shiela Arganda', 'shiela@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$GgYWrZVKghbi8Jnz3wPSrO1HfU9djn445XNemEF/.uqTaj645B5n.', NULL, '2024-06-08 00:21:10', '2024-06-17 06:25:52'),
+(13, 'John Carl', 'john@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$6NvnUssbihXMadnexWC39e8glj0yChHC31lf9jAHHeRIOFXiFMraq', NULL, '2024-06-08 06:32:46', '2024-06-18 06:51:45'),
+(14, 'Hanzo', 'hanzo@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$A7kO5WZtxtw5QJalPGT11eGGoiBBJAT9cNry3d/cbkG1ESn2mUrrm', NULL, '2024-06-08 07:45:37', '2024-06-27 06:27:19');
 
 --
 -- Indexes for dumped tables
@@ -417,6 +471,13 @@ ALTER TABLE `tbl_order`
   ADD KEY `tbl_order_owner_fk_foreign` (`owner_fk`);
 
 --
+-- Indexes for table `tbl_order_status`
+--
+ALTER TABLE `tbl_order_status`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tbl_order_status_order_fk_foreign` (`order_fk`);
+
+--
 -- Indexes for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
@@ -458,13 +519,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_contact`
@@ -476,25 +537,31 @@ ALTER TABLE `tbl_contact`
 -- AUTO_INCREMENT for table `tbl_income`
 --
 ALTER TABLE `tbl_income`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `tbl_order_status`
+--
+ALTER TABLE `tbl_order_status`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_design`
@@ -506,7 +573,7 @@ ALTER TABLE `tbl_product_design`
 -- AUTO_INCREMENT for table `tbl_shop_register`
 --
 ALTER TABLE `tbl_shop_register`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -544,6 +611,12 @@ ALTER TABLE `tbl_order`
   ADD CONSTRAINT `tbl_order_from_user_foreign` FOREIGN KEY (`from_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tbl_order_owner_fk_foreign` FOREIGN KEY (`owner_fk`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tbl_order_product_fk_foreign` FOREIGN KEY (`product_fk`) REFERENCES `tbl_product_design` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tbl_order_status`
+--
+ALTER TABLE `tbl_order_status`
+  ADD CONSTRAINT `tbl_order_status_order_fk_foreign` FOREIGN KEY (`order_fk`) REFERENCES `tbl_order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_product`

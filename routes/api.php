@@ -38,9 +38,15 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function() {
     });
 
     Route::get('FetchAllAccounts',[AdminController::class, 'FetchAllAccounts']);
+    Route::get('FetchAllAccountsLock',[AdminController::class, 'FetchAllAccountsLock']);
+    
     Route::get('FetchPending',[AdminController::class, 'FetchPending']);
     Route::get('AccountDetails/{id}',[AdminController::class,'AccountDetails']);
+    Route::get('AccountDetailsInformation/{id}',[AdminController::class,'AccountDetailsInformation']);
     Route::put('UpdateStatus',[AdminController::class, 'UpdateStatus']);
+    Route::put('AccountUpdate',[AdminController::class, 'AccountUpdate']);
+
+    Route::delete('RemoveAccount/{id}',[AdminController::class, 'RemoveAccount']);
 
     Route::get('Dashboaradmin/{id}',[AdminController::class, 'Dashboaradmin']);
 
@@ -49,6 +55,9 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function() {
     Route::get('ShopAccount',[ShopController::class, 'ShopAccount']);
     Route::get('ShopDetails/{id}',[ShopController::class, 'ShopDetails']);
     Route::put('UpdateAccount',[ShopController::class, 'UpdateAccount']);
+
+
+    Route::get('ShopInformation/{id}',[ShopController::class,'ShopInformation']);
 });
 
 
@@ -78,6 +87,7 @@ Route::middleware(['auth:sanctum','isAPIUser'])->group(function () {
     // List of buyer
     Route::get('ListoBuyer/{id}',[OrderController::class, 'ListoBuyer']);
     Route::get('ListoBuyerHistory/{id}',[OrderController::class, 'ListoBuyerHistory']);
+    Route::get('BuyerHistory/{id}',[OrderController::class, 'BuyerHistory']);
 
     Route::post('UpdateProductBuyer',[OrderController::class, 'UpdateProductBuyer']);
 
@@ -91,6 +101,21 @@ Route::middleware(['auth:sanctum','isAPIUser'])->group(function () {
 
 
     Route::get('ShopStatus/{id}',[ShopController::class,'ShopStatus']);
+
+
+    Route::delete('DeleteOrder/{id}',[OrderController::class, 'DeleteOrder']);
+
+    // Shop List
+    Route::get('ShopList/{id}',[ShopController::class,'ShopList']);
+    Route::get('ProductList/{id}',[ShopController::class, 'ProductList']);
+
+
+    Route::put('OrderStatusUpdate',[ShopController::class, 'OrderStatusUpdate']);
+
+
+    Route::get('ShopInfo/{id}',[ShopController::class, 'ShopInfo']);
+
+    Route::post('BookDataForm',[ShopController::class, 'BookDataForm']);
 
 });
 

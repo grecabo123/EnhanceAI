@@ -81,7 +81,7 @@ function Admin() {
                                         <Link to="/admin/accounts/registered" className="sidebar-link"><span className='child'>Registered Account</span></Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link to="/admin/accounts/request" className="sidebar-link"><span className='child'>Request Shop</span></Link>
+                                        <Link to="/admin/accounts/lock" className="sidebar-link"><span className='child'>Lock Account</span></Link>
                                     </li>
                                 </ul>
                             </li>
@@ -90,7 +90,7 @@ function Admin() {
                                 <a href="#" className="sidebar-link collapsed" data-bs-target="#customer" data-bs-toggle="collapse"
                                     aria-expanded="false">
                                     <BsPersonBadge size={20} className='align-middle' />
-                                    <span>Customer</span>
+                                    <span>Shop Account</span>
                                 </a>
                                 <ul id="customer" className="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                     <li className="sidebar-item">

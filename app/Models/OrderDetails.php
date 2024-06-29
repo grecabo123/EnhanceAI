@@ -14,12 +14,14 @@ class OrderDetails extends Model
     protected $fillable = [
         "invoice_id",
         "from_user",
+        "file_attach",
         "product_fk",
         "to_name",
         "to_address",
         "to_contact",
         "messages",
         'purchase_status',
+        "order_date",
         "owner_fk",
     ];
 }

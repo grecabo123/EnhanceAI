@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\ActivityLogs;
+use App\Models\OrderDetails;
+use App\Models\ProductDesign;
 use App\Models\RegisterShop;
+use App\Models\StoreIncome;
+use App\Models\StoreProducts;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -141,6 +145,109 @@ class ShopController extends Controller
         return response()->json([
             "status"            =>          200,
             "data"              =>          $shop,
+        ]);
+    }
+
+
+    public function ShopInformation($id){
+
+        $data = RegisterShop::find($id);
+        $income = StoreIncome::selectRaw('sum(amount) as total_amt')->where('user_fk',$data->user_fk)->first();
+        $user = User::join('tbl_contact','tbl_contact.user_fk','=','users.id')
+            ->where('users.id',$data->user_fk)
+            ->first();
+        $products = StoreProducts::selectRaw('count(*) as total_product')->where('user_fk',$data->user_fk)->first();
+        $design = ProductDesign::selectRaw('count(*) as total_design')->where('user_fk',$data->user_fk)->first();
+
+        $list_product = StoreProducts::where('user_fk',$data->user_fk)->get();
+        $list_design = ProductDesign::where('user_fk',$data->user_fk)->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $user,
+            "shop"              =>          $data,
+            "income"            =>          $income,
+            "product"           =>          $products,
+            "design"            =>          $design,
+            "list_product"      =>          $list_product,
+            "list_design"       =>          $list_design,
+        ]);
+            
+    }
+
+
+    public function ShopList($id){
+
+        $shop = RegisterShop::join('users','users.id','=','tbl_shop_register.user_fk')->where('tbl_shop_register.user_fk','!=',$id)->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $shop,
+        ]);
+    }
+
+    public function ProductList($id){
+
+        // $shop = RegisterShop::where('user_fk',$id)->first();
+        $data = ProductDesign::where('user_fk',$id)->get();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+
+        ]);
+    }
+
+    public function OrderStatusUpdate(Request $request){
+
+        $data = OrderDetails::where('invoice_id',$request->invoice)->first();
+        if($data){
+            $data->purchase_status = 2;
+            $data->update();
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
+    }
+
+    public function ShopInfo($id){
+
+        $data = RegisterShop::join('users','users.id','=', 'tbl_shop_register.user_fk')
+            ->selectRaw('users.name,users.email,tbl_shop_register.shop_name,tbl_shop_register.shop_logo,
+            tbl_shop_register.shop_contact,users.id as user_id,tbl_shop_register.id as shop_id,users.name')    
+        ->where('tbl_shop_register.user_fk',$id)
+            ->first();
+
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+        ]);
+    }
+
+    public function BookDataForm(Request $request){
+
+        $rand = rand(1111,9999)."".rand(1111,9999);
+
+        $data = new OrderDetails;
+
+
+        $data->invoice_id = $rand;
+        $data->from_user = $request->user_;
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->name.".".$extension;
+            $file->move('Upload/ID/',$filename);
+            $data->file_attach = "Upload/ID/".$filename;
+        }
+        $data->to_name = $request->name;
+        $data->to_address = $request->address;
+        $data->to_contact = $request->contact;
+        $data->messages = $request->desc;
+        $data->save();
+
+        return response()->json([
+            "status"            =>          200,
         ]);
     }
 }

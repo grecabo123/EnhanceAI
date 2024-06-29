@@ -12,6 +12,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
+  background: #dadadaa0 !important;
 }
 
 a {
@@ -1413,4 +1414,9 @@ section {
   background: #5faee3;
   color: #fff;
   text-decoration: none;
+}
+
+.vertical-timeline {
+  background-color: #ebebeb;
+  padding: 10px !important;
 }

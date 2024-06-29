@@ -12,7 +12,23 @@ class AdminController extends Controller
 {
 
     public function FetchAllAccounts (){
-        $data = User::where('status',1)->where('role',2)->get();
+        $data = User::leftJoin('tbl_shop_register','tbl_shop_register.user_fk','=','users.id')
+            ->selectRaw('users.name,users.email,users.id,users.created_at,tbl_shop_register.shop_status,users.status')
+        ->where('users.status',1)->where('users.role',2)
+        ->orderBy('users.created_at','DESC')
+        ->get();
+        return response()->json([
+            "status"            =>          200,
+            "data"              =>          $data,
+        ]);
+    }
+
+    public function FetchAllAccountsLock (){
+        $data = User::leftJoin('tbl_shop_register','tbl_shop_register.user_fk','=','users.id')
+            ->selectRaw('users.name,users.email,users.id,users.created_at,tbl_shop_register.shop_status,users.status')
+        ->where('users.status',0)->where('users.role',2)
+        ->orderBy('users.created_at','DESC')
+        ->get();
         return response()->json([
             "status"            =>          200,
             "data"              =>          $data,
@@ -88,6 +104,44 @@ class AdminController extends Controller
             "shope"             =>          $shops,
         ]);
 
+    }
+
+    public function RemoveAccount($id){
+
+        $data = User::find($id);
+
+        if($data) {
+            $data->delete();
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
+    }
+
+    public function AccountUpdate(Request $request){
+        $data = User::find($request->id);
+
+        if($data) {
+            $data->status = $data->status == 0 ? 1 : 0;
+            $data->update();
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
+    }
+
+    public function AccountDetailsInformation($id){
+
+        $shops = User::leftJoin('tbl_shop_register','tbl_shop_register.user_fk','=','users.id')
+            ->selectRaw('tbl_shop_register.shop_name,tbl_shop_register.shop_logo,tbl_shop_register.shop_city,users.email,
+            tbl_shop_register.created_at')
+            ->where('users.id',$id)
+            ->first();
+
+            return response()->json([
+                "status"            =>          200,
+                "data"              =>          $shops,
+            ]);
     }
     
 }

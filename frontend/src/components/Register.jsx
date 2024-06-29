@@ -133,28 +133,28 @@ function Register() {
                                             <label htmlFor="" className="form-label">
                                                 Name
                                             </label>
-                                            <InputText className='w-100 p-inputtext-sm' onChange={handleinput} name='name' />
+                                            <InputText className={`w-100 p-inputtext-sm ${CreateAccountData.error.name ? 'p-invalid' : ''}`} onChange={handleinput} name='name' />
                                             <span className='text-danger'>{CreateAccountData.error.name}</span>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 Email
                                             </label>
-                                            <InputText type='email' className='w-100 p-inputtext-sm' onChange={handleinput} name='email' />
+                                            <InputText type='email' className={`w-100 p-inputtext-sm ${CreateAccountData.error.email ? 'p-invalid' : ''}`} onChange={handleinput} name='email' />
                                             <span className='text-danger'>{CreateAccountData.error.email}</span>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 City
                                             </label>
-                                            <InputText  className='w-100 p-inputtext-sm' onChange={handleinput} name='city' />
+                                            <InputText  className={`w-100 p-inputtext-sm ${CreateAccountData.error.city ? 'p-invalid' : ''}`} onChange={handleinput} name='city' />
                                             <span className='text-danger'>{CreateAccountData.error.city}</span>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 Address
                                             </label>
-                                            <InputText  className='w-100 p-inputtext-sm' onChange={handleinput} name='address' />
+                                            <InputText  className={`w-100 p-inputtext-sm ${CreateAccountData.error.address ? 'p-invalid' : ''}`} onChange={handleinput} name='address' />
                                             <span className='text-danger'>{CreateAccountData.error.address}</span>
 
                                         </div>
@@ -163,23 +163,23 @@ function Register() {
                                                 Contact
                                             </label>
 
-                                            <InputText className='w-100 p-inputtext-sm' onChange={handleinput} name='contact' />
+                                            <InputText className={`w-100 p-inputtext-sm ${CreateAccountData.error.contact ? 'p-invalid' : ''}`} onChange={handleinput} name='contact' />
                                             <span className='text-danger'>{CreateAccountData.error.contact}</span>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 Password
                                             </label>
-                                            <InputText type='password' className='w-100 p-inputtext-sm' onChange={handleinput} name='password' />
+                                            <InputText type='password' className={`w-100 p-inputtext-sm ${CreateAccountData.error.password ? 'p-invalid' : ''}`} onChange={handleinput} name='password' />
                                             <span className='text-danger'>{CreateAccountData.error.password}</span>
                                         </div>
                                         <div className="col-lg-12 mb-2">
                                             <label htmlFor="" className="form-label">
                                                 Valid ID
                                             </label>
-                                            <InputText type='file' className='w-100 p-inputtext-sm' onChange={handleupload} name='file' />
+                                            <InputText type='file' className={`w-100 p-inputtext-sm ${CreateAccountData.error.file ? 'p-invalid' : ''}`} onChange={handleupload} name='file' />
                                             <small className='text-danger'>*</small><small>PNG,JPEG</small><br />
-                                            <span className='text-danger'>{CreateAccountData.error.city}</span>
+                                            <span className='text-danger'>{CreateAccountData.error.file}</span>
                                         </div>
                                          <div className="col-lg-12 mb-3">
                                             <Checkbox className='p-checkbox' ref={boxcheck} onChange={e => setChecked(e.checked)} checked={checked}></Checkbox> <small className='text-secondary'>By using our services, you agree to the following terms and conditions related to the collection and use of your information. </small>

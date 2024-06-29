@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import swal from 'sweetalert'
 
-function BidItem(props) {
+function OrderForm(props) {
 
     const history = useHistory()
     const [Details, setDetails] = useState([])
@@ -75,7 +75,7 @@ function BidItem(props) {
                 setBtn(false)
 
                 setTimeout(() => {
-                    window.location.href = "/customer/product/search"
+                    window.history.back();
                 }, 1500)
             }
         }).catch((error) => {
@@ -93,11 +93,15 @@ function BidItem(props) {
 
     }
 
+    const ReturnPage = () => {
+        window.history.back();
+    }
+
 
     return (
         <div>
             <div className="d-flex justify-content-end mb-2" >
-                <Button label='Return Page' className='p-button-sm' onClick={() => history.push(`/customer/product/search`)} />
+                <Button label='Return Page' className='p-button-sm' onClick={ReturnPage} />
             </div>
             <Toast ref={toast} />
             <Panel header="Details">
@@ -198,4 +202,4 @@ function BidItem(props) {
     )
 }
 
-export default BidItem
+export default OrderForm

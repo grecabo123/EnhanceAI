@@ -10,11 +10,10 @@ import { FilterMatchMode, PrimeIcons } from 'primereact/api';
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
-
 import { Dialog } from 'primereact/dialog';
 
 
-function Approve() {
+function LockAccount() {
 
     const [loading, setLoading] = useState(true)
     const [Accounts, setAccount] = useState([]);
@@ -34,18 +33,14 @@ function Approve() {
     }, [])
 
     const FetchData = () => {
-        axios.get(`/api/FetchAllAccounts`).then(res => {
+        axios.get(`/api/FetchAllAccountsLock`).then(res => {
             if (res.data.status === 200) {
                 setAccount(res.data.data);
             }
             setLoading(false)
         }).catch((error) => {
             if (error.response.status === 500) {
-                swal("Warning", error.response.statusText, 'warning');
-            }
-            else if (error.response.status === 404) {
-                swal("Error", 'Server Error', 'error');
-
+                swal("Warning", error.response.statusText, 'warning')
             }
         })
     }
@@ -81,8 +76,8 @@ function Approve() {
     const actionbutn = (rowData) => {
         return (
             <div className="d-flex justify-content-evenly">
-                <Button className='p-button-sm p-button-info m-1' data-id={rowData.id} data-indicator={1} onClick={ActionButton} label='Details' />
-                <Button className='p-button-sm p-button-danger m-1' data-indicator={2} onClick={ActionButton} data-id={rowData.id} label='Lock Account' icon={PrimeIcons.LOCK} />
+                <Button className='p-button-sm p-button-info m-1' data-indicator={1} onClick={ActionButton} label='Details' />
+                <Button className='p-button-sm p-button-success m-1' data-indicator={2} onClick={ActionButton} data-id={rowData.id} label='Unlock Account' icon={PrimeIcons.LOCK} />
             </div>
         )
     }
@@ -90,24 +85,9 @@ function Approve() {
     const ActionButton = (e) => {
 
         if (e.currentTarget.getAttribute('data-indicator') == 1) {
-            setVisible(true)
-
-            axios.get(`/api/AccountDetailsInformation/${e.currentTarget.getAttribute('data-id')}`).then(res => {
-                if(res.data.status === 200) {
-
-                }
-            }).catch((error) => {
-                if (error.response.status === 500) {
-                    swal("Warning", error.response.statusText, 'warning');
-                }
-                else if (error.response.status === 404) {
-                    swal("Error", 'Server Error', 'error');
-
-                }
-            })
+            console.log("!@3");
         }
         else {
-
             const data = {
                 id: e.currentTarget.getAttribute('data-id'),
                 user_fk: localStorage.getItem('auth_id'),
@@ -117,7 +97,7 @@ function Approve() {
                 if (res.data.status === 200) {
                     toast.current.show({
                         severity: "success",
-                        summary: "Account Has Been Locked!",
+                        summary: "Account Has Been Unlocked!",
                         detail: "Successfully",
                     });
                     FetchData()
@@ -161,7 +141,7 @@ function Approve() {
                     </DataTable>
                 </Panel>
 
-                <Dialog position='top' draggable={false} header="Account Details" visible={visible} onHide={() => { if (!visible) return; setVisible(false); }}
+                <Dialog header="Header" visible={visible} onHide={() => { if (!visible) return; setVisible(false); }}
                     style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
                     <p className="m-0">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -175,4 +155,4 @@ function Approve() {
     )
 }
 
-export default Approve
+export default LockAccount

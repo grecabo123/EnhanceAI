@@ -46,13 +46,13 @@ function ShopAccounts() {
     const action_btn = (formdata) => {
         return (
             <>
-                <Button onClick={Details} data-id={formdata.id} className='p-button-sm p-button-info' label='Details' icon={PrimeIcons.EYE} />
+                <Button onClick={Details} data-id={formdata.id} data-name={formdata.shop_name} className='p-button-sm p-button-info' label='Details' icon={PrimeIcons.EYE} />
             </>
         )
     }
 
     const Details = (e) => {
-        history.push(`/admin/account/request/refid=${e.currentTarget.getAttribute('data-id')}`)
+        history.push(`/admin/shop/name=${e.currentTarget.getAttribute('data-name')}/refid=${e.currentTarget.getAttribute('data-id')}`)
     }
 
     return (

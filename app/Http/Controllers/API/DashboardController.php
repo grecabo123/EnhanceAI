@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrderDetails;
+use App\Models\OrderStatus;
 use App\Models\ProductDesign;
 use App\Models\StoreIncome;
 use Illuminate\Http\Request;
@@ -27,6 +28,10 @@ class DashboardController extends Controller
             ->orderBy('tbl_order.created_at','DESC')
             ->get();
 
+        $order = OrderDetails::join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
+            ->join('users','users.id','=','tbl_order.from_user')
+        ->where('tbl_order.purchase_status',1)->where('tbl_order.owner_fk',$id)->get();
+
 
         return response()->json([
             "status"            =>          200,
@@ -34,6 +39,7 @@ class DashboardController extends Controller
             "pending"           =>          $pending,
             "design"            =>          $product_design,
             "customer"          =>          $customer,
+            "order"             =>          $order,
         ]);
         
     }

@@ -10,6 +10,7 @@ import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { Toast } from 'primereact/toast'
+import { PrimeIcons } from 'primereact/api'
 
 function OrderStatus() {
 
@@ -45,7 +46,7 @@ function OrderStatus() {
         return (
             <>
                 {
-                    rowData.purchase_status == 1 ? <Badge severity={'success'} value={'Completed'} /> : <Badge severity={'warning'} value={'On Progress'} />
+                    rowData.purchase_status == 1 ? <small className='text-success fw-bold'>Approved</small> : <small className='text-danger fw-bold'>Pending</small>
                 }
             </>
         )
@@ -60,14 +61,15 @@ function OrderStatus() {
         return (
             <div>
                 <Button className='p-button-sm p-button-info m-1' data-id={rowData.id} data-indicator={1} onClick={DetailsInfo}
-                    label='Details'
+                    label='Track'
+                    icon={PrimeIcons.MAP_MARKER}
                 />
-                {
+                {/* {
                     rowData.purchase_status  == 0 ?   <Button className='p-button-sm p-button-danger m-1' data-id={rowData.id} data-indicator={2} onClick={DetailsInfo}
                     label='Remove'
                 />
                 : ""
-                }
+                } */}
             </div>
         )
     }
@@ -100,11 +102,13 @@ function OrderStatus() {
                 <Toast ref={toast} />
                 <DataTable loading={loading} value={orderdata} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
-                    <Column field='invoice_id' header="Invoice #"></Column>
-                    <Column field='file_product' body={Image_Format} header="Product"></Column>
-                    <Column field='product_name' header="Product"></Column>
                     <Column field='purchase_status' body={status_pro} header="Product Status"></Column>
-                    <Column body={(orderdata) => <span>{moment(orderdata.created_at).format('MMM DD YYYY hh:mm a')}</span>} header="DateTime"></Column>
+                    <Column field='invoice_id' header="Invoice #"></Column>
+                    <Column field='shop_name' header="Shop Name"></Column>
+                    <Column field='file_product' body={Image_Format} header="Product"></Column>
+                    <Column field='product_name' header="Product Name"></Column>
+                    <Column field='price' body={(orderdata) => <span> ₱{orderdata.price.toFixed(2)}</span> } header="Product Price"></Column>
+                    <Column body={(orderdata) => <span>{moment(orderdata.order_date).format('MMM DD YYYY hh:mm a')}</span>} header="Deliver Date"></Column>
                     <Column field='id' body={ActionButton} header="Action"></Column>
                 </DataTable>
             </Panel>

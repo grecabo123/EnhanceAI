@@ -13,7 +13,7 @@ import { Toast } from 'primereact/toast'
 import { InputText } from 'primereact/inputtext'
 
 
-function ListofBuyer() {
+function HistoryCustomer() {
 
     const [loading, setLoading] = useState(true)
     const [list, setList] = useState([])
@@ -49,7 +49,7 @@ function ListofBuyer() {
     }, [])
 
     const FetchData = () => {
-        axios.get(`/api/ListoBuyerHistory/${localStorage.getItem('auth_id')}`).then(res => {
+        axios.get(`/api/BuyerHistory/${localStorage.getItem('auth_id')}`).then(res => {
             if (res.data.status === 200) {
                 setList(res.data.data)
             }
@@ -106,21 +106,15 @@ function ListofBuyer() {
                     onClick={GetDetails}
                     data-indicator={1}
                 />
-                <Button className='p-button-sm p-button-success m-1'
-                    label='Update'
-                    data-order={list.invoice_id}
-                    onClick={GetDetails}
-                    data-indicator={2}
-
-                />
+                
             </React.Fragment>
         )
     }
 
     const GetDetails = (e) => {
-        
+        setVisible(true)
+
         if (e.currentTarget.getAttribute('data-indicator') == 1) {
-            setVisible(true)
             setDetails({
                 id: e.currentTarget.getAttribute('data-id'),
                 name: e.currentTarget.getAttribute('data-name'),
@@ -148,7 +142,6 @@ function ListofBuyer() {
                         summary: "Order #: "+data.invoice+ "Update",
                         detail: "Successfully"
                     });
-                    FetchData();
                 }
                 else{
 
@@ -295,4 +288,4 @@ function ListofBuyer() {
     )
 }
 
-export default ListofBuyer
+export default HistoryCustomer

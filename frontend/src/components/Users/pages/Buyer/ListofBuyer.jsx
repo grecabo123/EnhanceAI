@@ -6,12 +6,13 @@ import { DataTable } from 'primereact/datatable'
 import { Panel } from 'primereact/panel'
 import React, { useEffect, useRef, useState } from 'react'
 import swal from 'sweetalert'
-
+import {FilterMatchMode } from 'primereact/api'
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider'
 import { Toast } from 'primereact/toast'
 import { InputText } from 'primereact/inputtext'
 import { InputNumber } from 'primereact/inputnumber'
+import Swal from 'sweetalert2'
 
 
 function ListofBuyer() {
@@ -36,11 +37,19 @@ function ListofBuyer() {
         address: "",
         city: "",
         person_msg: "",
+        date_order: "",
+        invoice: "",
     });
     const [Error, setError] = useState({
         error: [],
     })
     const toast = useRef(null);
+
+    const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+    const [filters, setFilter] = useState({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+    })
 
 
 
@@ -71,10 +80,30 @@ function ListofBuyer() {
         )
     }
 
+    const onGlobalFilterChange = (e) => {
+        const value = e.target.value;
+        let _filters = { ...filters };
+        _filters['global'].value = value;
+        setFilter(_filters);
+        setGlobalFilterValue(value);
+    };
+
+    const header = () => {
+        return (
+            <div className="d-flex justify-content-end">
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    
+                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Search" />
+                </span>
+            </div>
+        );
+    };
+
     const ActionsButton = (list) => {
         return (
             <React.Fragment>
-                <Button className='p-button-sm' label='Details'
+                <Button className='p-button-sm m-1' label='Details'
                     data-id={list.order_id}
                     data-name={list.name}
                     data-price={list.price}
@@ -89,10 +118,48 @@ function ListofBuyer() {
                     data-address={list.address}
                     data-city={list.city}
                     data-person_msg={list.messages}
+                    data-date={list.order_date}
+                    data-order={list.invoice_id}
                     onClick={GetDetails}
                 />
+                <Button label='Remove Order' className='p-button-sm p-button-danger m-1' onClick={RemoveOrder} data-id={list.order_id} />
             </React.Fragment>
         )
+    }
+
+    const RemoveOrder = (e) => {
+
+        var id_order = e.currentTarget.getAttribute('data-id');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to remove this list!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Remove it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/api/DeleteOrder/${id_order}`).then(res => {
+                    if(res.data.status === 200) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Order has been removed.",
+                            icon: "success"
+                        });
+                        FetchData();
+                    }
+                }).catch((error) => {
+                    if(error.response.status === 500){
+                        swal("Warning",error.response.statusText,'warning')
+                    }
+                    else if(error.response.status === 404){
+                        swal("Error","Server Error",'error')
+                    }
+                })
+            }
+        });
     }
 
     const GetDetails = (e) => {
@@ -112,6 +179,8 @@ function ListofBuyer() {
             address: e.currentTarget.getAttribute('data-address'),
             city: e.currentTarget.getAttribute('data-city'),
             person_msg: e.currentTarget.getAttribute('data-person_msg'),
+            date_order: e.currentTarget.getAttribute('data-date'),
+            invoice: e.currentTarget.getAttribute('data-order'),
         });
     }
 
@@ -122,6 +191,7 @@ function ListofBuyer() {
             product_id: Details.id,
             user_fk: localStorage.getItem('auth_id'),
             amt: amt,
+            date_: moment(Details.date_order).format('MMM DD YYYY hh:mm a'),
         };
 
         axios.post(`/api/UpdateProductBuyer`, data).then(res => {
@@ -135,8 +205,8 @@ function ListofBuyer() {
                 setbtnload(false)
                 FetchData();
             }
-            else{
-                setError({...Error, error: res.data.error});
+            else {
+                setError({ ...Error, error: res.data.error });
                 setbtnload(false)
 
             }
@@ -161,11 +231,15 @@ function ListofBuyer() {
                 <DataTable loading={loading}
                     size='small'
                     selectionMode={'single'}
+                    header={header}
+                    filters={filters}
+                    globalFilterFields={['invoice_id']}
                     value={list} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
+                    <Column field='invoice_id' filterField='invoice_id' header="Order ID"></Column>
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
                     <Column field='name' header="Name of Buyer"></Column>
-                    <Column body={(list) => <span>{moment(list.created_at).format('MMM DD YYYY')}</span>} header="Date Time"></Column>
+                    <Column body={(list) => <span>{moment(list.created_at).format('MMM DD YYYY hh:mm a')}</span>} header="Date Time Order"></Column>
                     <Column field='id' body={ActionsButton} header="Actions"></Column>
                 </DataTable>
             </Panel>
@@ -183,6 +257,13 @@ function ListofBuyer() {
 
                 <form onSubmit={UpdateStatus}>
                     <ul class="list-group">
+                        <Divider>
+                            <span>Order  Details</span>
+                        </Divider>
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            Order ID
+                            <span>{Details.invoice}</span>
+                        </li>
                         <Divider>
                             <span>Buyer  Details</span>
                         </Divider>
@@ -229,7 +310,10 @@ function ListofBuyer() {
                             Person Contact
                             <span>{Details.to_contact}</span>
                         </li>
-
+                        <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
+                            Deliver Date
+                            <span>{Details.date_order == null ? "" : moment(Details.date_order).format('MMM DD YYYY hh:mm a')}</span>
+                        </li>
                         <Divider>
                             <span>Message</span>
                         </Divider>
@@ -246,16 +330,17 @@ function ListofBuyer() {
                     </Divider>
                     <li class="list-group-item d-flex border-0 justify-content-between align-items-center">
                         Total Price
-                        <InputNumber className={`p-inputtext-sm ${Error.error.amt ? 'p-invalid' : ''}`} prefix='₱' minFractionDigits={2} 
+                        <InputNumber className={`p-inputtext-sm ${Error.error.amt ? 'p-invalid' : ''}`} prefix='₱' minFractionDigits={2}
                             onValueChange={(e) => setAmt(e.value)}
-                        
+
                         />
                     </li>
 
                     <div className="mt-2">
-                        <Button loading={btnloading} className='p-button-sm p-button-info'
+                        <Button loading={btnloading} className='p-button-sm p-button-info m-1'
                             label={btnloading ? "Saving..." : "Approve"}
                         />
+
                     </div>
                 </form>
             </Dialog>
