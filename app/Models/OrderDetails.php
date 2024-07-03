@@ -13,6 +13,7 @@ class OrderDetails extends Model
 
     protected $fillable = [
         "invoice_id",
+        "type_order",
         "from_user",
         "file_attach",
         "product_fk",

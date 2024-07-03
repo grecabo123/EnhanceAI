@@ -23,6 +23,9 @@ function ListofBuyer() {
     const [Details, setDetails] = useState({
         id: "",
         name: "",
+        contact: "",
+        address: "",
+        city: "",
         price: "",
         message: "",
         product_name: "",
@@ -93,6 +96,9 @@ function ListofBuyer() {
                 <Button className='p-button-sm m-1' label='Details'
                     data-id={list.order_id}
                     data-name={list.name}
+                    data-contact={list.contact}
+                    data-address={list.address}
+                    data-city={list.city}
                     data-price={list.price}
                     data-message={list.message}
                     data-product_name={list.product_name}
@@ -124,6 +130,9 @@ function ListofBuyer() {
             setDetails({
                 id: e.currentTarget.getAttribute('data-id'),
                 name: e.currentTarget.getAttribute('data-name'),
+                contact: e.currentTarget.getAttribute('data-contact'),
+                address: e.currentTarget.getAttribute('data-address'),
+                city: e.currentTarget.getAttribute('data-city'),
                 price: e.currentTarget.getAttribute('data-price'),
                 product_name: e.currentTarget.getAttribute('data-product_name'),
                 to_address: e.currentTarget.getAttribute('data-to_address'),

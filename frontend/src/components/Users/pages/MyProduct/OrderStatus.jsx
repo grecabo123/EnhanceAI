@@ -54,7 +54,18 @@ function OrderStatus() {
 
     const Image_Format = (rowData) => {
         return (
-            <span><Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.file_product_design}`} width='100' /></span>
+            <span>
+
+                {
+                    rowData.type_order == 1 ?  
+                    <span><Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.file_attach}`} width='100' /></span>
+
+                    :
+                        <span><Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.file_product_design}`} width='100' /></span>
+
+                }
+
+            </span>
         )
     }
     const ActionButton = (rowData) => {
@@ -78,22 +89,32 @@ function OrderStatus() {
         e.currentTarget.getAttribute('data-indicator') == 1 ?
             history.push(`/customer/product/order/${e.currentTarget.getAttribute('data-id')}`)
             :
-        axios.delete(`/api/OrderRemove/${e.currentTarget.getAttribute('data-id')}`).then(res => {
-            if(res.data.status === 200) {
-                toast.current.show({
-                    severity: "success",
-                    summary: "Order Has Been Removed",
-                    detail: "Successfully"
-                });
-                Order();
-            }
-        }).catch((error) => {
-            if(error.response.status === 500) {
+            axios.delete(`/api/OrderRemove/${e.currentTarget.getAttribute('data-id')}`).then(res => {
+                if (res.data.status === 200) {
+                    toast.current.show({
+                        severity: "success",
+                        summary: "Order Has Been Removed",
+                        detail: "Successfully"
+                    });
+                    Order();
+                }
+            }).catch((error) => {
+                if (error.response.status === 500) {
 
-            }
-        })
+                }
+            })
+    }
 
+    const OrderType = (rowData) => {
+        return (
+            <span>{rowData.type_order == 1 ? "Own Design" : "Store Design"}</span>
+        )
+    }
 
+    const ProductName = (rowData) => {
+        return (
+            <span>{rowData.type_order == 1 ? "Own Design" : rowData.product_name}</span>
+        )
     }
 
     return (
@@ -106,8 +127,9 @@ function OrderStatus() {
                     <Column field='invoice_id' header="Invoice #"></Column>
                     <Column field='shop_name' header="Shop Name"></Column>
                     <Column field='file_product' body={Image_Format} header="Product"></Column>
-                    <Column field='product_name' header="Product Name"></Column>
-                    <Column field='price' body={(orderdata) => <span> ₱{orderdata.price.toFixed(2)}</span> } header="Product Price"></Column>
+                    <Column body={ProductName} header="Product Name"></Column>
+                    <Column header="Type of Order" body={OrderType}></Column>
+                    {/* <Column field='price' body={(orderdata) => <span> ₱{orderdata.price.toFixed(2)}</span> } header="Product Price"></Column> */}
                     <Column body={(orderdata) => <span>{moment(orderdata.order_date).format('MMM DD YYYY hh:mm a')}</span>} header="Deliver Date"></Column>
                     <Column field='id' body={ActionButton} header="Action"></Column>
                 </DataTable>

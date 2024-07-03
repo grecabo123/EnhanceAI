@@ -148,18 +148,18 @@ function Dashboard() {
                                     <Column body={(data, options) => options.rowIndex + 1} header="#"></Column>
                                     <Column field='name' header="Customer Name"></Column>
                                     <Column field='email' header="Email"></Column>
-                                    <Column field='purchase_status' header="Status"></Column>
+                                    {/* <Column field='purchase_status' header="Status"></Column> */}
                                     <Column header="Date Order" body={dateformat}></Column>
                                 </DataTable>
                             </div>
 
                             <div className="mt-2">
                                 <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-12 mb-2">
+                                    {/* <div className="col-lg-6 col-md-6 col-sm-12 mb-2">
                                         <Card subTitle="Total Income">
                                             <Income />
                                         </Card>
-                                    </div>
+                                    </div> */}
                                     <div className="col-lg-12 col-md-12 col-sm-12 mb-2">
                                         <Card subTitle="Total Income">
                                             <Calendar

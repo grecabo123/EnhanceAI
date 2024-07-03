@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2024 at 05:23 PM
+-- Generation Time: Jul 03, 2024 at 05:42 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -98,6 +98,14 @@ CREATE TABLE `personal_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\User', 2, 'admin@gmail.com_Admin', '560d71065b076846cf5ac6e01912cece453db9a05304523c27dbd5756569ea84', '[\"server:admin\"]', '2024-06-29 08:44:36', '2024-06-29 08:22:09', '2024-06-29 08:44:36'),
+(4, 'App\\Models\\User', 13, 'john@gmail.com_customer', '4a0179fae56e24de39e0662476f76fb4458609ac2f6ca1e2ba93d89632577230', '[\"server:customer\"]', '2024-07-03 07:41:43', '2024-07-03 07:35:30', '2024-07-03 07:41:43');
+
 -- --------------------------------------------------------
 
 --
@@ -156,7 +164,10 @@ INSERT INTO `tbl_income` (`id`, `product_fk`, `amount`, `image_gene`, `user_fk`,
 (5, 15, 3600.00, NULL, 13, '2024-06-18 21:45:16', '2024-06-18 21:45:16'),
 (6, 13, 1500.00, NULL, 13, '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
 (7, 15, 3600.00, NULL, 13, '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
-(8, 11, 3700.00, NULL, 9, '2024-06-27 06:39:57', '2024-06-27 06:39:57');
+(8, 11, 3700.00, NULL, 9, '2024-06-27 06:39:57', '2024-06-27 06:39:57'),
+(9, 15, 3725.00, NULL, 13, '2024-06-29 08:30:47', '2024-06-29 08:30:47'),
+(10, 13, 2399.00, NULL, 13, '2024-07-03 07:35:50', '2024-07-03 07:35:50'),
+(11, 15, 4000.00, NULL, 13, '2024-07-03 07:36:02', '2024-07-03 07:36:02');
 
 -- --------------------------------------------------------
 
@@ -207,7 +218,10 @@ INSERT INTO `tbl_logs` (`id`, `description`, `user_fk`, `created_at`, `updated_a
 (43, 'Your Order ID 74727092 ', 14, '2024-06-19 20:47:40', '2024-06-19 20:47:40'),
 (44, 'Your Order ID 29915830 ', 14, '2024-06-27 06:32:41', '2024-06-27 06:32:41'),
 (45, 'Your Order ID 25052949 ', 14, '2024-06-27 06:38:28', '2024-06-27 06:38:28'),
-(46, 'Request Form to a Flower Shop Krystianne', 12, '2024-06-27 06:55:54', '2024-06-27 06:55:54');
+(46, 'Request Form to a Flower Shop Krystianne', 12, '2024-06-27 06:55:54', '2024-06-27 06:55:54'),
+(47, 'Your Order ID 30698113 ', 14, '2024-06-29 08:27:01', '2024-06-29 08:27:01'),
+(48, 'Your Order ID 99477282 ', 14, '2024-07-03 07:33:49', '2024-07-03 07:33:49'),
+(49, 'Your Order ID 22593967 ', 14, '2024-07-03 07:34:07', '2024-07-03 07:34:07');
 
 -- --------------------------------------------------------
 
@@ -218,6 +232,7 @@ INSERT INTO `tbl_logs` (`id`, `description`, `user_fk`, `created_at`, `updated_a
 CREATE TABLE `tbl_order` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `invoice_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_order` int(11) NOT NULL DEFAULT '0',
   `from_user` bigint(20) UNSIGNED NOT NULL,
   `product_fk` bigint(20) UNSIGNED DEFAULT NULL,
   `file_attach` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -236,14 +251,18 @@ CREATE TABLE `tbl_order` (
 -- Dumping data for table `tbl_order`
 --
 
-INSERT INTO `tbl_order` (`id`, `invoice_id`, `from_user`, `product_fk`, `file_attach`, `to_name`, `to_address`, `to_contact`, `messages`, `purchase_status`, `order_date`, `owner_fk`, `created_at`, `updated_at`) VALUES
-(12, '58121649', 9, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-19T04:56:43.326Z', 13, '2024-06-18 20:59:28', '2024-06-23 00:32:41'),
-(13, '68572056', 9, 14, NULL, NULL, NULL, NULL, NULL, 1, '2024-06-19T04:56:43.326Z', 14, '2024-06-18 21:26:52', '2024-06-18 21:39:33'),
-(14, '30433260', 9, 13, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-21T06:10:15.676Z', 13, '2024-06-18 22:15:29', '2024-06-23 00:32:15'),
-(16, '45705549', 9, 15, NULL, NULL, NULL, NULL, 'Paki wrap', 0, '2024-06-26T08:08:37.434Z', 13, '2024-06-19 00:08:49', '2024-06-19 00:08:49'),
-(17, '29283319', 14, 13, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-27T04:33:38.998Z', 13, '2024-06-19 08:33:57', '2024-06-19 08:33:57'),
-(18, '74727092', 14, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-28T09:40:08.728Z', 13, '2024-06-19 20:47:40', '2024-06-23 00:31:39'),
-(20, '25052949', 14, 11, NULL, NULL, NULL, NULL, NULL, 2, '2024-07-17T02:30:14.618Z', 9, '2024-06-27 06:38:28', '2024-06-27 06:42:45');
+INSERT INTO `tbl_order` (`id`, `invoice_id`, `type_order`, `from_user`, `product_fk`, `file_attach`, `to_name`, `to_address`, `to_contact`, `messages`, `purchase_status`, `order_date`, `owner_fk`, `created_at`, `updated_at`) VALUES
+(12, '58121649', 0, 9, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-19T04:56:43.326Z', 13, '2024-06-18 20:59:28', '2024-06-23 00:32:41'),
+(13, '68572056', 0, 9, 14, NULL, NULL, NULL, NULL, NULL, 1, '2024-06-19T04:56:43.326Z', 14, '2024-06-18 21:26:52', '2024-06-18 21:39:33'),
+(14, '30433260', 0, 9, 13, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-21T06:10:15.676Z', 13, '2024-06-18 22:15:29', '2024-06-23 00:32:15'),
+(16, '45705549', 0, 9, 15, NULL, NULL, NULL, NULL, 'Paki wrap', 1, '2024-06-26T08:08:37.434Z', 13, '2024-06-19 00:08:49', '2024-07-03 07:36:02'),
+(18, '74727092', 0, 14, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-06-28T09:40:08.728Z', 13, '2024-06-19 20:47:40', '2024-06-23 00:31:39'),
+(20, '25052949', 0, 14, 11, NULL, NULL, NULL, NULL, NULL, 2, '2024-07-17T02:30:14.618Z', 9, '2024-06-27 06:38:28', '2024-06-27 06:42:45'),
+(21, '30698113', 0, 14, 15, NULL, NULL, NULL, NULL, NULL, 2, '2024-07-25T02:20:07.653Z', 13, '2024-06-29 08:27:01', '2024-06-29 08:33:17'),
+(27, '13573706', 1, 14, NULL, 'Upload/ID/Georgie.jpg', 'Georgie', 'awdawd', 9324, 'ingani akong gusto,, and tawagi ko please', 0, 'Tue Jul 30 2024 23:28:43 GMT+0800 (Singapore Standard Time)', 13, '2024-07-03 07:29:08', '2024-07-03 07:29:08'),
+(28, '14814838', 1, 14, NULL, 'Upload/ID/daw.jpg', 'daw', 'dawd', 343, 'dawdawd', 0, 'Wed Jul 31 2024 23:33:09 GMT+0800 (Singapore Standard Time)', 12, '2024-07-03 07:33:24', '2024-07-03 07:33:24'),
+(29, '99477282', 0, 14, 11, NULL, NULL, NULL, NULL, 'daw', 0, '2024-07-31T15:33:31.819Z', 9, '2024-07-03 07:33:49', '2024-07-03 07:33:49'),
+(30, '22593967', 0, 14, 13, NULL, NULL, NULL, NULL, 'dawd', 2, '2024-07-23T15:33:57.155Z', 13, '2024-07-03 07:34:07', '2024-07-03 07:41:38');
 
 -- --------------------------------------------------------
 
@@ -274,13 +293,23 @@ INSERT INTO `tbl_order_status` (`id`, `order_fk`, `description`, `created_at`, `
 (8, 14, 'Your product order has been approved!', '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
 (9, 14, 'Your Product will deliver on  Jun 21 2024 02:10 pm', '2024-06-18 22:15:58', '2024-06-18 22:15:58'),
 (11, 16, 'Order Product Successfully with Order ID 45705549', '2024-06-19 00:08:49', '2024-06-19 00:08:49'),
-(12, 17, 'Order Product Successfully with Order ID 29283319', '2024-06-19 08:33:57', '2024-06-19 08:33:57'),
 (13, 18, 'Order Product Successfully with Order ID 74727092', '2024-06-19 20:47:40', '2024-06-19 20:47:40'),
 (14, 18, 'Your product order has been approved!', '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
 (15, 18, 'Your Product will deliver on  Jun 28 2024 05:40 pm', '2024-06-23 00:13:55', '2024-06-23 00:13:55'),
 (17, 20, 'Order Product Successfully with Order ID 25052949', '2024-06-27 06:38:28', '2024-06-27 06:38:28'),
 (18, 20, 'Your product order has been approved!', '2024-06-27 06:39:57', '2024-06-27 06:39:57'),
-(19, 20, 'Your Product will deliver on  Jul 17 2024 10:30 am', '2024-06-27 06:39:57', '2024-06-27 06:39:57');
+(19, 20, 'Your Product will deliver on  Jul 17 2024 10:30 am', '2024-06-27 06:39:57', '2024-06-27 06:39:57'),
+(20, 21, 'Order Product Successfully with Order ID 30698113', '2024-06-29 08:27:01', '2024-06-29 08:27:01'),
+(21, 21, 'Your product order has been approved!', '2024-06-29 08:30:47', '2024-06-29 08:30:47'),
+(22, 21, 'Your Product will deliver on  Jul 25 2024 10:20 am', '2024-06-29 08:30:47', '2024-06-29 08:30:47'),
+(23, 27, 'Order Product Successfully with Order ID 13573706', '2024-07-03 07:29:08', '2024-07-03 07:29:08'),
+(24, 28, 'Order Product Successfully with Order ID 14814838', '2024-07-03 07:33:24', '2024-07-03 07:33:24'),
+(25, 29, 'Order Product Successfully with Order ID 99477282', '2024-07-03 07:33:49', '2024-07-03 07:33:49'),
+(26, 30, 'Order Product Successfully with Order ID 22593967', '2024-07-03 07:34:07', '2024-07-03 07:34:07'),
+(27, 30, 'Your product order has been approved!', '2024-07-03 07:35:50', '2024-07-03 07:35:50'),
+(28, 30, 'Your Product will deliver on  Jul 23 2024 11:33 pm', '2024-07-03 07:35:50', '2024-07-03 07:35:50'),
+(29, 16, 'Your product order has been approved!', '2024-07-03 07:36:02', '2024-07-03 07:36:02'),
+(30, 16, 'Your Product will deliver on  Jun 26 2024 04:08 pm', '2024-07-03 07:36:02', '2024-07-03 07:36:02');
 
 -- --------------------------------------------------------
 
@@ -406,7 +435,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `role`, `status`, `email_verified_at
 (11, 'Kate Alcazar', 'kate@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$3yIKiHQd.o8gxsdbUZZSTudGdppZea.feeR851UTzsih6o7mbg7jK', NULL, '2024-06-08 00:19:41', '2024-06-08 00:21:58'),
 (12, 'Shiela Arganda', 'shiela@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$GgYWrZVKghbi8Jnz3wPSrO1HfU9djn445XNemEF/.uqTaj645B5n.', NULL, '2024-06-08 00:21:10', '2024-06-17 06:25:52'),
 (13, 'John Carl', 'john@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$6NvnUssbihXMadnexWC39e8glj0yChHC31lf9jAHHeRIOFXiFMraq', NULL, '2024-06-08 06:32:46', '2024-06-18 06:51:45'),
-(14, 'Hanzo', 'hanzo@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$A7kO5WZtxtw5QJalPGT11eGGoiBBJAT9cNry3d/cbkG1ESn2mUrrm', NULL, '2024-06-08 07:45:37', '2024-06-27 06:27:19');
+(14, 'Hanzo', 'hanzo@gmail.com', 2, 1, NULL, 'sample123', '$2y$10$A7kO5WZtxtw5QJalPGT11eGGoiBBJAT9cNry3d/cbkG1ESn2mUrrm', NULL, '2024-06-08 07:45:37', '2024-06-29 08:23:39');
 
 --
 -- Indexes for dumped tables
@@ -525,7 +554,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_contact`
@@ -537,25 +566,25 @@ ALTER TABLE `tbl_contact`
 -- AUTO_INCREMENT for table `tbl_income`
 --
 ALTER TABLE `tbl_income`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_status`
 --
 ALTER TABLE `tbl_order_status`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\ActivityLogs;
 use App\Models\OrderDetails;
+use App\Models\OrderStatus;
 use App\Models\ProductDesign;
 use App\Models\RegisterShop;
 use App\Models\StoreIncome;
@@ -226,28 +227,50 @@ class ShopController extends Controller
 
     public function BookDataForm(Request $request){
 
-        $rand = rand(1111,9999)."".rand(1111,9999);
-
-        $data = new OrderDetails;
-
-
-        $data->invoice_id = $rand;
-        $data->from_user = $request->user_;
-        if($request->hasFile('file')){
-            $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $request->name.".".$extension;
-            $file->move('Upload/ID/',$filename);
-            $data->file_attach = "Upload/ID/".$filename;
-        }
-        $data->to_name = $request->name;
-        $data->to_address = $request->address;
-        $data->to_contact = $request->contact;
-        $data->messages = $request->desc;
-        $data->save();
-
-        return response()->json([
-            "status"            =>          200,
+        $validate = Validator::make($request->all(), [
+            "file"          =>              "required"
         ]);
+
+        if($validate->fails()) {
+            return response()->json([
+                "status"            =>          $validate->messages(),
+            ]);
+        }
+        else{
+
+            $rand = rand(1111,9999)."".rand(1111,9999);
+    
+            $data = new OrderDetails;
+            $data->invoice_id = $rand;
+            $data->type_order = 1;
+            $data->from_user = $request->user_;
+            if($request->hasFile('file')){
+                $file = $request->file('file');
+                $extension = $file->getClientOriginalExtension();
+                $filename = $request->name.".".$extension;
+                $file->move('Upload/ID/',$filename);
+                $data->file_attach = "Upload/ID/".$filename;
+            }
+            $data->to_name = $request->name;
+            $data->to_address = $request->address;
+            $data->to_contact = $request->contact;
+            $data->messages = $request->desc;
+            $data->owner_fk = $request->owner_fk;
+            $data->purchase_status = 0;
+            $data->order_date = $request->date_;
+            $data->save();
+
+
+            $track = new OrderStatus;
+
+            $track->order_fk = $data->id;
+            $track->description = "Order Product Successfully with Order ID ".$rand;
+            $track->save();
+    
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
+
     }
 }

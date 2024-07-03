@@ -5,10 +5,12 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Panel } from 'primereact/panel'
-import React, { useEffect, useState } from 'react'
+import { Toast } from 'primereact/toast';
+import React, { useEffect, useRef, useState } from 'react'
 import swal from 'sweetalert';
 
 function CreateFormRequest(props) {
+
 
     const [ShopData, setShopData] = useState([])
     const [Book, setBook] = useState({
@@ -18,11 +20,11 @@ function CreateFormRequest(props) {
         desc: "",
         error: [],
     })
+    const toast = useRef(null)
     const [BookDate, setBookDate] = useState("")
     const [FileAttach, setFileAttach] = useState([])
     const [btndis, setBtn] = useState(false)
-
-
+    
     useEffect(() => {
         axios.get(`/api/ShopInfo/${props.match.params.id}`).then(res => {
             if (res.data.status === 200) {
@@ -55,27 +57,43 @@ function CreateFormRequest(props) {
 
         const data = new FormData;
         
-
+        setBtn(true)
         data.append('name',Book.name)
         data.append('contact',Book.contact)
         data.append('address',Book.address)
         data.append('desc',Book.desc)
         data.append('date_',BookDate)
         data.append('file',FileAttach.file)
+        data.append('owner_fk',props.match.params.id)
         data.append('user_',localStorage.getItem('auth_id'))
 
         axios.post(`/api/BookDataForm`,data).then(res => {
             if(res.data.status === 200) {
-
+                setBtn(false)
+                toast.current.show({
+                    severity: "success",
+                    summary: "Book Data Added",
+                    detail: "Successfully",
+                })
+                document.getElementById('reset_form').reset();
+                setBook({
+                    name: "",
+                    contact: "",
+                    address: "",
+                    desc: "",
+                })
             }
             else{
-
+                setBtn(false)
             }
         }).catch((error) => {
             if (error.response.status === 500) {
                 swal("Warning", error.response.statusText, 'warning')
+                setBtn(false)
+
             }
             else if (error.response.status === 404) {
+                setBtn(false)
 
             }
         })
@@ -85,6 +103,7 @@ function CreateFormRequest(props) {
     return (
         <div>
             <Panel header="Form Design Request">
+                <Toast ref={toast} />
                 <div className="d-flex justify-content-end">
                     <Button className='p-button-sm p-button-info' label='Return Page' onClick={ReturnPAge} />
                 </div>
@@ -98,13 +117,13 @@ function CreateFormRequest(props) {
                         </div>
                         <div className="col-lg-6 mb-2">
                             <label htmlFor="" className="form-label">
-                                Shop Name
+                                Shop Email
                             </label>
                             <InputText className='w-100 p-inputtext-sm' value={ShopData.email} readOnly />
                         </div>
                         <div className="col-lg-6 mb-2">
                             <label htmlFor="" className="form-label">
-                                Shop Name
+                                Shop Contact 
                             </label>
                             <InputText className='w-100 p-inputtext-sm' value={ShopData.shop_contact} readOnly />
                         </div>
@@ -129,7 +148,7 @@ function CreateFormRequest(props) {
                                     <label htmlFor="" className="form-label">
                                         <span className='text-danger'>*</span>Contact
                                     </label>
-                                    <InputText name='contact' className='w-100 p-inputtext-sm' onChange={hanldeinput} />
+                                    <InputText keyfilter={'int'} name='contact' maxLength={11} className='w-100 p-inputtext-sm' onChange={hanldeinput} />
                                 </div>
                                 <div className="col-lg-6 mb-2">
                                     <label htmlFor="" className="form-label">
