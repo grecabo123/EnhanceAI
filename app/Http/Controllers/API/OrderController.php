@@ -78,6 +78,21 @@ class OrderController extends Controller
             "status"            =>          200,
             "data"              =>          $data,
         ]);
+        // $user = "2,4,56,7,8,9,0"
+
+        // foreach($user as $user_data) {
+        //     $user_id = $user_data->id;
+
+        //     $user_array = explode(',',ltrim($user_id, ','));
+
+            
+        //     // To check if the id is matching
+        //     if(in_array($num,$user_array)){
+        //         // Match Number
+        //     }
+        // }
+
+
     }
 
     public function ListoBuyerHistory($id){

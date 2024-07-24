@@ -7,8 +7,10 @@ import { InputText } from 'primereact/inputtext'
 import { Panel } from 'primereact/panel'
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert'
-import {FilterMatchMode } from 'primereact/api'
+import { FilterMatchMode } from 'primereact/api'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Data } from '@react-google-maps/api';
+
 
 function ListShops() {
 
@@ -16,6 +18,7 @@ function ListShops() {
     const [loading, setLoading] = useState(true)
     const history = useHistory();
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+    const [coordinates, setCoordinates] = useState(null);
 
     const [filters, setFilter] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
@@ -23,23 +26,37 @@ function ListShops() {
 
     useEffect(() => {
         axios.get(`/api/ShopList/${localStorage.getItem('auth_id')}`).then(res => {
-            if(res.data.status === 200) {
+            if (res.data.status === 200) {
                 setData(res.data.data);
             }
             setLoading(false)
         }).catch((error) => {
-            if(error.response.status === 500) {
-                swal("Warning",error.response.statusText,'warning')
+            if (error.response.status === 500) {
+                swal("Warning", error.response.statusText, 'warning')
             }
-            else if(error.response.status === 404) {
-                swal("Error","Page Error",'warning')
+            else if (error.response.status === 404) {
+                swal("Error", "Page Error", 'warning')
             }
         })
-    },[])
+    }, [])
 
-    const ImageLogo = (rowData) =>{
+    const containerStyle = {
+        width: '100%',
+        height: '300px',
+    };
+
+    const butuan = {
+        lat: 8.9475,
+        lng: 125.5406,
+
+    }
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: "AIzaSyBYboX0tQrX5nexk94H30QwGUgbXCTokJw",
+    })
+
+    const ImageLogo = (rowData) => {
         return (
-            <span> 
+            <span>
                 <Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.shop_logo}`} width='80' />
             </span>
         )
@@ -76,10 +93,36 @@ function ListShops() {
         );
     };
 
+    const ShopAddress = (rowData) => {
+        return (
+            <span className='text-primary' onClick={MapData} data-adr={rowData.shop_address} >{rowData.shop_address}</span>
+        )
+    }
+
+    const MapData = (e) => {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ address: e.currentTarget.getAttribute('data-adr') }, (results, status) => {
+            if (status === 'OK') {
+                if (results[0]) {
+                    const location = results[0].geometry.location;
+                    setCoordinates({ lat: location.lat(), lng: location.lng() });
+                } else {
+                    console.error('No results found');
+                }
+            } else {
+                console.error('Geocoder failed due to: ' + status);
+            }
+        });
+
+        console.log(coordinates);
+    }
+
+
+
     return (
         <div>
             <Panel header="List Shops">
-                <DataTable 
+                <DataTable
                     loading={loading}
                     paginator
                     paginatorLeft
@@ -92,12 +135,12 @@ function ListShops() {
                     header={header}
                 >
 
-                    <Column header="#" body={(data,options) => options.rowIndex +1}></Column>
+                    <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column body={ImageLogo} header="Shop Logo"></Column>
                     <Column field='shop_name' filterField='shop_name' header="Shop Name"></Column>
                     <Column field='email' header="Shop Email"></Column>
                     <Column field='shop_city' header="Shop City"></Column>
-                    <Column field='shop_address' header="Shop Address"></Column>
+                    <Column field='shop_address' body={ShopAddress} header="Shop Address"></Column>
                     <Column body={ActionButton} header="Action"></Column>
                 </DataTable>
             </Panel>

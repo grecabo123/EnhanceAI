@@ -149,7 +149,7 @@ function BidItem(props) {
                             <div className="container">
                             </div>
                             <Divider>
-                                <span>Delivery Details</span>
+                                <span>Delivery Details / Pickup Details</span>
                             </Divider>
                             <form onSubmit={Purchase} id='form_purchase'>
                                 <div className="container">
@@ -174,7 +174,7 @@ function BidItem(props) {
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
-                                                <span className='text-danger'>*</span>Deliver Date
+                                                <span className='text-danger'>*</span>Deliver / Pick up Date
                                             </label>
                                             <Calendar showTime hourFormat='12' value={DateData} showButtonBar onChange={(e) => setData(e.target.value)} className='w-100 p-inputtex-sm' showIcon />
                                         </div>
