@@ -33,6 +33,7 @@ function Myproduct() {
         product_id: "",
         user_fk: "",
     })
+    const [NewFile, setFile] = useState([])
 
 
     useEffect(() => {
@@ -138,17 +139,32 @@ function Myproduct() {
         });
     }
 
+    const handleuploadnew = (e) => {
+        e.persist();
+        setFile({file_new: e.target.files[0]});
+        
+    }
+
     const Update = (e) => {
         e.preventDefault();
 
-        const data = {
-            name: EditDetails.name,
-            pcs: EditDetails.pcs,
-            id: EditDetails.product_id,
-            user: EditDetails.user_fk,
-        };
+        // const data = {
+        //     name: EditDetails.name,
+        //     pcs: EditDetails.pcs,
+        //     id: EditDetails.product_id,
+        //     user: EditDetails.user_fk,
+        // };
 
-        axios.put(`/api/UpdateProduct`, data).then(res => {
+        const data = new FormData;
+
+        data.append('name',EditDetails.name)
+        data.append('pcs',EditDetails.pcs)
+        data.append('id',EditDetails.product_id)
+        data.append('user',EditDetails.user_fk)
+        data.append('file_new',NewFile.file_new === undefined ? "" : NewFile.file_new)
+
+
+        axios.post(`/api/UpdateProduct`, data).then(res => {
             if (res.data.status === 200) {
                 toast.current.show({
                     severity: "success",
@@ -171,6 +187,8 @@ function Myproduct() {
             }
         })
     }
+
+    
 
     return (
         <div className='container'>
@@ -251,6 +269,12 @@ function Myproduct() {
                 <form onSubmit={Update} id='form_update'>
                     <div className="container">
                         <div className="row">
+                        <div className="col-lg-12 mb-2">
+                                <label htmlFor="" className="form-label">
+                                    <span className='text-danger'>*</span>Product Image
+                                </label>
+                                <InputText className='w-100 p-inputtext-sm' type='file' name='file_new' onChange={handleuploadnew} />
+                            </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
                                     <span className='text-danger'>*</span>Product Name

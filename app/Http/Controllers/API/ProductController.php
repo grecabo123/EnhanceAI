@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\ActivityLogs;
-use App\Models\ProductDesign;
 use Illuminate\Http\Request;
+use App\Models\ProductDesign;
 use App\Models\StoreProducts;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -120,15 +121,28 @@ class ProductController extends Controller
 
         if($data) {
 
-            $data->number_pcs = $request->pcs;
-            $data->product_name = $request->name;
-            $data->update();
+            if($request->hasFile('file_new')){
+                $path = $data->file_product;
+                if(File::exists($path)){
+                    File::delete($path);
+                }
+                $file = $request->file('file_new');
+                $extention = $file->getClientOriginalExtension();
+                $filename = $request->name.".".$extention;
+                $file->move('Uploads/Flowers/',$filename);
+                $data->file_product = "Uploads/Flowers/".$filename;
+                $data->number_pcs = $request->pcs;
+                $data->product_name = $request->name;
+                $data->update();
 
-            $logs = new ActivityLogs;
+                $logs = new ActivityLogs;
 
-            $logs->description = $data->product_name. " "."Updated Data";
-            $logs->user_fk = $request->user;
-            $logs->save();
+                $logs->description = $data->product_name. " "."Updated Data";
+                $logs->user_fk = $request->user;
+                $logs->save();
+
+            }
+
 
             
 
@@ -171,6 +185,48 @@ class ProductController extends Controller
         "status"            =>          200,
         "data"              =>          $data,
     ]);
+
+    }
+
+    public function ProductDesignUpdate(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            "file_new"           =>          "required",
+        ],[
+            "file_new.required"          =>          "Product Design field is required",
+        ]);
+
+        if($validate->fails()) {
+            return response()->json([
+                "error"         =>          $validate->messages(),
+            ]);
+        }
+        else{
+            $data = ProductDesign::find($request->product_id);
+            
+            if($data) {
+    
+                if($request->hasFile('file_new')){
+                    $path = $data->file_product_design;
+                    if(File::exists($path)){
+                        File::delete($path);
+                    }
+                    $data->product_name = $request->name;
+                    $data->price = $request->price;
+                    $file = $request->file('file_new');
+                    $extention = $file->getClientOriginalExtension();
+                    $filename = $request->name.".".$extention;
+                    $file->move('Uploads/DesignProducts/',$filename);
+                    $data->file_product_design = "Uploads/DesignProducts/".$filename;
+                    $data->update();
+    
+                    return response()->json([
+                        "status"            =>          200,
+                    ]);
+                }
+            }
+        }
+
 
     }
 }

@@ -19,6 +19,7 @@ function DesignProduct() {
     const [loading, setLoading] = useState(true)
     const [pricedata, setPrice] = useState("")
     const [btndis, setBtn] = useState(false)
+    const [detailsvisible, setdetailsvisible] = useState(false)
     const toast = useRef(null)
     const [product, setProduct] = useState({
         name: "",
@@ -30,8 +31,11 @@ function DesignProduct() {
     const [EditDesign, setDesign] = useState({
         name: "",
         desc: "",
-
+        price: "",
+        product_id: "",
+        indicator: ""
     });
+    const [NewImage, setNewImage] = useState([])
     const [DesignVisible, setVisibleDesign] = useState(false)
 
 
@@ -65,6 +69,16 @@ function DesignProduct() {
     const handleupload = (e) => {
         e.persist();
         setimg({ file: e.target.files[0] })
+    }
+
+    const handleupdatedata = (e) => {
+        e.persist();
+        setDesign({...EditDesign, [e.target.name] : e.target.value})
+    }
+
+    const handleuploadupdate = (e) => {
+        e.persist();
+        setNewImage({file_new: e.target.files[0]});
     }
 
     const AddProduct = (e) => {
@@ -112,12 +126,65 @@ function DesignProduct() {
         })
     }
 
+    const actionbutton = (rowData) => {
+        return (
+            <div>
+                <Button onClick={Detailsdata} 
+                    data-name={rowData.product_name}
+                    data-price={rowData.price}
+                    data-product_id={rowData.id}
+                    data-indicator={1} data-product={rowData.id} className='p-button-sm p-button-success m-2' icon={PrimeIcons.PENCIL} label='Edit Product' />
+                <Button className='p-button-sm p-button-danger m-2' data-indicator={2} onClick={Detailsdata} data-product={rowData.id} label='Disable Product' />
+            </div>
+        )
+    }
+
+    const onUpdateData = (e) => {
+        e.preventDefault();
+
+        const data = new FormData;
+
+        data.append('name',EditDesign.name)
+        data.append('product_id',EditDesign.product_id)
+        data.append('price',EditDesign.price)
+        data.append('file_new',NewImage.file_new === undefined ? "" : NewImage.file_new)
+
+        axios.post(`/api/ProductDesignUpdate`,data).then(res=> {
+            if(res.data.status === 200) {
+                FetchProduct();
+                setdetailsvisible(false)
+            }
+        }).catch((error) => {
+            if(error.response.status === 500) {
+                swal("Warning",error.response.statusText,'warning')
+            }
+            else if(error.response.status === 404) {
+                swal("Warning","Server Error",'warning')
+            }
+        })
+
+
+    }
+
+    // console.log(NewImage);
+
+    const Detailsdata = (e) => {
+
+        setdetailsvisible(true)
+        setDesign({
+            name: e.currentTarget.getAttribute('data-name'),
+            price: e.currentTarget.getAttribute('data-price'),
+            indicator: e.currentTarget.getAttribute('data-indicator'),
+            product_id: e.currentTarget.getAttribute('data-product_id'),
+        });
+    }
+
 
     return (
         <div className='container'>
             <Panel header="List of Product Design">
                 <Toast ref={toast} />
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-end mb-2">
                     <Button className='p-button-sm p-button-info' label='Add Product' onClick={() => setVisible(true)} icon={PrimeIcons.PLUS} />
                 </div>
                 <DataTable
@@ -128,8 +195,9 @@ function DesignProduct() {
                     <Column field='file_product' body={(ListProduct) => <img className='' width={100} src={`http://127.0.0.1:8000/${ListProduct.file_product_design}`} />} header="Product Image"></Column>
                     <Column field='product_name' header="Product Name"></Column>
                     <Column field='price' body={(ListProduct) => <span>₱{ListProduct.price.toFixed(2)}</span>} header="Price"></Column>
-                    <Column field='description' header="Description"></Column>
-                    <Column field='created_at' body={(ListProduct) => moment(ListProduct.created_at).format('MMM DD YYYY')} header="Date Created"></Column>
+                    {/* <Column field='description' header="Description"></Column> */}
+                    {/* <Column field='created_at' body={(ListProduct) => moment(ListProduct.created_at).format('MMM DD YYYY')} header="Date Created"></Column> */}
+                    <Column field='id' body={actionbutton} header="Action"></Column>
                 </DataTable>
             </Panel>
 
@@ -158,7 +226,7 @@ function DesignProduct() {
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                   Description <small>(optional)</small>
+                                    Description <small>(optional)</small>
                                 </label>
                                 <InputTextarea className={`w-100 ${product.error.desc ? 'p-invalid' : ''}`} rows={5} cols={5} name='desc' onChange={handleinput} />
                                 <small className='text-danger'>{product.error.desc}</small>
@@ -176,6 +244,51 @@ function DesignProduct() {
                         </div>
                     </div>
                 </form>
+            </Dialog>
+
+
+            <Dialog
+                header={`${EditDesign.indicator == 1 ? 'Edit Product Details' : 'Disable Product'}`} style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}
+                visible={detailsvisible}
+                position='top'
+                draggable={false}
+                onHide={() => setdetailsvisible(false)}
+            >
+                {
+                    EditDesign.indicator == 1 ?
+                    <React.Fragment>
+                        <form onSubmit={onUpdateData} id='reset_form'>
+                            <div className="row">
+                                <div className="col-lg-12 mb-2">
+                                    <label htmlFor="" className="form-label">
+                                        Product Image
+                                    </label>
+                                    <InputText type='file' onChange={handleuploadupdate}  className='w-100 p-inputtext-sm' name='file_new' />
+                                </div>
+                                <div className="col-lg-12 mb-2">
+                                    <label htmlFor="" className="form-label">
+                                        Product Name
+                                    </label>
+                                    <InputText value={EditDesign.name}  onChange={handleupdatedata} className='w-100 p-inputtext-sm' name='' />
+                                </div>
+                                <div className="col-lg-12 mb-2">
+                                    <label htmlFor="" className="form-label">
+                                        Product Price
+                                    </label>
+                                    <InputNumber value={EditDesign.price} name='price' onChange={handleupdatedata} className='w-100 p-inputtext-sm' prefix='₱' />
+                                </div>
+                                <div className="mt-2">
+                                    <Button className='w-100 p-button-sm p-button-success' label='Update Data' />
+                                </div>
+
+                            </div>
+                        </form>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+
+                    </React.Fragment>
+                }
             </Dialog>
         </div>
     )

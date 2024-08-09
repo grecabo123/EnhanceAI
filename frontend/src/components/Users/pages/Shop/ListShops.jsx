@@ -51,7 +51,7 @@ function ListShops() {
 
     }
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyBYboX0tQrX5nexk94H30QwGUgbXCTokJw",
+        googleMapsApiKey: import.meta.env.VITE_API_MAP,
     })
 
     const ImageLogo = (rowData) => {
