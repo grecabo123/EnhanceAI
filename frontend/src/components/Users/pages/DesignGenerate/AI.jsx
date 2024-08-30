@@ -44,29 +44,50 @@ function AI() {
             flower: "pollinations"
         }
 
-        const response = await fetch(
-            'https://api.edenai.run/v2/image/generation',
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
-                    // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTA1YzMxZWMtNWIzMS00YjZmLWI2OWYtMGM0NDc0OGU0NzE0IiwidHlwZSI6ImFwaV90b2tlbiJ9._A8SlY7e4vrUk2p13RaQK6geLrjdU3PtoJODpCC41sg",
-                    // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjU4NzgyZjMtMmU2My00NzkzLWIyNzItMmFmZTY1ZmFiMWZlIiwidHlwZSI6ImFwaV90b2tlbiJ9.0eQdnFXXpsEQXO6weOdg-oohDboMAQ5C7VdxHHz-Z-k",
-                    "User-Agent": "Chrome",
-                },
-                body: JSON.stringify({
-                    "providers": "openai,deepai,stabilityai",
-                    "text": data_.name,
-                    "resolution": "512x512",
-                }),
-            }
-        );
+        const options = {
+            method: "POST",
+            url: "https://api.edenai.run/v2/image/generation",
+            headers: {
+                authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
+            },
+            data: {
+                providers: "openai/dall-e-3",
+                text: data_.name,
+                resolution: "1024x1024",
+            },
+        };
+
+        axios
+            .request(options)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        // const response = await fetch(
+        //     'https://api.edenai.run/v2/image/generation',
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
+        //             "User-Agent": "Chrome",
+        //         },
+        //         body: JSON.stringify({
+        //             "providers": "openai,deepai,stabilityai",
+        //             "text": data_.name,
+        //             "resolution": "512x512",
+        //         }),
+        //     }
+        // );
 
 
-        
-        const data = await response.json();
-        setImages(data.deepai.items[0].image_resource_url)
+
+        // const data = await response.json();
+        // setImages(data.deepai.items[0].image_resource_url)
+        // console.log(data);
         // const resp = await fetch(
         //   `https://api.limewire.com/api/image/generation`,
         //   {
@@ -100,6 +121,8 @@ function AI() {
         //     setLoading(false);
         // }
     }
+
+
 
     const RequestForm = (e) => {
 
@@ -158,16 +181,16 @@ function AI() {
                                 :
                             } */}
 
-                            <Image
-                                src={images}
-                                // src={`https://api.deepai.org/job-view-file/29534bfc-d4e4-42ba-8c7f-dca8357db1fd/outputs/output.jpg?art-image=true`}
-                                alt={"Flower"}
-                                className='img-fluid mt-5 mr-4'
-                                width={250}
-                                preview
-                                downloadIcon
-                                downloadable={true}
-                            />
+                        <Image
+                            src={images}
+                            // src={`https://api.deepai.org/job-view-file/29534bfc-d4e4-42ba-8c7f-dca8357db1fd/outputs/output.jpg?art-image=true`}
+                            alt={"Flower"}
+                            className='img-fluid mt-5 mr-4'
+                            width={250}
+                            preview
+                            downloadIcon
+                            downloadable={true}
+                        />
                         {/* {loading ? (
                             <p className='loading'>Loading...</p>
                         ) : (
