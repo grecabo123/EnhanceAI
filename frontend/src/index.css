@@ -273,3 +273,23 @@ a.sidebar-link {
     background: #cccccc !important;
 }
 
+
+.sidebar-list{
+    list-style-type: none;
+}
+.sidebar-list li {
+    position: relative;
+    margin: 10px 4px;
+    left: -20px;
+    padding: 10px 10px;
+    background-color: #ded5d7;
+    width: 100%;
+    border-radius: 4px;
+}
+.sidebar-list li a{
+    color: #5a5a77;
+    transition: 0.4 ease-in;
+}
+.sidebar-list li a:hover{
+    color: blue;
+}

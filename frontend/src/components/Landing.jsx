@@ -1,18 +1,23 @@
-import React from 'react'
-import { FaCartPlus, FaRobot, FaSearch } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaBars, FaCartPlus, FaRobot, FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
+import { Sidebar } from 'primereact/sidebar';
+import { Button } from 'primereact/button';
 
 function Landing() {
+
+    const [visible, setVisible] = useState(false)
+
     return (
         <React.Fragment>
             <header id="header" class="fixed-top d-flex align-items-center">
-                <div class="container d-flex align-items-center">
-                    <div class="logo me-auto">
-                        <h1><a href="index.html">Floral Design</a></h1>
+                <div class="container d-flex align-items-center justify-content-start">
+                    <div className='d-lg-none' id='bars'>
+                        <FaBars size={24} onClick={(e) => setVisible(true)} style={{ cursor: "pointer" }} />
                     </div>
                     <nav id="navbar" class="navbar order-last order-lg-0">
                         <ul>
-                            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                            <li><a class="nav-link scrollto active" href="/">Home</a></li>
                             <li><Link to="/register" class="nav-link scrollto" href="#about">Register</Link></li>
                             <li><Link to="/login" class="nav-link scrollto" href="#contact">Login</Link></li>
                         </ul>
@@ -35,12 +40,12 @@ function Landing() {
                                     <div class="icon"><FaRobot size={50} color='gray' /></div>
                                     <h4><a>Assist AI </a></h4>
                                     <p>
-                                    Enhancing creativity using AI: fostering innovation, inspiration, and novel perspectives for expansive creative endeavors.</p>
+                                        Enhancing creativity using AI: fostering innovation, inspiration, and novel perspectives for expansive creative endeavors.</p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                                 <div class="icon-box">
-                                    <div class="icon"><FaSearch  size={30}/></div>
+                                    <div class="icon"><FaSearch size={30} /></div>
                                     <h4><a >Search Product</a></h4>
                                     <p>You can search any design flowers from the flower shop </p>
                                 </div>
@@ -56,6 +61,18 @@ function Landing() {
                     </div>
                 </section>
             </main>
+
+            <Sidebar visible={visible} onHide={() => setVisible(false)}>
+                <div className="text-center">
+                    <h4><b>Floral Design</b></h4>
+                </div>
+                <ul className='sidebar-list'>
+                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    <li><Link to="/register" class="nav-link scrollto" href="#about">Register</Link></li>
+                    <li><Link to="/login" class="nav-link scrollto" href="#contact">Login</Link></li>
+                </ul>
+            </Sidebar>
+            
         </React.Fragment>
     )
 }

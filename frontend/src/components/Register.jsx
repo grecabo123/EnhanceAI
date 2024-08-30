@@ -1,7 +1,7 @@
 import { Button } from 'primereact/button'
 import React, { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { FaCartPlus, FaRobot, FaSearch } from 'react-icons/fa'
+import { FaBars, FaCartPlus, FaRobot, FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Divider } from 'primereact/divider'
@@ -10,12 +10,14 @@ import swal from 'sweetalert'
 import {Toast} from 'primereact/toast'
 import ReCAPTCHA from "react-google-recaptcha"
 import { Checkbox } from 'primereact/checkbox';
+import { Sidebar } from 'primereact/sidebar'
 
 
 
 function Register() {
 
     const history = useHistory();
+    const [visible, setVisible] = useState(false)
     const [loading, setloading] = useState(false)
     const [CreateAccountData, setData] = useState({
         name: "",
@@ -99,9 +101,9 @@ function Register() {
         <React.Fragment>
             <Toast ref={toast} />
             <header id="header" class="fixed-top d-flex align-items-center">
-                <div class="container d-flex align-items-center">
-                    <div class="logo me-auto">
-                        <h1><a href="index.html">Floral Design</a></h1>
+                <div class="container d-flex align-items-center justify-content-start">
+                    <div className='d-lg-none' id='bars'>
+                        <FaBars size={24} onClick={(e) => setVisible(true)} style={{ cursor: "pointer" }} />
                     </div>
                     <nav id="navbar" class="navbar order-last order-lg-0">
                         <ul>
@@ -209,6 +211,17 @@ function Register() {
                     </div>
                 </div>
             </main>
+
+            <Sidebar visible={visible} onHide={() => setVisible(false)}>
+                <div className="text-center">
+                    <h4><b>Floral Design</b></h4>
+                </div>
+                <ul className='sidebar-list'>
+                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    <li><Link to="/register" class="nav-link scrollto" href="#about">Register</Link></li>
+                    <li><Link to="/login" class="nav-link scrollto" href="#contact">Login</Link></li>
+                </ul>
+            </Sidebar>
         </React.Fragment>
     )
 }
