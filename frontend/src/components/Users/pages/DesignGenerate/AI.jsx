@@ -29,13 +29,17 @@ function AI() {
         desc: "",
         error: [],
     })
+    const [generateimg, setGenerateimg] = useState(1)
+    const [btndis, setBtn] = useState(false)
     const [CollentDate, setDate] = useState("")
 
     const URL = 'https://api.unsplash.com/search/photos';
 
     const IMAGES_PER_PAGES = 21;
+
     const Search = async (e) => {
         e.preventDefault();
+        setBtn(true)
         const data_ = {
             name: input,
             width: 893,
@@ -43,91 +47,43 @@ function AI() {
             seed: 42,
             flower: "pollinations"
         }
-
         const options = {
             method: "POST",
-            url: "https://api.edenai.run/v2/image/generation",
             headers: {
+                "Content-Type": "application/json",
                 authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
             },
-            data: {
-                providers: "openai/dall-e-3",
+            body: JSON.stringify({
+                providers: "amazon/titan-image-generator-v1_standard",
                 text: data_.name,
                 resolution: "1024x1024",
-            },
+            }),
         };
 
-        axios
-            .request(options)
+        fetch("https://api.edenai.run/v2/image/generation", options)
             .then((response) => {
-                console.log(response.data);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                    setBtn(false)
+
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setImages(data)
+                setGenerateimg(0);
+                console.log(data);
+                setBtn(false)
             })
             .catch((error) => {
+                setBtn(false)
+
                 console.error(error);
             });
-
-        // const response = await fetch(
-        //     'https://api.edenai.run/v2/image/generation',
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
-        //             "User-Agent": "Chrome",
-        //         },
-        //         body: JSON.stringify({
-        //             "providers": "openai,deepai,stabilityai",
-        //             "text": data_.name,
-        //             "resolution": "512x512",
-        //         }),
-        //     }
-        // );
-
-
-
-        // const data = await response.json();
-        // setImages(data.deepai.items[0].image_resource_url)
-        // console.log(data);
-        // const resp = await fetch(
-        //   `https://api.limewire.com/api/image/generation`,
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       'X-Api-Version': 'v1',
-        //       Accept: 'application/json',
-        //       Authorization: `Bearer ${import.meta.env.VITE_API_IMAGE_GENERATE}`
-        //     },
-        //     body: JSON.stringify({
-        //       prompt: 'A cute baby sea otter',
-        //       aspect_ratio: '1:1'
-        //     })
-        //   }
-        // );
-
-        // const data = await resp.json();
-        // console.log(data);
-
-
-        // const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(data_.name)}?width=${data_.width}&height=${data_.height}&seed=${data_.seed}&model=${data_.flower}`;
-
-        // try {
-        //     const response = await fetch(imageUrl);
-        //     const result = await response.buffer();
-        //     console.log(result);
-        //     setLoading(false);
-        // } catch (error) {
-        //     console.log(error);
-        //     setLoading(false);
-        // }
     }
 
-
-
     const RequestForm = (e) => {
-
         history.push(`/customer/request/form/flower`)
-        // setVisible(true)
     }
 
     const handleinput = (e) => {
@@ -142,13 +98,13 @@ function AI() {
 
     const RequestFormData = (e) => {
         e.preventDefault();
-
         const form = new FormData;
 
 
 
-
     }
+
+    // console.log(images['amazon/titan-image-generator-v1_standard'].items[0].image_resource_url);
 
 
     return (
@@ -161,61 +117,28 @@ function AI() {
                     <form onSubmit={Search}>
                         <div className="p-inputgroup flex-1">
                             <InputText className='p-inputtext-sm' name='name' onChange={(e) => setinput(e.target.value)} />
-                            {/* <Chips value={value} onChange={(e) => setValue(e.value)}></Chips> */}
                         </div>
                         <div className="mt-2">
-                            <Button className='p-button-sm p-button-info w-100' label='Generate Design' />
+                            <Button loading={btndis} className='p-button-sm p-button-info w-100' label='Generate Design' />
                         </div>
-
+                        {
+                            generateimg == 1 ? ""
+                            :
                         <div className="container">
-                            <div className="row">
-
-                            </div>
+                            <Image
+                                src={`${images['amazon/titan-image-generator-v1_standard'].items[0].image_resource_url}`}
+                                alt={"Flower"}
+                                className='img-fluid mt-5 mr-4'
+                                width={250}
+                                preview
+                                downloadIcon
+                                downloadable={true}
+                            />
                         </div>
-
-
-
-
-                        {/* {
-                            images.length === 0 ? ""
-                                :
-                            } */}
-
-                        <Image
-                            src={images}
-                            // src={`https://api.deepai.org/job-view-file/29534bfc-d4e4-42ba-8c7f-dca8357db1fd/outputs/output.jpg?art-image=true`}
-                            alt={"Flower"}
-                            className='img-fluid mt-5 mr-4'
-                            width={250}
-                            preview
-                            downloadIcon
-                            downloadable={true}
-                        />
-                        {/* {loading ? (
-                            <p className='loading'>Loading...</p>
-                        ) : (
-                            <>
-                                <div className='col-12'>
-                                    {images.map((image) => (
-                                        <Image
-                                            key={image.id}
-                                            src={image.urls.small}
-                                            alt={image.alt_description}
-                                            className='img-fluid m-2'
-                                            width={150}
-                                            preview
-                                            downloadIcon
-                                            downloadable={true}
-                                        />
-                                    ))}
-                                </div>
-                            </>
-                        )} */}
+                        }
                     </form>
-
                 </Panel>
             </div>
-
             <Dialog header="Request Form" visible={visible} position='top' draggable={false}
                 onHide={() => setVisible(false)}
                 style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}
