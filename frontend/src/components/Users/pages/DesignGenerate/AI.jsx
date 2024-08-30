@@ -50,7 +50,9 @@ function AI() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjU4NzgyZjMtMmU2My00NzkzLWIyNzItMmFmZTY1ZmFiMWZlIiwidHlwZSI6ImFwaV90b2tlbiJ9.0eQdnFXXpsEQXO6weOdg-oohDboMAQ5C7VdxHHz-Z-k",
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
+                    // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTA1YzMxZWMtNWIzMS00YjZmLWI2OWYtMGM0NDc0OGU0NzE0IiwidHlwZSI6ImFwaV90b2tlbiJ9._A8SlY7e4vrUk2p13RaQK6geLrjdU3PtoJODpCC41sg",
+                    // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjU4NzgyZjMtMmU2My00NzkzLWIyNzItMmFmZTY1ZmFiMWZlIiwidHlwZSI6ImFwaV90b2tlbiJ9.0eQdnFXXpsEQXO6weOdg-oohDboMAQ5C7VdxHHz-Z-k",
                     "User-Agent": "Chrome",
                 },
                 body: JSON.stringify({
