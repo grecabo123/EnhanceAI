@@ -186,7 +186,7 @@ function Register() {
                                         </div>
                                         <div className="col-lg-12 mb-3">
                                             <ReCAPTCHA
-                                                sitekey={"6LcC86wcAAAAAOohkFSsLQ-Pa-6W21_hukOLMYoV"}
+                                                sitekey={"6LdJjzIqAAAAACiA5FbO2ZB8nRfWJ-TEmJPcDJXm"}
                                                 render="explicit"
                                                 theme="light"
                                                 ref={UsercaptchaRef}
