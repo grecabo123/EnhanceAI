@@ -62,7 +62,7 @@ function BidItem(props) {
             to_address: PurchaseData.to_address,
             message: PurchaseData.message,
             from_buyer: Details.user_id,
-            schedule: DateData,
+            schedule: DateData == null ? "" : DateData,
         }
 
         axios.post(`/api/OrderNow`, data).then(res => {
@@ -77,6 +77,10 @@ function BidItem(props) {
                 setTimeout(() => {
                     window.location.href = "/customer/product/search"
                 }, 1500)
+            }
+            else{
+                setPurchase({...PurchaseData, error: res.data.error});
+                setBtn(false)
             }
         }).catch((error) => {
             if (error.response.status === 500) {
@@ -156,27 +160,31 @@ function BidItem(props) {
                                     <div className="row">
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
-                                                Name (optional)
+                                                <span className='text-danger'>*</span>Name
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' name='name' onChange={handleinput} />
+                                            <small className='text-danger'>{PurchaseData.error.name}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
-                                                Contact Number(optional)
+                                                <span className='text-danger'>*</span>Contact Number
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' keyfilter={'num'} name='contact' onChange={handleinput} />
+                                            <small className='text-danger'>{PurchaseData.error.contact}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
-                                                Address (optional)
+                                                <span className='text-danger'>*</span>Address
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' name='to_address' onChange={handleinput} />
+                                            <small className='text-danger'>{PurchaseData.error.to_address}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
                                                 <span className='text-danger'>*</span>Deliver / Pick up Date
                                             </label>
                                             <Calendar showTime hourFormat='12' value={DateData} showButtonBar onChange={(e) => setData(e.target.value)} className='w-100 p-inputtex-sm' showIcon />
+                                            <small className='text-danger'>{PurchaseData.error.schedule}</small>
                                         </div>
 
                                         <div className="col-lg-12 mb-2">
