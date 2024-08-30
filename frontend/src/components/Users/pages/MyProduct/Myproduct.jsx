@@ -205,7 +205,7 @@ function Myproduct() {
                     paginator paginatorLeft rows={10}>
 
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
-                    <Column field='file_product' body={(ListProduct) => <img className='' width={100} src={`http://127.0.0.1:8000/${ListProduct.file_product}`} />} header="Product Image"></Column>
+                    <Column field='file_product' body={(ListProduct) => <img className='' width={100} src={`${import.meta.env.VITE_API_BASE_URL}/${ListProduct.file_produc}`} />} header="Product Image"></Column>
                     <Column field='product_name' header="Product Name"></Column>
                     <Column body={(ListProduct) => <span>₱{ListProduct.price.toFixed(2)}</span> } header="Product Price"></Column>
                     <Column field='number_pcs' header="Quantity"></Column>
