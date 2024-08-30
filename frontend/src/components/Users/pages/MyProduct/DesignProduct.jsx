@@ -73,12 +73,12 @@ function DesignProduct() {
 
     const handleupdatedata = (e) => {
         e.persist();
-        setDesign({...EditDesign, [e.target.name] : e.target.value})
+        setDesign({ ...EditDesign, [e.target.name]: e.target.value })
     }
 
     const handleuploadupdate = (e) => {
         e.persist();
-        setNewImage({file_new: e.target.files[0]});
+        setNewImage({ file_new: e.target.files[0] });
     }
 
     const AddProduct = (e) => {
@@ -129,12 +129,16 @@ function DesignProduct() {
     const actionbutton = (rowData) => {
         return (
             <div>
-                <Button onClick={Detailsdata} 
+                <Button onClick={Detailsdata}
                     data-name={rowData.product_name}
                     data-price={rowData.price}
                     data-product_id={rowData.id}
                     data-indicator={1} data-product={rowData.id} className='p-button-sm p-button-success m-2' icon={PrimeIcons.PENCIL} label='Edit Product' />
-                <Button className='p-button-sm p-button-danger m-2' data-indicator={2} onClick={Detailsdata} data-product={rowData.id} label='Disable Product' />
+                <Button
+                    data-name={rowData.product_name}
+                    data-price={rowData.price}
+                    data-product_id={rowData.id}
+                    className='p-button-sm p-button-danger m-2' data-indicator={2} onClick={Detailsdata} data-product={rowData.id} label='Delete Product' />
             </div>
         )
     }
@@ -144,22 +148,22 @@ function DesignProduct() {
 
         const data = new FormData;
 
-        data.append('name',EditDesign.name)
-        data.append('product_id',EditDesign.product_id)
-        data.append('price',EditDesign.price)
-        data.append('file_new',NewImage.file_new === undefined ? "" : NewImage.file_new)
+        data.append('name', EditDesign.name)
+        data.append('product_id', EditDesign.product_id)
+        data.append('price', EditDesign.price)
+        data.append('file_new', NewImage.file_new === undefined ? "" : NewImage.file_new)
 
-        axios.post(`/api/ProductDesignUpdate`,data).then(res=> {
-            if(res.data.status === 200) {
+        axios.post(`/api/ProductDesignUpdate`, data).then(res => {
+            if (res.data.status === 200) {
                 FetchProduct();
                 setdetailsvisible(false)
             }
         }).catch((error) => {
-            if(error.response.status === 500) {
-                swal("Warning",error.response.statusText,'warning')
+            if (error.response.status === 500) {
+                swal("Warning", error.response.statusText, 'warning')
             }
-            else if(error.response.status === 404) {
-                swal("Warning","Server Error",'warning')
+            else if (error.response.status === 404) {
+                swal("Warning", "Server Error", 'warning')
             }
         })
 
@@ -169,7 +173,6 @@ function DesignProduct() {
     // console.log(NewImage);
 
     const Detailsdata = (e) => {
-
         setdetailsvisible(true)
         setDesign({
             name: e.currentTarget.getAttribute('data-name'),
@@ -177,6 +180,29 @@ function DesignProduct() {
             indicator: e.currentTarget.getAttribute('data-indicator'),
             product_id: e.currentTarget.getAttribute('data-product_id'),
         });
+    }
+
+    const DeleteProduct = (e) => {
+        e.preventDefault();
+
+        axios.put(`/api/ProductDelete/${EditDesign.product_id}`).then(res => {
+            if(res.data.status === 200) {
+                FetchProduct();
+                toast.current.show({
+                    severity: "success",
+                    summary: "Delete Product Successfully",
+                    detail: "Success",
+                });
+                setVisible(false)
+            }
+        }).catch((error) => {
+            if (error.response.status === 500) {
+                swal("Warning", error.response.statusText, 'warning')
+            }
+            else if (error.response.status === 404) {
+                swal("Warning", "Server Error", 'warning')
+            }
+        })
     }
 
 
@@ -248,7 +274,7 @@ function DesignProduct() {
 
 
             <Dialog
-                header={`${EditDesign.indicator == 1 ? 'Edit Product Details' : 'Disable Product'}`} style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}
+                header={`${EditDesign.indicator == 1 ? 'Edit Product Details' : 'Delete Product'}`} style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}
                 visible={detailsvisible}
                 position='top'
                 draggable={false}
@@ -256,20 +282,42 @@ function DesignProduct() {
             >
                 {
                     EditDesign.indicator == 1 ?
-                    <React.Fragment>
-                        <form onSubmit={onUpdateData} id='reset_form'>
-                            <div className="row">
-                                <div className="col-lg-12 mb-2">
-                                    <label htmlFor="" className="form-label">
-                                        Product Image
-                                    </label>
-                                    <InputText type='file' onChange={handleuploadupdate}  className='w-100 p-inputtext-sm' name='file_new' />
+                        <React.Fragment>
+                            <form onSubmit={onUpdateData} id='reset_form'>
+                                <div className="row">
+                                    <div className="col-lg-12 mb-2">
+                                        <label htmlFor="" className="form-label">
+                                            Product Image
+                                        </label>
+                                        <InputText type='file' onChange={handleuploadupdate} className='w-100 p-inputtext-sm' name='file_new' />
+                                    </div>
+                                    <div className="col-lg-12 mb-2">
+                                        <label htmlFor="" className="form-label">
+                                            Product Name
+                                        </label>
+                                        <InputText value={EditDesign.name} onChange={handleupdatedata} className='w-100 p-inputtext-sm' name='' />
+                                    </div>
+                                    <div className="col-lg-12 mb-2">
+                                        <label htmlFor="" className="form-label">
+                                            Product Price
+                                        </label>
+                                        <InputNumber value={EditDesign.price} name='price' onChange={handleupdatedata} className='w-100 p-inputtext-sm' prefix='₱' />
+                                    </div>
+                                    <div className="mt-2">
+                                        <Button className='w-100 p-button-sm p-button-success' label='Update Data' />
+                                    </div>
+
                                 </div>
+                            </form>
+                        </React.Fragment>
+                        :
+                        <React.Fragment>
+                            <form onSubmit={DeleteProduct}>
                                 <div className="col-lg-12 mb-2">
                                     <label htmlFor="" className="form-label">
                                         Product Name
                                     </label>
-                                    <InputText value={EditDesign.name}  onChange={handleupdatedata} className='w-100 p-inputtext-sm' name='' />
+                                    <InputText value={EditDesign.name} onChange={handleupdatedata} className='w-100 p-inputtext-sm' name='' />
                                 </div>
                                 <div className="col-lg-12 mb-2">
                                     <label htmlFor="" className="form-label">
@@ -277,17 +325,9 @@ function DesignProduct() {
                                     </label>
                                     <InputNumber value={EditDesign.price} name='price' onChange={handleupdatedata} className='w-100 p-inputtext-sm' prefix='₱' />
                                 </div>
-                                <div className="mt-2">
-                                    <Button className='w-100 p-button-sm p-button-success' label='Update Data' />
-                                </div>
-
-                            </div>
-                        </form>
-                    </React.Fragment>
-                    :
-                    <React.Fragment>
-
-                    </React.Fragment>
+                                <Button className='p-button-danger p-button-sm' label='Delete Product' />
+                            </form>
+                        </React.Fragment>
                 }
             </Dialog>
         </div>

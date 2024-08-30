@@ -18,35 +18,53 @@ class OrderController extends Controller
 
     public function OrderNow(Request $request){
 
-        $order = new OrderDetails;
-
-        $rand = rand(1111,9999)."".rand(1111,9999);
-
-        $order->invoice_id = $rand;
-        $order->from_user = $request->user_fk;
-        $order->product_fk = $request->product_fk;
-        $order->to_name = $request->name;
-        $order->to_address = $request->to_address;
-        $order->to_contact = $request->contact;
-        $order->messages = $request->message;
-        $order->owner_fk = $request->from_buyer;
-        $order->order_date = $request->schedule;
-        $order->save();
-
-        $track = new OrderStatus;
-        $track->order_fk = $order->id;
-        $track->description = "Order Product Successfully with Order ID". " ".$rand;
-        $track->save();
-
-        $logs = new ActivityLogs;
-        $logs->description = "Your Order ID ". $rand. " ";
-        $logs->user_fk = $request->user_fk;
-        $logs->save();
-
-        return response()->json([
-            "status"            =>          200,
-
+        $validate = Validator::make($request->all(), [
+            "contact"               =>          "required",
+            "name"                  =>          "required",
+            "to_address"            =>          "required",
+            "schedule"              =>          "required",
+        ],[
+            "schedule.required"         =>      "Date field is required",
+            "to_address.required"       =>      "Address field is required",
         ]);
+
+        if($validate->fails()) {
+            return response()->json([
+                "error"             =>          $validate->messages(),
+            ]);
+        }
+        else{
+            $order = new OrderDetails;
+            $rand = rand(1111,9999)."".rand(1111,9999);
+            $order->invoice_id = $rand;
+            $order->from_user = $request->user_fk;
+            $order->product_fk = $request->product_fk;
+            $order->to_name = $request->name;
+            $order->to_address = $request->to_address;
+            $order->to_contact = $request->contact;
+            $order->messages = $request->message;
+            $order->owner_fk = $request->from_buyer;
+            $order->order_date = $request->schedule;
+            $order->save();
+    
+            $track = new OrderStatus;
+            $track->order_fk = $order->id;
+            $track->description = "Order Product Successfully with Order ID". " ".$rand;
+            $track->save();
+    
+            $logs = new ActivityLogs;
+            $logs->description = "Your Order ID ". $rand. " ";
+            $logs->user_fk = $request->user_fk;
+            $logs->save();
+    
+            return response()->json([
+                "status"            =>          200,
+    
+            ]);
+
+        }
+
+
     }
 
     public function PurchaseStatus($id){

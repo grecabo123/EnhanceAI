@@ -40,6 +40,7 @@ class ProductController extends Controller
             $product->number_pcs = $request->pcs;
             $product->product_name = $request->name;
             $product->price = $request->Amount;
+            $product->status = 1;
             if($request->hasFile('file')){
                 $file = $request->file('file');
                 $extension = $file->getClientOriginalExtension();
@@ -68,7 +69,7 @@ class ProductController extends Controller
 
     public function DesignProduct($id){
 
-        $design = ProductDesign::where('user_fk',$id)->get();
+        $design = ProductDesign::where('user_fk',$id)->where('status',1)->get();
 
         return response()->json([
             "status"            =>          200,
@@ -226,7 +227,18 @@ class ProductController extends Controller
                 }
             }
         }
+    }
 
+    public function ProductDelete($id){
 
+        $data = ProductDesign::find($id);
+
+        if($data){
+            $data->status = 0;
+            $data->update();
+            return response()->json([
+                "status"            =>          200,
+            ]);
+        }
     }
 }
