@@ -24,6 +24,7 @@ Route::post('CreateAccount',[AuthController::class, 'CreateAccount']);
 // Fetch All Product
 Route::get('GetAllProduct/{id}',[ProductController::class, 'GetAllProduct']);
 Route::get('DetailsProduct/{id}',[ProductController::class, 'DetailsProduct']);
+Route::put('ProductDelete/{id}',[ProductController::class, 'ProductDelete']);
 
 Route::post('OrderNow',[OrderController::class, 'OrderNow']);
 Route::get('PurchaseStatus/{id}',[OrderController::class, 'PurchaseStatus']);
