@@ -193,7 +193,7 @@ function DesignProduct() {
                     summary: "Delete Product Successfully",
                     detail: "Success",
                 });
-                setVisible(false)
+                setdetailsvisible(false)
             }
         }).catch((error) => {
             if (error.response.status === 500) {
