@@ -1,52 +1,46 @@
-import { PrimeIcons } from 'primereact/api';
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
 import { Panel } from 'primereact/panel';
-import React, { useState } from 'react'
-import { FaRobot } from 'react-icons/fa';
-import { Chips } from 'primereact/chips';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Image } from 'primereact/image';
 import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Calendar } from 'primereact/calendar';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-
-
 function AI() {
-
-    const [input, setinput] = useState("")
-    const [images, setImages] = useState("");
+    const [input, setinput] = useState("");
+    const [nameproduct, setProduct] = useState("")
+    const [images, setImages] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false)
-    const [uploadfile, setUpload] = useState([])
+    const [visible, setVisible] = useState(false);
+    const [uploadfile, setUpload] = useState([]);
     const history = useHistory();
     const [Data, setData] = useState({
         email: "",
         desc: "",
         error: [],
-    })
-    const [generateimg, setGenerateimg] = useState(1)
-    const [btndis, setBtn] = useState(false)
-    const [CollentDate, setDate] = useState("")
+    });
+    const [generateimg, setGenerateimg] = useState(1);
+    const [btndis, setBtn] = useState(false);
+    const [CollentDate, setDate] = useState("");
 
     const URL = 'https://api.unsplash.com/search/photos';
-
     const IMAGES_PER_PAGES = 21;
 
     const Search = async (e) => {
         e.preventDefault();
-        setBtn(true)
+        setProduct(input)
+        setBtn(true);
         const data_ = {
             name: input,
             width: 893,
             height: 1174,
             seed: 42,
             flower: "pollinations"
-        }
+        };
         const options = {
             method: "POST",
             headers: {
@@ -54,9 +48,10 @@ function AI() {
                 authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRhOTQxMTUtYmQ5Ni00ZGRlLTk5NTYtZDEzNjM5YTRkMDY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.qRnZZSVkmEtp-rfKBg1HimqH8-4HkQcS4DK4SuqdLJE",
             },
             body: JSON.stringify({
-                providers: "amazon/titan-image-generator-v1_standard",
+                providers: "amazon/titan-image-generator-v1_premium",
                 text: data_.name,
-                resolution: "1024x1024",
+                resolution: "512x512",
+                num_images: 3 
             }),
         };
 
@@ -64,48 +59,39 @@ function AI() {
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
-                    setBtn(false)
-
                 }
                 return response.json();
             })
             .then((data) => {
-                setImages(data)
+                setImages(data['amazon/titan-image-generator-v1_premium'].items || []);
                 setGenerateimg(0);
                 console.log(data);
-                setBtn(false)
+                setBtn(false);
             })
             .catch((error) => {
-                setBtn(false)
-
+                setBtn(false);
                 console.error(error);
             });
-    }
+    };
 
     const RequestForm = (e) => {
-        history.push(`/customer/request/form/flower`)
-    }
+        history.push(`/customer/request/form/flower`);
+    };
 
     const handleinput = (e) => {
         e.persist();
         setData({ ...Data, [e.target.name]: e.target.value });
-    }
+    };
 
     const handleupload = (e) => {
         e.persist();
-        setUpload({ file: e.target.files[0] })
-    }
+        setUpload({ file: e.target.files[0] });
+    };
 
     const RequestFormData = (e) => {
         e.preventDefault();
-        const form = new FormData;
-
-
-
-    }
-
-    // console.log(images['amazon/titan-image-generator-v1_standard'].items[0].image_resource_url);
-
+        const form = new FormData();
+    };
 
     return (
         <div className='container'>
@@ -122,19 +108,25 @@ function AI() {
                             <Button loading={btndis} className='p-button-sm p-button-info w-100' label='Generate Design' />
                         </div>
                         {
-                            generateimg == 1 ? ""
-                            :
-                        <div className="container">
-                            <Image
-                                src={`${images['amazon/titan-image-generator-v1_standard'].items[0].image_resource_url}`}
-                                alt={"Flower"}
-                                className='img-fluid mt-5 mr-4'
-                                width={250}
-                                preview
-                                downloadIcon
-                                downloadable={true}
-                            />
-                        </div>
+                            generateimg === 1 ? "" :
+                            <div className="container mt-4">
+                                <div className="row">
+                                    {images.map((item, index) => (
+                                        <div key={index} className="col-md-4 mb-3">
+                                            <Image
+                                                src={item.image_resource_url}
+                                                alt={`Generated Flower ${index + 1}`}
+                                                className='img-fluid'
+                                                width={'100%'}
+                                                preview
+                                                downloadIcon
+                                                downloadable={true}
+                                            />
+                                            <p className='text-center'> { nameproduct == "" ? "" : nameproduct + ' '+ '#'+ `${index + 1}` }</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         }
                     </form>
                 </Panel>
@@ -166,7 +158,7 @@ function AI() {
                             </div>
                             <div className="col-lg-12 mb-2">
                                 <label htmlFor="" className="form-label">
-                                    <span className='text-danger'>*</span>Desctiption
+                                    <span className='text-danger'>*</span>Description
                                 </label>
                                 <InputTextarea name='desc' onChange={handleinput} className='w-100' rows={5} cols={5} style={{ resize: "none" }} />
                             </div>
@@ -176,10 +168,9 @@ function AI() {
                         </div>
                     </div>
                 </form>
-
             </Dialog>
         </div>
-    )
+    );
 }
 
-export default AI
+export default AI;
