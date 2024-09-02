@@ -51,7 +51,7 @@ function AI() {
                 providers: "amazon/titan-image-generator-v1_premium",
                 text: data_.name,
                 resolution: "512x512",
-                num_images: 6 
+                num_images: 5
             }),
         };
 
