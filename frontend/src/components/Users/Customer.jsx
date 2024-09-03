@@ -267,7 +267,7 @@ function Admin() {
                                     <li className="sidebar-item">
                                         <Link to="/customer/product/search" className="sidebar-link">
                                             <FcSearch size={20} className='align-middle' />
-                                            <span>Search Product</span>
+                                            <span>List of Products</span>
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
