@@ -11,10 +11,12 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext'
 import { Calendar } from 'primereact/calendar'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { Link } from 'react-router-dom/cjs/react-router-dom'
+import { PrimeIcons } from 'primereact/api'
 
 
 function ShopProduct(props) {
-
+    
     const [loading, setLoading] = useState(true)
     const [Product, setProduct] = useState([])
     const history = useHistory();
@@ -71,12 +73,14 @@ function ShopProduct(props) {
         history.push(`/customer/order/form/${e.currentTarget.getAttribute('data-id')}`)        
     }
 
+    console.log(props.match.params.name);
 
     return (
         <div>
             <Panel header={`${props.match.params.name} - Product List`}>
                 <div className="d-flex justify-content-end mb-2">
-                    <Button className='p-button-sm p-button-info' label='Return Page' onClick={() => history.push('/customer/visit/shop')} />
+                    <Button className='p-button-sm p-button-info m-1' label='Design AI' onClick={() => history.push(`/customer/purchase/generate/design/${props.match.params.name}/${props.match.params.id}`)} icon={PrimeIcons.ANDROID} />
+                    <Button className='p-button-sm p-button-info m-1' label='Return Page' onClick={() => history.push('/customer/visit/shop')} />
                 </div>
                 <DataTable
                     paginator

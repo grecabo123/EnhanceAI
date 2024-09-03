@@ -24,7 +24,7 @@ import ShopProduct from "../components/Users/pages/Shop/ShopProduct";
 const CustomerRoutes = [
     {path: "/customer/dashboard", exact: true, name: "Dashboard", component: Dashboard},
     {path: "/customer/product/search", exact: true, name: "Logs", component: SearchProducts},
-    {path: "/customer/purchase/generate/design", exact: true, name: "AI", component: AI},
+    {path: "/customer/purchase/generate/design/:name/:id", exact: true, name: "AI", component: AI},
     {path: "/customer/request/form/flower", exact: true, name: "AI", component: RequestFlowerDesign},
     {path: "/customer/request/form/flower/:name/:id", exact: true, name: "AI", component: CreateFormRequest},
     {path: "/customer/history/logs", exact: true, name: "Logs", component: ActivityLogs},

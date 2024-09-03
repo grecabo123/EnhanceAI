@@ -93,7 +93,7 @@ function Admin() {
                                     <li className="sidebar-item">
                                         <Link to="/customer/product/search" className="sidebar-link">
                                             <FcSearch size={20} className='align-middle' />
-                                            <span>Search Product</span>
+                                            <span>List of Product</span>
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
@@ -102,12 +102,12 @@ function Admin() {
                                             <span>Visit Shop</span>
                                         </Link>
                                     </li>
-                                    <li className="sidebar-item">
+                                    {/* <li className="sidebar-item">
                                         <Link to="/customer/purchase/generate/design" className="sidebar-link">
                                             <FaRobot size={20} className='align-middle' />
                                             <span>Generate Design</span>
                                         </Link>
-                                    </li>
+                                    </li> */}
                                     <li className="sidebar-item">
                                         <Link to="/customer/product/order" className="sidebar-link">
                                             <FaCartPlus size={20} className='align-middle' />
@@ -276,12 +276,12 @@ function Admin() {
                                             <span>Visit Shop</span>
                                         </Link>
                                     </li>
-                                    <li className="sidebar-item">
+                                    {/* <li className="sidebar-item">
                                         <Link to="/customer/purchase/generate/design" className="sidebar-link">
                                             <FaRobot size={20} className='align-middle' />
                                             <span>Generate Design</span>
                                         </Link>
-                                    </li>
+                                    </li> */}
                                     <li className="sidebar-item">
                                         <Link to="/customer/product/order" className="sidebar-link">
                                             <FaCartPlus size={20} className='align-middle' />

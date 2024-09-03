@@ -63,7 +63,7 @@ function CreateFormRequest(props) {
         data.append('address',Book.address)
         data.append('desc',Book.desc)
         data.append('date_',BookDate)
-        data.append('file',FileAttach.file)
+        data.append('file',FileAttach.length == 0 ? "" : FileAttach.file)
         data.append('owner_fk',props.match.params.id)
         data.append('user_',localStorage.getItem('auth_id'))
 
@@ -84,6 +84,7 @@ function CreateFormRequest(props) {
                 })
             }
             else{
+                setBook({...Book, error: res.data.error})
                 setBtn(false)
             }
         }).catch((error) => {
@@ -143,30 +144,39 @@ function CreateFormRequest(props) {
                                         <span className='text-danger'>*</span>Name
                                     </label>
                                     <InputText name='name' className='w-100 p-inputtext-sm' onChange={hanldeinput} />
+                                    <small className='text-danger'>{Book.error.name}</small>
                                 </div>
                                 <div className="col-lg-6 mb-2">
                                     <label htmlFor="" className="form-label">
                                         <span className='text-danger'>*</span>Contact
                                     </label>
+
                                     <InputText keyfilter={'int'} name='contact' maxLength={11} className='w-100 p-inputtext-sm' onChange={hanldeinput} />
+                                    <small className='text-danger'>{Book.error.contact}</small>
                                 </div>
                                 <div className="col-lg-6 mb-2">
                                     <label htmlFor="" className="form-label">
                                         <span className='text-danger'>*</span>Address
                                     </label>
+
                                     <InputText name='address' className='w-100 p-inputtext-sm' onChange={hanldeinput} />
+                                    <small className='text-danger'>{Book.error.address}</small>
                                 </div>
                                 <div className="col-lg-6 mb-2">
                                     <label htmlFor="" className="form-label">
                                         <span className='text-danger'>*</span>Date
                                     </label>
+
                                     <Calendar value={BookDate} onChange={(e) => setBookDate(e.target.value)} className='w-100 p-inputtext-sm' showIcon showTime hourFormat='12' />
+                                    <small className='text-danger'>{Book.error.date_}</small>
                                 </div>
                                 <div className="col-lg-12 mb-2">
                                     <label htmlFor="" className="form-label">
                                         <span className='text-danger'>*</span>File Attach
                                     </label>
+
                                     <InputText name='file' onChange={handleupload} className='w-100 p-inputtext-sm' type='file' />
+                                    <small className='text-danger'>{Book.error.file}</small>
                                 </div>
                                 <div className="col-lg-12 mb-2">
                                     <label htmlFor="" className="form-label">

@@ -228,12 +228,16 @@ class ShopController extends Controller
     public function BookDataForm(Request $request){
 
         $validate = Validator::make($request->all(), [
-            "file"          =>              "required"
+            "file"          =>              "required",
+            "date_"         =>              "required",
+            "name"          =>              "required",
+            "contact"          =>              "required",
+            "address"          =>              "required",
         ]);
 
         if($validate->fails()) {
             return response()->json([
-                "status"            =>          $validate->messages(),
+                "error"            =>          $validate->messages(),
             ]);
         }
         else{

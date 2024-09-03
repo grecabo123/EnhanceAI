@@ -8,7 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Calendar } from 'primereact/calendar';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function AI() {
+function AI(props) {
     const [input, setinput] = useState("");
     const [nameproduct, setProduct] = useState("")
     const [images, setImages] = useState([]);
@@ -74,8 +74,9 @@ function AI() {
             });
     };
 
+
     const RequestForm = (e) => {
-        history.push(`/customer/request/form/flower`);
+        history.push(`/customer/request/form/flower/${props.match.params.name}/${props.match.params.id}`);
     };
 
     const handleinput = (e) => {
@@ -98,7 +99,8 @@ function AI() {
             <div className="row">
                 <Panel header="Generate Design By AI" footer="Upload Generate You must download the file and attach it to the form request">
                     <div className="d-flex justify-content-end mb-2">
-                        <Button className='p-button-info p-button-sm' label='Request Form' onClick={RequestForm} />
+                        <Button className='p-button-info p-button-sm m-1' label='List of Product' onClick={(e) => history.push(`/customer/shop/${props.match.params.name}/${props.match.params.id}`)} />
+                        <Button className='p-button-info p-button-sm m-1' label='Request Form' onClick={RequestForm} />
                     </div>
                     <form onSubmit={Search}>
                         <div className="p-inputgroup flex-1">
