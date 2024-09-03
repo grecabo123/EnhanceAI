@@ -7,6 +7,7 @@ import AI from "../components/Users/pages/DesignGenerate/AI";
 import CreateFormRequest from "../components/Users/pages/DesignGenerate/CreateFormRequest";
 import RequestFlowerDesign from "../components/Users/pages/DesignGenerate/RequestFlowerDesign";
 import ActivityLogs from "../components/Users/pages/LogsHistory/Activitylogs";
+import DesignGenerate from "../components/Users/pages/MyProduct/DesignGenerate";
 import DesignProduct from "../components/Users/pages/MyProduct/DesignProduct";
 import DetailsOrder from "../components/Users/pages/MyProduct/DetailsOrder";
 import Myproduct from "../components/Users/pages/MyProduct/Myproduct";
@@ -37,6 +38,7 @@ const CustomerRoutes = [
     {path: "/customer/buyer/approve", exact: true, name: "Forn", component: BuyerHistory},
     {path: "/customer/buyer/history", exact: true, name: "Forn", component: HistoryCustomer},
     {path: "/customer/product/design", exact: true, name: "Design", component: DesignProduct},
+    {path: "/customer/product/design/ai", exact: true, name: "DesignAI", component: DesignGenerate},
     {path: "/customer/visit/shop", exact: true, name: "Design", component: ListShops},
     {path: "/customer/order/form/:id", exact: true, name: "Design", component: OrderForm },
     {path: "/customer/shop/:name/:id", exact: true, name: "Design", component: ShopProduct},

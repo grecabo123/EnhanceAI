@@ -48,7 +48,7 @@ function Dashboard() {
     }
 
     return (
-        <div className='container'>
+        <div className='container-fluid'>
             {
                 loading ?
                     <React.Fragment>

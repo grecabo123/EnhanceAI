@@ -12,6 +12,7 @@ import { Toast } from 'primereact/toast'
 import moment from 'moment'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { InputNumber } from 'primereact/inputnumber'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 
 function DesignProduct() {
 
@@ -90,7 +91,6 @@ function DesignProduct() {
         data.append('name', product.name)
         data.append('desc', product.desc)
         data.append('file', product_img.file === undefined ? "" : product_img.file)
-        // data.append('file', product_img.file == "undefined" ? "" : product_img.file)
         data.append('pricedata', pricedata)
         data.append('user_fk', localStorage.getItem('auth_id'))
 
@@ -211,7 +211,10 @@ function DesignProduct() {
             <Panel header="List of Product Design">
                 <Toast ref={toast} />
                 <div className="d-flex justify-content-end mb-2">
-                    <Button className='p-button-sm p-button-info' label='Add Product' onClick={() => setVisible(true)} icon={PrimeIcons.PLUS} />
+                    <Button className='p-button-sm m-1 p-button-info' label='Add Product' onClick={() => setVisible(true)} icon={PrimeIcons.PLUS} />
+                    <Link  to="/customer/product/design/ai">
+                        <Button className='p-button-info p-button-sm m-1' label='Design' icon={PrimeIcons.ANDROID} />
+                    </Link>
                 </div>
                 <DataTable
                     size='small'

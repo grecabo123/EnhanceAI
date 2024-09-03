@@ -30,7 +30,7 @@ function ActivityLogs() {
     }
 
     return (
-        <div className='container'>
+        <div className='container-fluid'>
             <div className="row">
                 <Panel header="History Logs">
                     <DataTable value={Logs}

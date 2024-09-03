@@ -17,5 +17,6 @@ class StoreProducts extends Model
         "product_name",
         "price",
         "file_product",
+        "status",
     ];
 }
