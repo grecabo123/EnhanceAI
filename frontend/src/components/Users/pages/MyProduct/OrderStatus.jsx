@@ -55,16 +55,12 @@ function OrderStatus() {
     const Image_Format = (rowData) => {
         return (
             <span>
-
                 {
                     rowData.type_order == 1 ?  
                     <span><Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.file_attach}`} width='100' /></span>
-
                     :
                         <span><Image src={`${import.meta.env.VITE_API_BASE_URL}/${rowData.file_product_design}`} width='100' /></span>
-
                 }
-
             </span>
         )
     }

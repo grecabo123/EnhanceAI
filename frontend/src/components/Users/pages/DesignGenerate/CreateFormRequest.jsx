@@ -81,7 +81,9 @@ function CreateFormRequest(props) {
                     contact: "",
                     address: "",
                     desc: "",
+                    error: [],
                 })
+                
             }
             else{
                 setBook({...Book, error: res.data.error})

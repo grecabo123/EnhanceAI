@@ -6,7 +6,7 @@ import { DataTable } from 'primereact/datatable'
 import { Panel } from 'primereact/panel'
 import React, { useEffect, useRef, useState } from 'react'
 import swal from 'sweetalert'
-import {FilterMatchMode } from 'primereact/api'
+import { FilterMatchMode } from 'primereact/api'
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider'
 import { Toast } from 'primereact/toast'
@@ -75,8 +75,17 @@ function ListofBuyer() {
     }
 
     const file_format = (list) => {
+        // console.log(list.type_order);
         return (
-            <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={80} alt="" />
+            <span>
+                {
+                    list.type_order === 1 ?
+                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_attach}`} width={80} alt="" />
+                        :
+                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={80} alt="" />
+
+                }
+            </span>
         )
     }
 
@@ -93,7 +102,7 @@ function ListofBuyer() {
             <div className="d-flex justify-content-end">
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
-                    
+
                     <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Search" />
                 </span>
             </div>
@@ -142,7 +151,7 @@ function ListofBuyer() {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`/api/DeleteOrder/${id_order}`).then(res => {
-                    if(res.data.status === 200) {
+                    if (res.data.status === 200) {
                         Swal.fire({
                             title: "Deleted!",
                             text: "Order has been removed.",
@@ -151,11 +160,11 @@ function ListofBuyer() {
                         FetchData();
                     }
                 }).catch((error) => {
-                    if(error.response.status === 500){
-                        swal("Warning",error.response.statusText,'warning')
+                    if (error.response.status === 500) {
+                        swal("Warning", error.response.statusText, 'warning')
                     }
-                    else if(error.response.status === 404){
-                        swal("Error","Server Error",'error')
+                    else if (error.response.status === 404) {
+                        swal("Error", "Server Error", 'error')
                     }
                 })
             }
@@ -224,6 +233,12 @@ function ListofBuyer() {
         })
     }
 
+    const imge_from = (rowData) => {
+        return (
+            <span className={`fw-bold ${rowData.type_order === 1 ? 'text-info' : 'text-success'}`}>{rowData.type_order === 1 ? "Generate AI" : "Store Design"}</span>
+        )
+    }
+
     return (
         <div className='container-fluid'>
             <Toast ref={toast} />
@@ -237,6 +252,7 @@ function ListofBuyer() {
                     value={list} paginator paginatorLeft rows={10}>
                     <Column header="#" body={(data, options) => options.rowIndex + 1}></Column>
                     <Column field='invoice_id' filterField='invoice_id' header="Order ID"></Column>
+                    <Column body={imge_from}  header="Image From"></Column>
                     <Column field='file_product_design' body={file_format} header="Product Image"></Column>
                     <Column field='name' header="Name of Buyer"></Column>
                     <Column body={(list) => <span>{moment(list.created_at).format('MMM DD YYYY hh:mm a')}</span>} header="Date Time Order"></Column>

@@ -45,6 +45,7 @@ class OrderController extends Controller
             $order->messages = $request->message;
             $order->owner_fk = $request->from_buyer;
             $order->order_date = $request->schedule;
+            $order->type_order = 0;
             $order->save();
     
             $track = new OrderStatus;
@@ -82,12 +83,12 @@ class OrderController extends Controller
     public function ListoBuyer($id){
 
         $data = OrderDetails::join('users','users.id','=','tbl_order.from_user')
-        ->join('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
-        ->join('tbl_contact','tbl_contact.user_fk','=','users.id')
+        ->leftjoin('tbl_product_design','tbl_product_design.id','=','tbl_order.product_fk')
+        ->leftjoin('tbl_contact','tbl_contact.user_fk','=','users.id')
         ->selectRaw('users.name,tbl_contact.contact,tbl_contact.address,tbl_contact.city,
         tbl_order.to_name,tbl_order.to_address,tbl_order.to_contact,tbl_order.messages,tbl_product_design.product_name,
         tbl_product_design.description,tbl_product_design.price,tbl_product_design.file_product_design,tbl_order.id as order_id,
-        tbl_order.order_date,tbl_order.invoice_id')
+        tbl_order.order_date,tbl_order.invoice_id,tbl_order.type_order,tbl_order.file_attach')
         ->where('tbl_order.owner_fk',$id)
         ->where('tbl_order.purchase_status',0)
         ->orderBy('tbl_order.created_at','DESC')->get();

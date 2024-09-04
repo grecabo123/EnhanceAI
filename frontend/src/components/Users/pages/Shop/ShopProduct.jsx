@@ -79,6 +79,7 @@ function ShopProduct(props) {
         <div>
             <Panel header={`${props.match.params.name} - Product List`}>
                 <div className="d-flex justify-content-end mb-2">
+                    
                     <Button className='p-button-sm p-button-info m-1' label='Design AI' onClick={() => history.push(`/customer/purchase/generate/design/${props.match.params.name}/${props.match.params.id}`)} icon={PrimeIcons.ANDROID} />
                     <Button className='p-button-sm p-button-info m-1' label='Return Page' onClick={() => history.push('/customer/visit/shop')} />
                 </div>
