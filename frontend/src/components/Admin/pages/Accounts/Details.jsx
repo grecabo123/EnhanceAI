@@ -123,7 +123,8 @@ function Details(props) {
                                         <InputText className='w-100' value={moment(UserInfo.created_at).format('MMM DD YYYY')} readOnly />
                                     </div>
                                     <div className="col-lg-12">
-                                        <Image src={`http://127.0.0.1:8000/${UserInfo.file_upload}`} width='200' height='200' preview />
+                                        <Image src={`${import.meta.env.VITE_API_BASE_URL}/${UserInfo.file_upload}`} width='200' height='200' />
+                                        {/* <Image src={`http://127.0.0.1:8000/${UserInfo.file_upload}`} width='200' height='200' preview /> */}
                                     </div>
                                     <div className="mt-2">
                                         <Button onClick={ModelPreview} className='p-button-sm p-button-info' label='Actions' />
