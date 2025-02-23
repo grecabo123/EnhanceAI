@@ -39,6 +39,7 @@ function ListofBuyer() {
         person_msg: "",
         date_order: "",
         invoice: "",
+        type_order: "",
     });
     const [Error, setError] = useState({
         error: [],
@@ -121,7 +122,7 @@ function ListofBuyer() {
                     data-to_address={list.to_address}
                     data-to_contact={list.to_contact}
                     data-to_name={list.to_name}
-                    data-img={list.file_product_design}
+                    data-img={list.type_order === 1 ? list.file_attach : list.file_product_design}
                     data-desc={list.description}
                     data-contact={list.contact}
                     data-address={list.address}
@@ -129,6 +130,7 @@ function ListofBuyer() {
                     data-person_msg={list.messages}
                     data-date={list.order_date}
                     data-order={list.invoice_id}
+                    data-type_order={list.type_order}
                     onClick={GetDetails}
                 />
                 <Button label='Remove Order' className='p-button-sm p-button-danger m-1' onClick={RemoveOrder} data-id={list.order_id} />
@@ -173,6 +175,7 @@ function ListofBuyer() {
 
     const GetDetails = (e) => {
         setVisible(true)
+        const type_order = e.currentTarget.getAttribute('data-type_order')
 
         setDetails({
             id: e.currentTarget.getAttribute('data-id'),
@@ -182,7 +185,7 @@ function ListofBuyer() {
             to_address: e.currentTarget.getAttribute('data-to_address'),
             to_contact: e.currentTarget.getAttribute('data-to_contact'),
             to_name: e.currentTarget.getAttribute('data-to_name'),
-            img: e.currentTarget.getAttribute('data-img'),
+            img:  e.currentTarget.getAttribute('data-img'),
             message: e.currentTarget.getAttribute('data-desc'),
             contact: e.currentTarget.getAttribute('data-contact'),
             address: e.currentTarget.getAttribute('data-address'),
@@ -268,14 +271,7 @@ function ListofBuyer() {
                     <span>Product Details</span>
                 </Divider>
                 <div className="d-flex justify-content-center">
-                {
-                    list.type_order === 1 ?
-                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_attach}`} width={80} alt="" />
-                        :
-                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={80} alt="" />
-
-                }
-                    {/* <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} /> */}
+                    <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} />
                 </div>
 
                 <form onSubmit={UpdateStatus}>
