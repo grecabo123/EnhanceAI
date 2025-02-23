@@ -268,7 +268,14 @@ function ListofBuyer() {
                     <span>Product Details</span>
                 </Divider>
                 <div className="d-flex justify-content-center">
-                    <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} />
+                {
+                    list.type_order === 1 ?
+                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_attach}`} width={80} alt="" />
+                        :
+                        <img src={`${import.meta.env.VITE_API_BASE_URL}/${list.file_product_design}`} width={80} alt="" />
+
+                }
+                    {/* <img src={`${import.meta.env.VITE_API_BASE_URL}/${Details.img}`} alt="" width={100} /> */}
                 </div>
 
                 <form onSubmit={UpdateStatus}>
