@@ -83,7 +83,7 @@ function Approve() {
             <div className="d-flex justify-content-evenly">
                 {/* <Button className='p-button-sm p-button-info m-1' data-id={rowData.id} data-indicator={1} onClick={ActionButton} label='Details' /> */}
                 <Button className='p-button-sm p-button-danger m-1' data-indicator={2} onClick={ActionButton} data-id={rowData.id} icon={PrimeIcons.LOCK} />
-                
+
             </div>
         )
     }
@@ -157,7 +157,7 @@ function Approve() {
                         <Column field='email' filterField='email' header="Email"></Column>
                         <Column field='shop_status' body={role_status} header="Open Shop"></Column>
                         <Column field='created_at' body={dateformat} header="Date Registered"></Column>
-                        <Column body={actionbutn} header="Date Registered"></Column>
+                        <Column body={actionbutn} header="Actions"></Column>
                     </DataTable>
                 </Panel>
 
