@@ -32,7 +32,7 @@ function ShopAccounts() {
     const image_logo = (formdata) => {
         return (
             <>
-                <Image preview width='80' src={`http://127.0.0.1:8000/${formdata.shop_logo}`} />
+                <Image preview width='80' src={`${import.meta.env.VITE_API_BASE_URL}/${formdata.shop_logo}`} />
             </>
         )
     }
