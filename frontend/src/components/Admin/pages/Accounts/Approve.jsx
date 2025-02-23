@@ -81,8 +81,9 @@ function Approve() {
     const actionbutn = (rowData) => {
         return (
             <div className="d-flex justify-content-evenly">
-                <Button className='p-button-sm p-button-info m-1' data-id={rowData.id} data-indicator={1} onClick={ActionButton} label='Details' />
-                <Button className='p-button-sm p-button-danger m-1' data-indicator={2} onClick={ActionButton} data-id={rowData.id} label='Lock Account' icon={PrimeIcons.LOCK} />
+                {/* <Button className='p-button-sm p-button-info m-1' data-id={rowData.id} data-indicator={1} onClick={ActionButton} label='Details' /> */}
+                <Button className='p-button-sm p-button-danger m-1' data-indicator={2} onClick={ActionButton} data-id={rowData.id} icon={PrimeIcons.LOCK} />
+                
             </div>
         )
     }
@@ -91,7 +92,6 @@ function Approve() {
 
         if (e.currentTarget.getAttribute('data-indicator') == 1) {
             setVisible(true)
-
             axios.get(`/api/AccountDetailsInformation/${e.currentTarget.getAttribute('data-id')}`).then(res => {
                 if(res.data.status === 200) {
 
@@ -163,12 +163,13 @@ function Approve() {
 
                 <Dialog position='top' draggable={false} header="Account Details" visible={visible} onHide={() => { if (!visible) return; setVisible(false); }}
                     style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
-                    <p className="m-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+                    <div className="row">
+                        <div className="col-lg-6 col-md-12 mb-2">
+                            <label htmlFor="" className="form-label">
+                                
+                            </label>
+                        </div>
+                    </div>
                 </Dialog>
             </div>
         </div>
