@@ -167,28 +167,28 @@ function OrderForm(props) {
                                                 Name 
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' name='name' onChange={handleinput} />
-                                            <small className='text-small'>{PurchaseData.error.name}</small>
+                                            <small className='text-danger'>{PurchaseData.error.name}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
                                                 Contact Number
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' keyfilter={'num'} name='contact' onChange={handleinput} />
-                                            <small className='text-small'>{PurchaseData.error.contact}</small>
+                                            <small className='text-danger'>{PurchaseData.error.contact}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
                                                 Address 
                                             </label>
                                             <InputText className='w-100 p-inputtext-sm' name='to_address' onChange={handleinput} />
-                                            <small className='text-small'>{PurchaseData.error.to_address}</small>
+                                            <small className='text-danger'>{PurchaseData.error.to_address}</small>
                                         </div>
                                         <div className="col-lg-6 mb-2">
                                             <label className="label form-label">
                                                 <span className='text-danger'>*</span>Deliver Date
                                             </label>
                                             <Calendar showTime hourFormat='12' value={DateData} showButtonBar onChange={(e) => setData(e.target.value)} className='w-100 p-inputtex-sm' showIcon />
-                                            <small className='text-small'>{PurchaseData.error.schedule}</small>
+                                            <small className='text-danger'>{PurchaseData.error.schedule}</small>
                                         </div>
                                         <div className="col-lg-12 mb-2">
                                             <label htmlFor="" className="form-label">
